@@ -7,13 +7,17 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route } from '@redwoodjs/router'
+import { Router, Route, PrivateSet } from '@redwoodjs/router'
 
 import { useAuth } from './auth'
+import CMSLayout from './layouts/CMSLayout/CMSLayout'
 
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+      <PrivateSet wrap={CMSLayout} unauthenticated="login">
+        <Route path="/" page={HomePage} name="home" />
+      </PrivateSet>
       <Route path="/login" page={LoginPage} name="login" />
       <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />

@@ -11,5 +11,7 @@ if test ! -e redwood.toml; then {
 } fi
 
 if test -e redwood.toml; then {
+  corepack enable
+  corepack install
   yarn install
 } fi
