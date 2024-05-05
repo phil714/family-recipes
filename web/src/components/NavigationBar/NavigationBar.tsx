@@ -16,9 +16,9 @@ const NavigationBar = () => {
         <NavLink
           className="link"
           activeClassName="activeLink"
-          to={routes.home({ tab: 'tutorial' })}
+          to={routes.home()}
         >
-          Tutorial
+          Recipes
         </NavLink>
       </li>
     </ul>

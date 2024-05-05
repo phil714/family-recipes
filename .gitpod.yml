@@ -7,8 +7,8 @@ tasks:
       # Cleanup terminal
       printf "\033[3J\033c\033[3J"
 
-      nvm install 20.12.0
-      nvm use 20.12.0
+      nvm install 20.12.2
+      nvm use 20.12.2
       corepack enable
       corepack install
 
@@ -24,6 +24,8 @@ tasks:
       } fi
 
     command: |
+      corepack enable
+      corepack install
       cmd="yarn rw dev"
       printf "Executing '%s' ..." "${cmd}"
       ${cmd}

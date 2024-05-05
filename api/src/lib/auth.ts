@@ -30,7 +30,8 @@ export const cookieName = 'session_%port%'
  * seen if someone were to open the Web Inspector in their browser.
  */
 export const getCurrentUser = async (session: Decoded) => {
-  if (!session || typeof session.id !== 'number') {
+  console.log('session', session)
+  if (!session || typeof session.id !== 'string') {
     throw new Error('Invalid session')
   }
 

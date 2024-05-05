@@ -18,7 +18,7 @@ generator client {
 // to create migrations for them and apply to your dev DB.
 // TODO: Please remove the following example:
 model User {
-  id                  Int              @id @default(autoincrement())
+  id                  String           @id @default(nanoid())
   email               String           @unique
   hashedPassword      String
   salt                String
@@ -29,10 +29,19 @@ model User {
 }
 
 model UserCredential {
-  id         String  @id
-  userId     Int
+  id         String  @id @default(nanoid())
+  userId     String
   user       User    @relation(fields: [userId], references: [id])
   publicKey  Bytes
   transports String?
   counter    BigInt
+}
+
+model Recipe {
+  id                     String @id @default(nanoid())
+  name                   String
+  description            String
+  instructions           String
+  preparationTimeMinutes Int
+  cookingTimeMinutes     Int
 }

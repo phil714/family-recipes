@@ -14,6 +14,7 @@ import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { Button } from 'src/components/Button/Button'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
@@ -113,7 +114,9 @@ const LoginPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Login</Submit>
+                    <Button type="submit" variant="destructive">
+                      Login
+                    </Button>
                   </div>
                 </Form>
               </div>
