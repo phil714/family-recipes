@@ -24,9 +24,7 @@ tasks:
       } fi
 
     command: |
-      corepack enable
-      corepack install
-      cmd="yarn rw dev"
+      cmd="corepack enable;corepack install;yarn rw dev"
       printf "Executing '%s' ..." "${cmd}"
       ${cmd}
 

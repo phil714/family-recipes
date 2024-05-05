@@ -2,6 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
+import { Button } from 'src/components/Button/Button'
 
 const HomePage = () => {
   const { isAuthenticated, logOut } = useAuth()
@@ -18,7 +19,7 @@ const HomePage = () => {
         My default route is named <code>home</code>, link to me with `
         <Link to={routes.home()}>Home</Link>`
         <p>Is Authenticated: {String(isAuthenticated)}</p>
-        <button onClick={() => logOut()}>Log Out</button>
+        <Button onClick={() => logOut()}>Log Out</Button>
       </p>
     </>
   )
