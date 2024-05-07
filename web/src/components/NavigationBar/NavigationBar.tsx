@@ -13,6 +13,8 @@ import {
 } from 'src/components/Tooltip/Tooltip'
 import { cn } from 'src/lib/utils'
 
+import { UserMenu } from '../UserMenu/UserMenu'
+
 interface NavItem {
   title: string
   to: string
@@ -41,9 +43,10 @@ export const NavigationBar = () => {
   return (
     <div
       data-collapsed={isCollapsed}
-      className="border-right group flex flex-col gap-4 border border-gray-100 py-2"
+      className="border-right group flex w-64 flex-col gap-4 border border-gray-100 py-2"
     >
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center">
+        <UserMenu />
         {links.map((link, index) => (
           <Tooltip key={index} delayDuration={0}>
             <TooltipTrigger asChild>
