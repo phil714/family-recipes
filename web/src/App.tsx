@@ -7,6 +7,7 @@ import Routes from 'src/Routes'
 import './scaffold.css'
 import './index.css'
 import { AuthProvider, useAuth } from './auth'
+import './i18n'
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>

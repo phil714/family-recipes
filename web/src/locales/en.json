@@ -1,0 +1,9 @@
+{
+  "components": {
+    "UserMenu": {
+      "myAccount": "My Account",
+      "profile": "Profile",
+      "logOut": "Log Out"
+    }
+  }
+}
