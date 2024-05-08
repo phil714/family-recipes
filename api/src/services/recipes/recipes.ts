@@ -18,7 +18,12 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
 
 export const createRecipe: MutationResolvers['createRecipe'] = ({ input }) => {
   return db.recipe.create({
-    data: input,
+    data: {
+      ...input,
+      tags: {
+        connect: input.tags.map((tag) => ({ id: tag })),
+      },
+    },
   })
 }
 
@@ -27,7 +32,12 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = ({
   input,
 }) => {
   return db.recipe.update({
-    data: input,
+    data: {
+      ...input,
+      tags: {
+        connect: input.tags.map((tag) => ({ id: tag })),
+      },
+    },
     where: { id },
   })
 }

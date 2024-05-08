@@ -9,7 +9,10 @@ import {
   TextField,
   NumberField,
   Submit,
+  Controller,
 } from '@redwoodjs/forms'
+
+import MultiSelectFormField from 'src/components/MultiSelect/MultiSelect'
 
 type FormRecipe = NonNullable<EditRecipeById['recipe']>
 
@@ -142,6 +145,33 @@ const RecipeForm = (props: RecipeFormProps) => {
         />
 
         <FieldError name="familyId" className="rw-field-error" />
+
+        <Label
+          name="tags"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Tags
+        </Label>
+        <Controller
+          name={'tags'}
+          defaultValue={[]}
+          // rules={validation}
+          render={({ field: { onChange, value } }) => (
+            <MultiSelectFormField
+              name="tags"
+              options={[
+                { value: 'ExkKqU8kbgdp6qWMULNDB', label: 'Asian' },
+                { value: 'Chinese', label: 'Chinese' },
+              ]}
+              defaultValue={value}
+              onValueChange={onChange}
+              placeholder="Select options"
+              variant="inverted"
+            />
+          )}
+        />
+        <FieldError name="tags" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">

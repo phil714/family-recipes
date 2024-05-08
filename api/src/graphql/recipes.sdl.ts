@@ -23,6 +23,7 @@ export const schema = gql`
     preparationTimeMinutes: Int!
     cookingTimeMinutes: Int!
     familyId: String!
+    tags: [String!]!
   }
 
   input UpdateRecipeInput {
@@ -32,6 +33,7 @@ export const schema = gql`
     preparationTimeMinutes: Int
     cookingTimeMinutes: Int
     familyId: String
+    tags: [String!]
   }
 
   type Mutation {
