@@ -35,7 +35,17 @@ export const NavigationBar = () => {
     },
     {
       title: 'Recipes',
-      to: '/recipes',
+      to: routes.recipes(),
+      icon: ListBulletIcon,
+    },
+    {
+      title: 'Families',
+      to: routes.families(),
+      icon: ListBulletIcon,
+    },
+    {
+      title: 'Tags',
+      to: routes.tags(),
       icon: ListBulletIcon,
     },
   ]

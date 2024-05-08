@@ -38,6 +38,12 @@ model UserCredential {
   counter    BigInt
 }
 
+model Family {
+  id      String   @id @default(nanoid())
+  name    String
+  recipes Recipe[]
+}
+
 model Recipe {
   id                     String @id @default(nanoid())
   name                   String
@@ -45,4 +51,14 @@ model Recipe {
   instructions           String
   preparationTimeMinutes Int
   cookingTimeMinutes     Int
+  familyId               String
+  family                 Family @relation(fields: [familyId], references: [id])
+  tags                   Tag[]
+}
+
+model Tag {
+  id      String   @id @default(nanoid())
+  name    String
+  color   String
+  recipes Recipe[]
 }

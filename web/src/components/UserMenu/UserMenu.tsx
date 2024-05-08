@@ -13,7 +13,7 @@ import { User } from 'src/components/User/User'
 
 export const UserMenu = () => {
   const { currentUser, logOut } = useAuth()
-  const { t, i18n } = useTranslation(undefined, {
+  const { t } = useTranslation(undefined, {
     keyPrefix: 'components.UserMenu',
   })
 
