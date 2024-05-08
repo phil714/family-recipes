@@ -7,26 +7,23 @@ tasks:
       # Cleanup terminal
       printf "\033[3J\033c\033[3J"
 
+      # install dependencies
       nvm install 20.12.2
-      nvm use 20.12.2
       corepack enable
       corepack install
+      yarn install
 
-      # Auto init a redwoodjs project for Gitpod if missing
-      if test ! -e redwood.toml; then {
-        # Create
-        yarn create redwood-app . --overwrite --yes
+      # setup auth
+      SESSION_SECRET=$(yarn rw g secret | sed -n '2p' | sed 's/^[ \t]*//;s/[ \t]*$//')
+      echo "SESSION_SECRET=$SESSION_SECRET" >> .env
 
-        # Change the default `sqlite` datasource provider to `postgres`
-        sed -i 's|provider = "sqlite"|provider = "postgres"|' "api/db/schema.prisma"
-      } else {
-        yarn install
-      } fi
+      # setup db
+      yarn rw prisma migrate dev
 
     command: |
-      cmd="corepack enable;corepack install;yarn rw dev"
-      printf "Executing '%s' ..." "${cmd}"
-      ${cmd}
+      corepack enable
+      corepack install
+      yarn rw dev
 
 ports:
   - port: 5432
