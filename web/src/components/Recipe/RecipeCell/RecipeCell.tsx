@@ -21,6 +21,11 @@ export const QUERY: TypedDocumentNode<
       preparationTimeMinutes
       cookingTimeMinutes
       familyId
+      tags {
+        id
+        name
+        color
+      }
     }
   }
 `

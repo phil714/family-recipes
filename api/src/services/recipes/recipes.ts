@@ -17,25 +17,34 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
 }
 
 export const createRecipe: MutationResolvers['createRecipe'] = ({ input }) => {
+  const tags = {
+    connect: input.tagIds.map((tag) => ({ id: tag })),
+  }
+  delete input.tagIds
   return db.recipe.create({
     data: {
       ...input,
-      tags: {
-        connect: input.tags.map((tag) => ({ id: tag })),
-      },
+      tags,
     },
   })
 }
 
-export const updateRecipe: MutationResolvers['updateRecipe'] = ({
+export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   id,
   input,
 }) => {
+  const tags = await db.recipe.findUnique({ where: { id } }).tags()
+  const toConnect = input.tagIds.map((id) => ({ id }))
+  const toDisconnect = tags.filter((tag) => !input.tagIds.includes(tag.id))
+
+  delete input.tagIds
+
   return db.recipe.update({
     data: {
       ...input,
       tags: {
-        connect: input.tags.map((tag) => ({ id: tag })),
+        connect: toConnect,
+        disconnect: toDisconnect,
       },
     },
     where: { id },

@@ -1,5 +1,5 @@
 import type { EditRecipeById, UpdateRecipeInput } from 'types/graphql'
-
+import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
 import type { RWGqlError } from '@redwoodjs/forms'
 import {
   Form,
@@ -13,8 +13,7 @@ import {
 } from '@redwoodjs/forms'
 
 import MultiSelectFormField from 'src/components/MultiSelect/MultiSelect'
-
-type FormRecipe = NonNullable<EditRecipeById['recipe']>
+type FormRecipe = NonNullable<Omit<EditRecipeById['recipe'], 'tags'> & { tagIds: string[] }>
 
 interface RecipeFormProps {
   recipe?: EditRecipeById['recipe']
@@ -25,7 +24,7 @@ interface RecipeFormProps {
 
 const RecipeForm = (props: RecipeFormProps) => {
   const onSubmit = (data: FormRecipe) => {
-    props.onSave(data, props?.recipe?.id)
+    props.onSave({ ...data, tagIds: data.tagIds }, props?.recipe?.id)
   }
 
   return (
@@ -147,28 +146,18 @@ const RecipeForm = (props: RecipeFormProps) => {
         <FieldError name="familyId" className="rw-field-error" />
 
         <Label
-          name="tags"
+          name="tagIds"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
           Tags
         </Label>
         <Controller
-          name={'tags'}
-          defaultValue={[]}
+          name="tagIds"
+          defaultValue={props.recipe?.tags.map((tag) => tag.id) || []}
           // rules={validation}
           render={({ field: { onChange, value } }) => (
-            <MultiSelectFormField
-              name="tags"
-              options={[
-                { value: 'ExkKqU8kbgdp6qWMULNDB', label: 'Asian' },
-                { value: 'Chinese', label: 'Chinese' },
-              ]}
-              defaultValue={value}
-              onValueChange={onChange}
-              placeholder="Select options"
-              variant="inverted"
-            />
+            <RecipeTagsInputCell onChange={onChange} value={value} />
           )}
         />
         <FieldError name="tags" className="rw-field-error" />
