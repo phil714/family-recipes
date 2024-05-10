@@ -9,8 +9,6 @@ import { useMutation } from '@redwoodjs/web'
 import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import {} from 'src/lib/formatters'
-
 const DELETE_RECIPE_MUTATION: TypedDocumentNode<
   DeleteRecipeMutation,
   DeleteRecipeMutationVariables
@@ -48,7 +46,7 @@ const Recipe = ({ recipe }: Props) => {
       <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Recipe {recipe.id} Detail
+            Recipe {recipe.name} Detail
           </h2>
         </header>
         <table className="rw-table">
@@ -78,8 +76,8 @@ const Recipe = ({ recipe }: Props) => {
               <td>{recipe.cookingTimeMinutes}</td>
             </tr>
             <tr>
-              <th>Family id</th>
-              <td>{recipe.familyId}</td>
+              <th>Family</th>
+              <td>{recipe.family.name}</td>
             </tr>
           </tbody>
         </table>

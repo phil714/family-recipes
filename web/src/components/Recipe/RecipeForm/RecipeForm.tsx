@@ -1,5 +1,6 @@
 import type { EditRecipeById, UpdateRecipeInput } from 'types/graphql'
 import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
+import FamilyInputCell from 'src/components/FamilyInputCell'
 import type { RWGqlError } from '@redwoodjs/forms'
 import {
   Form,
@@ -132,15 +133,16 @@ const RecipeForm = (props: RecipeFormProps) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Family id
+          Family
         </Label>
 
-        <TextField
+        <Controller
           name="familyId"
           defaultValue={props.recipe?.familyId}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <FamilyInputCell onChange={onChange} value={value} />
+          )}
         />
 
         <FieldError name="familyId" className="rw-field-error" />

@@ -20,7 +20,10 @@ export const QUERY: TypedDocumentNode<
       instructions
       preparationTimeMinutes
       cookingTimeMinutes
-      familyId
+      family {
+        id
+        name
+      }
       tags {
         id
         name

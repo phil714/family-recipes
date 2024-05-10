@@ -55,7 +55,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
             <th>Instructions</th>
             <th>Preparation time minutes</th>
             <th>Cooking time minutes</th>
-            <th>Family id</th>
+            <th>Family</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -68,7 +68,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
               <td>{truncate(recipe.instructions)}</td>
               <td>{truncate(recipe.preparationTimeMinutes)}</td>
               <td>{truncate(recipe.cookingTimeMinutes)}</td>
-              <td>{truncate(recipe.familyId)}</td>
+              <td>{truncate(recipe.family.name)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link

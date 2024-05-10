@@ -18,7 +18,10 @@ export const QUERY: TypedDocumentNode<FindRecipes, FindRecipesVariables> = gql`
       instructions
       preparationTimeMinutes
       cookingTimeMinutes
-      familyId
+      family {
+        id
+        name
+      }
     }
   }
 `
