@@ -27,6 +27,7 @@ model User {
   resetTokenExpiresAt DateTime?
   webAuthnChallenge   String?          @unique
   credentials         UserCredential[]
+  familyMembers       FamilyMember[]
 }
 
 model UserCredential {
@@ -39,21 +40,48 @@ model UserCredential {
 }
 
 model Family {
-  id      String   @id @default(nanoid())
-  name    String
-  recipes Recipe[]
+  id            String         @id @default(nanoid())
+  name          String
+  recipes       Recipe[]
+  familyMembers FamilyMember[]
+  Invitation    Invitation[]
+}
+
+enum AccessRole {
+  USER
+  ADMIN
+}
+
+model FamilyMember {
+  id         String     @id @default(nanoid())
+  userId     String
+  accessRole AccessRole
+  familyId   String
+  family     Family     @relation(fields: [familyId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+  recipes    Recipe[]
+}
+
+model Invitation {
+  id         String     @id @default(nanoid())
+  email      String
+  familyId   String
+  family     Family     @relation(fields: [familyId], references: [id])
+  accessRole AccessRole
 }
 
 model Recipe {
-  id                     String @id @default(nanoid())
+  id                     String       @id @default(nanoid())
   name                   String
   description            String
   instructions           String
   preparationTimeMinutes Int
   cookingTimeMinutes     Int
   familyId               String
-  family                 Family @relation(fields: [familyId], references: [id])
+  family                 Family       @relation(fields: [familyId], references: [id])
   tags                   Tag[]
+  familyMember           FamilyMember @relation(fields: [familyMemberId], references: [id])
+  familyMemberId         String
 }
 
 model Tag {

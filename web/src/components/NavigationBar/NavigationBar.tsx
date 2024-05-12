@@ -44,6 +44,11 @@ export const NavigationBar = () => {
       icon: ListBulletIcon,
     },
     {
+      title: 'Invitations',
+      to: routes.invitations(),
+      icon: ListBulletIcon,
+    },
+    {
       title: 'Tags',
       to: routes.tags(),
       icon: ListBulletIcon,
