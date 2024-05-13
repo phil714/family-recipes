@@ -95,6 +95,7 @@ export const handler = async (
 
   interface UserAttributes {
     name: string
+    code?: string
   }
 
   const signupOptions: DbAuthHandlerOptions<
@@ -116,13 +117,13 @@ export const handler = async (
     //
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
-    handler: ({
+    handler: async ({
       username,
       hashedPassword,
       salt,
       userAttributes: _userAttributes,
     }) => {
-      return db.user.create({
+      const user = await db.user.create({
         data: {
           email: username,
           hashedPassword: hashedPassword,
@@ -130,6 +131,24 @@ export const handler = async (
           name: _userAttributes.name,
         },
       })
+
+      if (_userAttributes.code) {
+        const invitation = await db.invitation.findUnique({
+          where: { id: _userAttributes.code, email: username },
+        })
+
+        await db.familyMember.create({
+          data: {
+            userId: user.id,
+            accessRole: invitation.accessRole,
+            familyId: invitation.familyId,
+          },
+        })
+
+        await db.invitation.delete({ where: { id: invitation.id } })
+      }
+
+      return user
     },
 
     // Include any format checks for password here. Return `true` if the

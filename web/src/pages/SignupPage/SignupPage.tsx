@@ -9,7 +9,7 @@ import {
   FieldError,
   Submit,
 } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes, useParams } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
@@ -17,6 +17,7 @@ import { useAuth } from 'src/auth'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
+  const params = useParams()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -35,6 +36,7 @@ const SignupPage = () => {
       name: data.name,
       username: data.email,
       password: data.password,
+      familyId: params.familyId,
     })
 
     if (response.message) {

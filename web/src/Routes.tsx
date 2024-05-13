@@ -17,13 +17,14 @@ import CMSLayout from './layouts/CMSLayout/CMSLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Set wrap={ScaffoldLayout} title="Invitations" titleTo="invitations" buttonLabel="New Invitation" buttonTo="newInvitation">
-        <Route path="/invitations/new" page={InvitationNewInvitationPage} name="newInvitation" />
-        <Route path="/invitations/{id}/edit" page={InvitationEditInvitationPage} name="editInvitation" />
-        <Route path="/invitations/{id}" page={InvitationInvitationPage} name="invitation" />
-        <Route path="/invitations" page={InvitationInvitationsPage} name="invitations" />
-      </Set>
+      <Route path="/invitation-accept" page={InvitationAcceptPage} name="invitationAccept" />
       <PrivateSet wrap={CMSLayout} unauthenticated="login">
+        <Set wrap={ScaffoldLayout} title="Invitations" titleTo="invitations" buttonLabel="New Invitation" buttonTo="newInvitation">
+          <Route path="/invitations/new" page={InvitationNewInvitationPage} name="newInvitation" />
+          <Route path="/invitations/{id}/edit" page={InvitationEditInvitationPage} name="editInvitation" />
+          <Route path="/invitations/{id}" page={InvitationInvitationPage} name="invitation" />
+          <Route path="/invitations" page={InvitationInvitationsPage} name="invitations" />
+        </Set>
         <Set wrap={ScaffoldLayout} title="Tags" titleTo="tags" buttonLabel="New Tag" buttonTo="newTag">
           <Route path="/tags/new" page={TagNewTagPage} name="newTag" />
           <Route path="/tags/{id}/edit" page={TagEditTagPage} name="editTag" />
@@ -49,6 +50,7 @@ const Routes = () => {
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Route notfound page={NotFoundPage} />
+      <Route path="/invitations/{id}/accept" page={InvitationAcceptPage} name="invitationAccept" />
     </Router>
   )
 }

@@ -7,6 +7,15 @@ export const schema = gql`
     accessRole: AccessRole!
   }
 
+  type InvitationByCode {
+    id: String!
+    email: String!
+    familyId: String!
+    family: Family!
+    accessRole: AccessRole!
+    userId: String
+  }
+
   enum AccessRole {
     USER
     ADMIN
@@ -15,6 +24,7 @@ export const schema = gql`
   type Query {
     invitations: [Invitation!]! @requireAuth
     invitation(id: String!): Invitation @requireAuth
+    invitationByCode(id: String!): InvitationByCode #TODO: refactor to code
   }
 
   input CreateInvitationInput {
@@ -34,5 +44,6 @@ export const schema = gql`
     updateInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
       @requireAuth
     deleteInvitation(id: String!): Invitation! @requireAuth
+    acceptInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
   }
 `
