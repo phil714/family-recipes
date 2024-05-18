@@ -54,14 +54,18 @@ export const invitationByCode: QueryResolvers['invitationByCode'] = async ({
 export const createInvitation: MutationResolvers['createInvitation'] = async ({
   input,
 }) => {
+  const { redirectUrl } = input
+  delete input.redirectUrl
   const invitation = await db.invitation.create({
     data: input,
   })
 
+  const url = redirectUrl.replace(':code', invitation.code)
+
   await sendEmail({
     to: invitation.email,
     subject: 'You got invited into a family',
-    html: `<div>Allo<div>${routes}</div></div>`,
+    html: `<div>Allo<div>${url}</div></div>`,
     text: `Allo`,
   })
 

@@ -4,7 +4,7 @@ import { Metadata } from '@redwoodjs/web'
 import { useAuth } from 'src/auth'
 
 const HomePage = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, currentUser } = useAuth()
 
   return (
     <>
@@ -18,6 +18,7 @@ const HomePage = () => {
         My default route is named <code>home</code>, link to me with `
         <Link to={routes.home()}>Home</Link>`
         <p>Is Authenticated: {String(isAuthenticated)}</p>
+        <p>User Email: {currentUser.email}</p>
       </p>
     </>
   )

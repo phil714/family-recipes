@@ -31,9 +31,6 @@ export const Failure = ({
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-{
-  /* Redirect to Sign Up page if user does not exist, else add him to the family */
-}
 export const Success = ({
   invitationByCode,
   queryResult,
@@ -41,10 +38,11 @@ export const Success = ({
   FindInvitationByCodeQuery,
   FindInvitationByCodeQueryVariables
 >) => {
+  /* Redirect to Sign Up page if user does not exist, else add him to the family */
   if (invitationByCode.userId) {
     // already added to family
     return <Redirect to={routes.home()} />
   }
 
-  return <Redirect to={routes.signup({ code: queryResult.variables.code })}
+  return <Redirect to={routes.signup({ code: queryResult.variables.code })} />
 }

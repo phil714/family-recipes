@@ -30,6 +30,7 @@ export const schema = gql`
     email: String!
     familyId: String!
     accessRole: AccessRole!
+    redirectUrl: String!
   }
 
   input UpdateInvitationInput {

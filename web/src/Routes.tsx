@@ -49,7 +49,7 @@ const Routes = () => {
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Route notfound page={NotFoundPage} />
-      <Route path="/invitations/{id}/accept" page={InvitationAcceptPage} name="invitationAccept" />
+      <Route path="/invitations/{code}/accept" page={InvitationAcceptPage} name="invitationAccept" />
     </Router>
   )
 }

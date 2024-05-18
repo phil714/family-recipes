@@ -7,12 +7,27 @@ import type {
 import { db } from 'src/lib/db'
 
 export const families: QueryResolvers['families'] = () => {
-  return db.family.findMany()
+  return db.family.findMany({
+    where: {
+      familyMembers: {
+        some: {
+          userId: context.currentUser?.id,
+        },
+      },
+    },
+  })
 }
 
 export const family: QueryResolvers['family'] = ({ id }) => {
   return db.family.findUnique({
-    where: { id },
+    where: {
+      id,
+      familyMembers: {
+        some: {
+          userId: context.currentUser?.id,
+        },
+      },
+    },
   })
 }
 

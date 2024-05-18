@@ -37,7 +37,15 @@ const NewInvitation = () => {
   )
 
   const onSave = (input: CreateInvitationInput) => {
-    createInvitation({ variables: { input } })
+    const redirectUrl = new URL(
+      routes.invitationAccept({ code: ':code' }),
+      window.location.origin
+    )
+    createInvitation({
+      variables: {
+        input: { ...input, redirectUrl: redirectUrl.toString() },
+      },
+    })
   }
 
   return (

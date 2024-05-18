@@ -36,7 +36,7 @@ const SignupPage = () => {
       name: data.name,
       username: data.email,
       password: data.password,
-      familyId: params.familyId,
+      code: params.code,
     })
 
     if (response.message) {

@@ -1,23 +1,11 @@
-import { Link, routes } from '@redwoodjs/router'
-import { Metadata } from '@redwoodjs/web'
+import InvitationAcceptCell from 'src/components/Invitation/InvitationAcceptCell'
 
-const InvitationAcceptPage = () => {
-  return (
-    <>
-      <Metadata title="InvitationAccept" description="InvitationAccept page" />
-      <h1>InvitationAcceptPage</h1>
-      <p>
-        Find me in{' '}
-        <code>
-          ./web/src/pages/InvitationAcceptPage/InvitationAcceptPage.tsx
-        </code>
-      </p>
-      <p>
-        My default route is named <code>invitationAccept</code>, link to me with
-        `<Link to={routes.invitationAccept()}>InvitationAccept</Link>`
-      </p>
-    </>
-  )
+type InvitationAcceptPageProps = {
+  code: string
+}
+
+const InvitationAcceptPage = ({ code }: InvitationAcceptPageProps) => {
+  return <InvitationAcceptCell code={code} />
 }
 
 export default InvitationAcceptPage
