@@ -133,9 +133,17 @@ export const handler = async (
       })
 
       if (_userAttributes.code) {
-        const invitation = await db.invitation.findUnique({
-          where: { id: _userAttributes.code, email: username },
+        const invitation = await db.invitation.findFirst({
+          where: {
+            code: _userAttributes.code,
+            email: username,
+            expiresAt: { gte: new Date() },
+          },
         })
+
+        if (!invitation) {
+          throw new Error('invitation not found or expired')
+        }
 
         await db.familyMember.create({
           data: {

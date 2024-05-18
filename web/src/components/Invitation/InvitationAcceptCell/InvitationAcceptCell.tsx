@@ -3,6 +3,7 @@ import type {
   FindInvitationByCodeQueryVariables,
 } from 'types/graphql'
 
+import { Redirect, routes } from '@redwoodjs/router'
 import type {
   CellSuccessProps,
   CellFailureProps,
@@ -13,9 +14,9 @@ export const QUERY: TypedDocumentNode<
   FindInvitationByCodeQuery,
   FindInvitationByCodeQueryVariables
 > = gql`
-  query FindInvitationByCodeQuery($id: String!) {
-    invitationByCode(id: $id) {
-      id
+  query FindInvitationByCodeQuery($code: String!) {
+    invitationByCode(code: $code) {
+      userId
     }
   }
 `
@@ -35,9 +36,15 @@ export const Failure = ({
 }
 export const Success = ({
   invitationByCode,
+  queryResult,
 }: CellSuccessProps<
   FindInvitationByCodeQuery,
   FindInvitationByCodeQueryVariables
 >) => {
-  return <div>{JSON.stringify(invitationByCode)}</div>
+  if (invitationByCode.userId) {
+    // already added to family
+    return <Redirect to={routes.home()} />
+  }
+
+  return <Redirect to={routes.signup({ code: queryResult.variables.code })}
 }

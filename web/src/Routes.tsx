@@ -17,7 +17,6 @@ import CMSLayout from './layouts/CMSLayout/CMSLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/invitation-accept" page={InvitationAcceptPage} name="invitationAccept" />
       <PrivateSet wrap={CMSLayout} unauthenticated="login">
         <Set wrap={ScaffoldLayout} title="Invitations" titleTo="invitations" buttonLabel="New Invitation" buttonTo="newInvitation">
           <Route path="/invitations/new" page={InvitationNewInvitationPage} name="newInvitation" />

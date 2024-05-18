@@ -18,12 +18,16 @@ export const invitation: QueryResolvers['invitation'] = ({ id }) => {
 }
 
 // dead code, need find user by id
-export const invitationById: QueryResolvers['invitationByCode'] = async ({
-  id,
+export const invitationByCode: QueryResolvers['invitationByCode'] = async ({
+  code,
 }) => {
-  const invitation = await db.invitation.findUnique({
-    where: { id },
+  const invitation = await db.invitation.findFirst({
+    where: { code, expiresAt: { gte: new Date() } },
   })
+
+  if (!invitation) {
+    throw new Error('invitation not found or expired')
+  }
 
   const user = await db.user.findUnique({
     where: {
@@ -32,7 +36,16 @@ export const invitationById: QueryResolvers['invitationByCode'] = async ({
   })
 
   if (user) {
-    // if user exist, add to family directly or do another mutation ?
+    // if user exist, add to family directly
+    await db.familyMember.create({
+      data: {
+        accessRole: invitation.accessRole,
+        familyId: invitation.familyId,
+        userId: user.id,
+      },
+    })
+
+    await db.invitation.delete({ where: { id: invitation.id } })
   }
 
   return { ...invitation, userId: user?.id }
@@ -48,21 +61,12 @@ export const createInvitation: MutationResolvers['createInvitation'] = async ({
   await sendEmail({
     to: invitation.email,
     subject: 'You got invited into a family',
-    html: '<div>Allo</div>',
-    text: 'Allo',
+    html: `<div>Allo<div>${routes}</div></div>`,
+    text: `Allo`,
   })
 
   return invitation
 }
-
-// TODO: add invitation by "private" id + no auth on this
-// export const invitationById: MutationResolvers['createInvitation'] = ({
-//   id,
-// }) => {
-//   return db.invitation.findUnique({
-//     where: { id },
-//   })
-// }
 
 export const updateInvitation: MutationResolvers['updateInvitation'] = ({
   id,

@@ -8,5 +8,8 @@
     "@redwoodjs/graphql-server": "7.5.0",
     "@simplewebauthn/server": "^7",
     "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.15"
   }
 }
