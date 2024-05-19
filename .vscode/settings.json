@@ -7,5 +7,18 @@
   },
   "[prisma]": {
     "editor.formatOnSave": true
-  }
+  },
+  "i18n-ally.localesPaths": [
+    "web/src/locales"
+  ],
+  "i18n-ally.sourceLanguage": "english",
+  "i18n-ally.enabledParsers": [
+    "json"
+  ],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.namespace": true,
+  "i18n-ally.translate.engines": [
+    "google"
+  ],
 }

@@ -13,9 +13,7 @@ import { User } from 'src/components/User/User'
 
 export const UserMenu = () => {
   const { currentUser, logOut } = useAuth()
-  const { t } = useTranslation(undefined, {
-    keyPrefix: 'components.UserMenu',
-  })
+  const { t } = useTranslation('common')
 
   return (
     <DropdownMenu>
@@ -23,7 +21,7 @@ export const UserMenu = () => {
         <User user={currentUser} options={{ email: false }} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-white">
-        <DropdownMenuLabel>{t('myAccount')}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('components.myAccount')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>{t('profile')}</DropdownMenuItem>
         <DropdownMenuItem onClick={() => logOut()}>

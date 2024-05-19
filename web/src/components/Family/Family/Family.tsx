@@ -10,6 +10,7 @@ import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { } from 'src/lib/formatters'
+import { useTranslation } from 'react-i18next'
 
 const DELETE_FAMILY_MUTATION: TypedDocumentNode<
   DeleteFamilyMutation,
@@ -27,6 +28,8 @@ interface Props {
 }
 
 const Family = ({ family }: Props) => {
+  const { t } = useTranslation()
+
   const [deleteFamily] = useMutation(DELETE_FAMILY_MUTATION, {
     onCompleted: () => {
       toast.success('Family deleted')
@@ -48,7 +51,7 @@ const Family = ({ family }: Props) => {
       <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Family {family.id} Detail
+            {t('glossary:family')} {family.id} Detail
           </h2>
         </header>
         <table className="rw-table">

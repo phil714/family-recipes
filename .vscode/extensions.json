@@ -10,7 +10,9 @@
     "prisma.prisma",
     "graphql.vscode-graphql",
     "csstools.postcss",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "lokalise.i18n-ally",
+    "inlang.vs-code-extension"
   ],
   "unwantedRecommendations": []
 }
