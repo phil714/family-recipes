@@ -1,7 +1,13 @@
 'use client'
 
-import { HomeIcon, ListBulletIcon } from '@radix-ui/react-icons'
-import { IconProps } from '@radix-ui/react-icons/dist/types'
+import {
+  BookOpen,
+  HomeIcon,
+  ListIcon,
+  LucideProps,
+  SendIcon,
+  UsersIcon,
+} from 'lucide-react'
 
 import { NavLink, routes } from '@redwoodjs/router'
 
@@ -20,7 +26,7 @@ interface NavItem {
   to: string
   label?: string
   icon: React.ForwardRefExoticComponent<
-    IconProps & React.RefAttributes<SVGSVGElement>
+    Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
   >
 }
 
@@ -36,22 +42,22 @@ export const NavigationBar = () => {
     {
       title: 'Recipes',
       to: routes.recipes(),
-      icon: ListBulletIcon,
+      icon: BookOpen,
     },
     {
       title: 'Families',
       to: routes.families(),
-      icon: ListBulletIcon,
+      icon: UsersIcon,
     },
     {
       title: 'Invitations',
       to: routes.invitations(),
-      icon: ListBulletIcon,
+      icon: SendIcon,
     },
     {
       title: 'Tags',
       to: routes.tags(),
-      icon: ListBulletIcon,
+      icon: ListIcon,
     },
   ]
 

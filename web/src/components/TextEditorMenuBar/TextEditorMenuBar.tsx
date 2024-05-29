@@ -1,13 +1,19 @@
 import React from 'react'
 
-import {
-  CodeIcon,
-  FontBoldIcon,
-  FontItalicIcon,
-  ListBulletIcon,
-  StrikethroughIcon,
-} from '@radix-ui/react-icons'
 import { Editor } from '@tiptap/react'
+import {
+  BoldIcon,
+  CodeIcon,
+  Heading1Icon,
+  Heading2Icon,
+  Heading3Icon,
+  ItalicIcon,
+  ListIcon,
+  ListOrderedIcon,
+  RedoIcon,
+  StrikethroughIcon,
+  UndoIcon,
+} from 'lucide-react'
 
 import { cn } from 'src/lib/utils'
 
@@ -31,14 +37,14 @@ export const TextEditorMenuBar: React.FC<Props> = (props) => {
         disabled={!editor.can().chain().focus().toggleBold().run()}
         isActive={editor.isActive('bold')}
       >
-        <FontBoldIcon />
+        <BoldIcon />
       </MenuItem>
       <MenuItem
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         isActive={editor.isActive('italic')}
       >
-        <FontItalicIcon />
+        <ItalicIcon />
       </MenuItem>
       <MenuItem
         onClick={() => editor.chain().focus().toggleStrike().run()}
@@ -50,7 +56,7 @@ export const TextEditorMenuBar: React.FC<Props> = (props) => {
       <MenuItem
         onClick={() => editor.chain().focus().toggleCode().run()}
         disabled={!editor.can().chain().focus().toggleCode().run()}
-        isActive={editor.isActive('strike')}
+        isActive={editor.isActive('code')}
       >
         <CodeIcon />
       </MenuItem>
@@ -58,45 +64,33 @@ export const TextEditorMenuBar: React.FC<Props> = (props) => {
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         isActive={editor.isActive('heading', { level: 1 })}
       >
-        H1
+        <Heading1Icon />
       </MenuItem>
       <MenuItem
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         isActive={editor.isActive('heading', { level: 2 })}
       >
-        H2
+        <Heading2Icon />
       </MenuItem>
       <MenuItem
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         isActive={editor.isActive('heading', { level: 3 })}
       >
-        H3
+        <Heading3Icon />
       </MenuItem>
       <MenuItem
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         isActive={editor.isActive('bulletList')}
       >
-        <ListBulletIcon />
+        <ListIcon />
       </MenuItem>
-      {/* <MenuItem
+      <MenuItem
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         isActive={editor.isActive('orderedList')}
       >
-        <ListIc />
+        <ListOrderedIcon />
       </MenuItem>
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive('bulletList') ? 'is-active' : ''}
-      >
-        bullet list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive('orderedList') ? 'is-active' : ''}
-      >
-        ordered list
-      </button>
-      <button
+      {/* <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         className={editor.isActive('blockquote') ? 'is-active' : ''}
       >
@@ -107,19 +101,21 @@ export const TextEditorMenuBar: React.FC<Props> = (props) => {
       </button>
       <button onClick={() => editor.chain().focus().setHardBreak().run()}>
         hard break
-      </button>
-      <button
+      </button> */}
+      <MenuItem
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
+        isActive={false}
       >
-        undo
-      </button>
-      <button
+        <UndoIcon />
+      </MenuItem>
+      <MenuItem
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().chain().focus().redo().run()}
+        isActive={false}
       >
-        redo
-      </button> */}
+        <RedoIcon />
+      </MenuItem>
     </div>
   )
 }
@@ -134,6 +130,7 @@ const MenuItem: React.FC<ButtonProps & { isActive: boolean }> = ({
       {...otherProps}
       variant="secondary"
       size="icon"
+      type="button"
       className={cn(isActive && 'bg-blue-200')}
     >
       {children}

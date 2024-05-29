@@ -29,7 +29,9 @@ export const cookieName = 'session_%port%'
  * fields to the `select` object below once you've decided they are safe to be
  * seen if someone were to open the Web Inspector in their browser.
  */
-export const getCurrentUser = async (session: Decoded) => {
+export const getCurrentUser = async (
+  session: Decoded
+) => {
   console.log('session', session)
   if (!session || typeof session.id !== 'string') {
     throw new Error('Invalid session')

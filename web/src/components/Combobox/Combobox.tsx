@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons'
+import { CheckIcon, ChevronDownIcon } from 'lucide-react'
 
 import { Button } from 'src/components/Button/Button'
 import {

@@ -67,14 +67,14 @@ const RecipeForm = (props: RecipeFormProps) => {
           Description
         </Label>
 
-        <TextField
+        <Controller
           name="description"
-          defaultValue={props.recipe?.description}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          defaultValue={props.recipe?.description || ''}
+          // rules={validation}
+          render={({ field: { value, onChange } }) => (
+            <TextEditor value={value} onChange={onChange} />
+          )}
         />
-        <TextEditor />
 
         <FieldError name="description" className="rw-field-error" />
 
