@@ -16,15 +16,36 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
   })
 }
 
-export const createRecipe: MutationResolvers['createRecipe'] = ({ input }) => {
+export const createRecipe: MutationResolvers['createRecipe'] = async ({
+  input,
+}) => {
   const tags = {
     connect: input.tagIds.map((tag) => ({ id: tag })),
   }
-  delete input.tagIds
+  const family = {
+    connect: { id: input.familyId },
+  }
+
+  const familyMember = {
+    connect: {
+      id: (
+        await db.familyMember.findFirstOrThrow({
+          where: { userId: context.currentUser?.id },
+        })
+      ).id,
+    },
+  }
+
   return db.recipe.create({
     data: {
-      ...input,
+      name: input.name,
+      description: input.description,
+      instructions: input.instructions,
+      cookingTimeMinutes: input.cookingTimeMinutes,
+      preparationTimeMinutes: input.preparationTimeMinutes,
+      familyMember,
       tags,
+      family,
     },
   })
 }

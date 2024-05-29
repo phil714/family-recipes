@@ -1,6 +1,5 @@
 import type { EditRecipeById, UpdateRecipeInput } from 'types/graphql'
-import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
-import FamilyInputCell from 'src/components/FamilyInputCell'
+
 import type { RWGqlError } from '@redwoodjs/forms'
 import {
   Form,
@@ -13,8 +12,12 @@ import {
   Controller,
 } from '@redwoodjs/forms'
 
-import MultiSelectFormField from 'src/components/MultiSelect/MultiSelect'
-type FormRecipe = NonNullable<Omit<EditRecipeById['recipe'], 'tags'> & { tagIds: string[] }>
+import FamilyInputCell from 'src/components/FamilyInputCell'
+import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
+import TextEditor from 'src/components/TextEditor/TextEditor'
+type FormRecipe = NonNullable<
+  Omit<EditRecipeById['recipe'], 'tags'> & { tagIds: string[] }
+>
 
 interface RecipeFormProps {
   recipe?: EditRecipeById['recipe']
@@ -64,12 +67,13 @@ const RecipeForm = (props: RecipeFormProps) => {
           Description
         </Label>
 
-        <TextField
+        <Controller
           name="description"
-          defaultValue={props.recipe?.description}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          defaultValue={props.recipe?.description || ''}
+          // rules={validation}
+          render={({ field: { value, onChange } }) => (
+            <TextEditor value={value} onChange={onChange} />
+          )}
         />
 
         <FieldError name="description" className="rw-field-error" />

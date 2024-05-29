@@ -82,6 +82,31 @@ export default async () => {
     ]
 
     await db.familyMember.createMany({ data: familyMembers })
+
+    const tags: Prisma.TagCreateManyInput[] = [
+      {
+        id: '1',
+        name: 'Chinese',
+        color: '#FF0000',
+      },
+      {
+        id: '2',
+        name: 'French',
+        color: '#0000FF',
+      },
+      {
+        id: '3',
+        name: 'Canadian',
+        color: '#00EE00',
+      },
+      {
+        id: '4',
+        name: 'Mexican',
+        color: '#00FF00',
+      },
+    ]
+
+    await db.tag.createMany({ data: tags })
   } catch (error) {
     console.warn('Please define your seed data.')
     console.error(error)

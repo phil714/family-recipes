@@ -1,13 +1,13 @@
 import * as React from 'react'
 
+import { cva, type VariantProps } from 'class-variance-authority'
 import {
   CheckIcon,
-  CrossCircledIcon,
+  CircleXIcon,
   ChevronDownIcon,
-  Cross1Icon,
-  MagicWandIcon,
-} from '@radix-ui/react-icons'
-import { cva, type VariantProps } from 'class-variance-authority'
+  XIcon,
+  WandIcon,
+} from 'lucide-react'
 
 import { Badge } from 'src/components/Badge/Badge'
 import { Button } from 'src/components/Button/Button'
@@ -152,7 +152,7 @@ const MultiSelectFormField = React.forwardRef<
                           <IconComponent className="mr-2 h-4 w-4" />
                         )}
                         {option?.label}
-                        <CrossCircledIcon
+                        <CircleXIcon
                           className="ml-2 h-4 w-4 cursor-pointer"
                           onClick={(event) => {
                             event.stopPropagation()
@@ -164,7 +164,7 @@ const MultiSelectFormField = React.forwardRef<
                   })}
                 </div>
                 <div className="flex items-center justify-between">
-                  <Cross1Icon
+                  <XIcon
                     className="mx-2 h-4 cursor-pointer text-muted-foreground"
                     onClick={(event) => {
                       setSelectedValues([])
@@ -280,7 +280,7 @@ const MultiSelectFormField = React.forwardRef<
           </Command>
         </PopoverContent>
         {animation > 0 && selectedValues.length > 0 && (
-          <MagicWandIcon
+          <WandIcon
             className={cn(
               'my-2 h-3 w-3 cursor-pointer bg-background text-foreground',
               isAnimating ? '' : 'text-muted-foreground'
