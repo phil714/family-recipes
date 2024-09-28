@@ -42,6 +42,12 @@ const Routes = () => {
           <Route path="/families/{id}" page={FamilyFamilyPage} name="family" />
           <Route path="/families" page={FamilyFamiliesPage} name="families" />
         </Set>
+        <Set wrap={ScaffoldLayout} title="Ingredients" titleTo="ingredients" buttonLabel="New Ingredient" buttonTo="newIngredient">
+          <Route path="/ingredients/new" page={IngredientNewIngredientPage} name="newIngredient" />
+          <Route path="/ingredients/{id}/edit" page={IngredientEditIngredientPage} name="editIngredient" />
+          <Route path="/ingredients/{id}" page={IngredientIngredientPage} name="ingredient" />
+          <Route path="/ingredients" page={IngredientIngredientsPage} name="ingredients" />
+        </Set>
         <Route path="/" page={HomePage} name="home" />
       </PrivateSet>
       <Route path="/login" page={LoginPage} name="login" />

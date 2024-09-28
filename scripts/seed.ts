@@ -107,6 +107,22 @@ export default async () => {
     ]
 
     await db.tag.createMany({ data: tags })
+
+    const ingredients: Prisma.IngredientCreateManyInput[] = [
+      {
+        id: '1',
+        name: 'Minced Beef',
+        description: 'Finely cut beef'
+      },
+      {
+        id: '2',
+        name: 'Brocoli',
+        description: 'A leefy green'
+      },
+    ]
+
+    await db.ingredient.createMany({ data: ingredients })
+
   } catch (error) {
     console.warn('Please define your seed data.')
     console.error(error)

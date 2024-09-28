@@ -22,6 +22,9 @@ export const createRecipe: MutationResolvers['createRecipe'] = async ({
   const tags = {
     connect: input.tagIds.map((tag) => ({ id: tag })),
   }
+  const ingredients = {
+    connect: input.ingredientIds.map((ingredient) => ({ id: ingredient })),
+  }
   const family = {
     connect: { id: input.familyId },
   }
@@ -54,11 +57,17 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   id,
   input,
 }) => {
-  const tags = await db.recipe.findUnique({ where: { id } }).tags()
+
+  const ingredients = await db.recipe.findUnique({ where: { id } }).ingredients() ?? []
+  const ingredientsToConnect = input.ingredientIds.map((id) => ({ id }))
+  const ingredientsToDisconnect = ingredients.filter((ingredient) => !input.ingredientIds.includes(ingredient.id))
+
+  const tags = await db.recipe.findUnique({ where: { id } }).tags() ?? []
   const toConnect = input.tagIds.map((id) => ({ id }))
   const toDisconnect = tags.filter((tag) => !input.tagIds.includes(tag.id))
 
   delete input.tagIds
+  delete input.ingredientIds
 
   return db.recipe.update({
     data: {
@@ -84,5 +93,8 @@ export const Recipe: RecipeRelationResolvers = {
   },
   tags: (_obj, { root }) => {
     return db.recipe.findUnique({ where: { id: root?.id } }).tags()
+  },
+  ingredients: (_obj, { root }) => {
+    return db.recipe.findUnique({ where: { id: root?.id } }).ingredients()
   },
 }

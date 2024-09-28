@@ -9,6 +9,7 @@ export const schema = gql`
     familyId: String!
     family: Family!
     tags: [Tag]!
+    ingredients: [Ingredient]!
   }
 
   type Query {
@@ -19,6 +20,7 @@ export const schema = gql`
   input CreateRecipeInput {
     name: String!
     description: String!
+    ingredientIds: [String!]!
     instructions: String!
     preparationTimeMinutes: Int!
     cookingTimeMinutes: Int!
@@ -29,11 +31,12 @@ export const schema = gql`
   input UpdateRecipeInput {
     name: String
     description: String
+    ingredientIds: [String!]!
     instructions: String
     preparationTimeMinutes: Int
     cookingTimeMinutes: Int
     familyId: String
-    tagIds: [String!]
+    tagIds: [String!]!
   }
 
   type Mutation {

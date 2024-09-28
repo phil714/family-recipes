@@ -7,6 +7,7 @@ import {
   LucideProps,
   SendIcon,
   UsersIcon,
+  AppleIcon,
 } from 'lucide-react'
 
 import { NavLink, routes } from '@redwoodjs/router'
@@ -53,6 +54,11 @@ export const NavigationBar = () => {
       title: 'Invitations',
       to: routes.invitations(),
       icon: SendIcon,
+    },
+    {
+      title: 'Ingredients',
+      to: routes.ingredients(),
+      icon: AppleIcon,
     },
     {
       title: 'Tags',

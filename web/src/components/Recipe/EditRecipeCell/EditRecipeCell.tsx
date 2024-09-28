@@ -30,6 +30,11 @@ export const QUERY: TypedDocumentNode<EditRecipeById> = gql`
         name
         color
       }
+      ingredients {
+        id
+        name
+        description
+      }
     }
   }
 `

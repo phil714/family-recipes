@@ -76,6 +76,7 @@ model Recipe {
   id                     String       @id @default(nanoid())
   name                   String
   description            String
+  ingredients            Ingredient[]
   instructions           String
   preparationTimeMinutes Int
   cookingTimeMinutes     Int
@@ -86,9 +87,19 @@ model Recipe {
   familyMemberId         String
 }
 
+model Ingredient {
+  id          String   @id @default(nanoid())
+  name        String
+  description String
+  tags        Tag[]
+  recipes     Recipe[]
+  recipeId    String?
+}
+
 model Tag {
-  id      String   @id @default(nanoid())
-  name    String
-  color   String
-  recipes Recipe[]
+  id          String       @id @default(nanoid())
+  name        String
+  color       String
+  recipes     Recipe[]
+  ingredients Ingredient[]
 }
