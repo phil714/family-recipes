@@ -3,9 +3,10 @@
     "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2023",
+    "module": "Node16",
+    "strict": true,
+    "moduleResolution": "Node16",
     "skipLibCheck": false,
     "rootDirs": [
       "./src",
@@ -16,14 +17,21 @@
         "./src/*",
         "../.redwood/types/mirror/api/src/*"
       ],
-      "types/*": ["./types/*", "../types/*"],
-      "@redwoodjs/testing": ["../node_modules/@redwoodjs/testing/api"]
+      "types/*": [
+        "./types/*",
+        "../types/*"
+      ],
+      "@redwoodjs/testing": [
+        "../node_modules/@redwoodjs/testing/api"
+      ]
     },
     "typeRoots": [
       "../node_modules/@types",
       "./node_modules/@types"
     ],
-    "types": ["jest"],
+    "types": [
+      "jest"
+    ],
     "jsx": "react-jsx"
   },
   "include": [

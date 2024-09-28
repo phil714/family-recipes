@@ -85,7 +85,7 @@ export const NavigationBar = () => {
                     variant: 'default',
                     size: isCollapsed ? 'icon' : 'default',
                   }),
-                  'hover:text-primary-foreground'
+                  'flex items-center gap-2 hover:text-primary-foreground'
                 )}
               >
                 <link.icon className="h-4 w-4" />

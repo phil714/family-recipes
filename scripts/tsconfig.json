@@ -3,9 +3,9 @@
     "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2023",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "paths": {
       "$api/*": [
         "../api/*"
@@ -27,9 +27,15 @@
         "../web/src/*",
         "../.redwood/types/mirror/web/src/*"
       ],
-      "types/*": ["../types/*", "../web/types/*", "../api/types/*"]
+      "types/*": [
+        "../types/*",
+        "../web/types/*",
+        "../api/types/*"
+      ]
     },
-    "typeRoots": ["../node_modules/@types"],
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
     "jsx": "preserve"
   },
   "include": [
