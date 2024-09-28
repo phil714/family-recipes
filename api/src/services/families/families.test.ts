@@ -17,12 +17,16 @@ import type { StandardScenario } from './families.scenarios'
 
 describe('families', () => {
   scenario('returns all families', async (scenario: StandardScenario) => {
+    mockCurrentUser({ id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' })
+
     const result = await families()
 
-    expect(result.length).toEqual(Object.keys(scenario.family).length)
+    expect(result.length).toEqual(1)
   })
 
   scenario('returns a single family', async (scenario: StandardScenario) => {
+    mockCurrentUser({ id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' })
+
     const result = await family({ id: scenario.family.one.id })
 
     expect(result).toEqual(scenario.family.one)
@@ -48,7 +52,7 @@ describe('families', () => {
 
   scenario('deletes a family', async (scenario: StandardScenario) => {
     const original = (await deleteFamily({
-      id: scenario.family.one.id,
+      id: scenario.family.two.id,
     })) as Family
     const result = await family({ id: original.id })
 

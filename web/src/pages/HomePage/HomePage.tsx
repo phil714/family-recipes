@@ -17,8 +17,8 @@ const HomePage = () => {
       <p>
         My default route is named <code>home</code>, link to me with `
         <Link to={routes.home()}>Home</Link>`
-        <p>Is Authenticated: {String(isAuthenticated)}</p>
-        <p>User Email: {currentUser.email}</p>
+        <span>Is Authenticated: {String(isAuthenticated)}</span>
+        <span>{`User Email: ${currentUser?.email ?? ''}`}</span>
       </p>
     </>
   )

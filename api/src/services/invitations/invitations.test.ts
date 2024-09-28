@@ -37,6 +37,7 @@ describe('invitations', () => {
         email: 'String',
         familyId: scenario.invitation.two.familyId,
         accessRole: 'USER',
+        redirectUrl: 'localhost:8910/invitations/2/accept'
       },
     })
 

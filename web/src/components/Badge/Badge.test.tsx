@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import Badge from './Badge'
+import { Badge } from './Badge'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components

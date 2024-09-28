@@ -8,7 +8,7 @@ import InvitationAcceptPage from './InvitationAcceptPage'
 describe('InvitationAcceptPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<InvitationAcceptPage />)
+      render(<InvitationAcceptPage code={'1'} />)
     }).not.toThrow()
   })
 })
