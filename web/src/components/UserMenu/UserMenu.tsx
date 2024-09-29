@@ -1,3 +1,4 @@
+import { Link, routes } from '@redwoodjs/router'
 import { useTranslation } from 'react-i18next'
 
 import { useAuth } from 'src/auth'
@@ -15,8 +16,6 @@ export const UserMenu = () => {
   const { currentUser, logOut } = useAuth()
   const { t } = useTranslation()
 
-  console.log(t('user-menu:logout'))
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -25,7 +24,11 @@ export const UserMenu = () => {
       <DropdownMenuContent className="w-56 bg-white">
         <DropdownMenuLabel>{t('user-menu:my-account')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>{t('user-menu:profile')}</DropdownMenuItem>
+        <Link
+          to={routes.profile()}
+        >
+          <DropdownMenuItem>{t('user-menu:profile')}</DropdownMenuItem>
+        </Link>
         <DropdownMenuItem onClick={() => logOut()}>
           {t('user-menu:logout')}
         </DropdownMenuItem>

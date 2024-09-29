@@ -1,21 +1,14 @@
-// import { Link, routes } from '@redwoodjs/router'
-import { Metadata } from "@redwoodjs/web";
+import { useAuth } from 'src/auth';
+import ProfileCell from 'src/components/ProfileCell'
 
-const ProfilePage = () => {
-  return (
-    <>
-      <Metadata title="Profile" description="Profile page" />
+type ProfilePageProps = {
+  id: string
+}
 
-      <h1>ProfilePage</h1>
-      <p>
-        Find me in <code>./web/src/pages/ProfilePage/ProfilePage.tsx</code>
-      </p>
-      {/*
-          My default route is named `profile`, link to me with:
-          `<Link to={routes.profile()}>Profile</Link>`
-      */}
-    </>
-  );
-};
+const ProfilePage = ({ id }: ProfilePageProps) => {
+  const { currentUser } = useAuth();
 
-export default ProfilePage;
+  return <ProfileCell id={currentUser.id} />
+}
+
+export default ProfilePage

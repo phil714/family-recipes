@@ -21,6 +21,7 @@ model User {
   id                  String           @id @default(nanoid())
   email               String           @unique
   name                String
+  language            String?
   hashedPassword      String
   salt                String
   resetToken          String?

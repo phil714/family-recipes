@@ -50,7 +50,7 @@ const Routes = () => {
           <Route path="/ingredients" page={IngredientIngredientsPage} name="ingredients" />
         </Set>
         <Route path="/" page={HomePage} name="home" />
-        <Route path="/profile" page={HomePage} name="profile" />
+        <Route path="/profile" page={ProfilePage} name="profile" />
       </PrivateSet>
       <Route path="/login" page={LoginPage} name="login" />
       <Route path="/signup" page={SignupPage} name="signup" />
