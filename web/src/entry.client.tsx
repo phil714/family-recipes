@@ -1,5 +1,7 @@
 import { hydrateRoot, createRoot } from 'react-dom/client'
 
+import './i18n'
+
 import App from './App'
 /**
  * When `#redwood-app` isn't empty then it's very likely that you're using

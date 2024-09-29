@@ -12871,21 +12871,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-fetch@npm:4.0.0, cross-fetch@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cross-fetch@npm:4.0.0"
+  dependencies:
+    node-fetch: "npm:^2.6.12"
+  checksum: 10c0/386727dc4c6b044746086aced959ff21101abb85c43df5e1d151547ccb6f338f86dec3f28b9dbddfa8ff5b9ec8662ed2263ad4607a93b2dc354fb7fe3bbb898a
+  languageName: node
+  linkType: hard
+
 "cross-fetch@npm:^3.1.5":
   version: 3.1.8
   resolution: "cross-fetch@npm:3.1.8"
   dependencies:
     node-fetch: "npm:^2.6.12"
   checksum: 10c0/4c5e022ffe6abdf380faa6e2373c0c4ed7ef75e105c95c972b6f627c3f083170b6886f19fb488a7fa93971f4f69dcc890f122b0d97f0bf5f41ca1d9a8f58c8af
-  languageName: node
-  linkType: hard
-
-"cross-fetch@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "cross-fetch@npm:4.0.0"
-  dependencies:
-    node-fetch: "npm:^2.6.12"
-  checksum: 10c0/386727dc4c6b044746086aced959ff21101abb85c43df5e1d151547ccb6f338f86dec3f28b9dbddfa8ff5b9ec8662ed2263ad4607a93b2dc354fb7fe3bbb898a
   languageName: node
   linkType: hard
 
@@ -16659,6 +16659,15 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
   checksum: 10c0/08a7c747ec18a0743b54390a0b42836d814b15fb49c92b90c259298e6a6e7e001ff9df99d0fd308283a34fceea53b4d9053aa1695a37f696bc04160017bbb524
+  languageName: node
+  linkType: hard
+
+"i18next-http-backend@npm:^2.6.1":
+  version: 2.6.1
+  resolution: "i18next-http-backend@npm:2.6.1"
+  dependencies:
+    cross-fetch: "npm:4.0.0"
+  checksum: 10c0/d85b25cd1543906b3c67c30a8dca0af0e66b8c13c53139a2ab65612eb7c047d78e84741e952ba267fa0214264a1fca99ce77aea5ab09919eedcdba2634606c85
   languageName: node
   linkType: hard
 
@@ -25521,6 +25530,7 @@ __metadata:
     i18n: "npm:^0.15.1"
     i18next: "npm:^23.15.1"
     i18next-browser-languagedetector: "npm:^8.0.0"
+    i18next-http-backend: "npm:^2.6.1"
     lucide-react: "npm:^0.446.0"
     postcss: "npm:^8.4.47"
     postcss-loader: "npm:^8.1.1"
