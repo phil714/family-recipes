@@ -9,6 +9,8 @@ import {
 } from './invitations'
 import type { StandardScenario } from './invitations.scenarios'
 
+jest.mock('@sendgrid/mail')
+
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
 //           Please refer to the RedwoodJS Testing Docs:

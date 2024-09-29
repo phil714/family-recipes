@@ -7,7 +7,7 @@ import {
   updateFamily,
   deleteFamily,
 } from './families'
-import type { StandardScenario } from './families.scenarios'
+import { user, type StandardScenario } from './families.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -17,7 +17,7 @@ import type { StandardScenario } from './families.scenarios'
 
 describe('families', () => {
   scenario('returns all families', async (scenario: StandardScenario) => {
-    mockCurrentUser({ id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' })
+    mockCurrentUser(user)
 
     const result = await families()
 
@@ -25,7 +25,7 @@ describe('families', () => {
   })
 
   scenario('returns a single family', async (scenario: StandardScenario) => {
-    mockCurrentUser({ id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' })
+    mockCurrentUser(user)
 
     const result = await family({ id: scenario.family.one.id })
 
