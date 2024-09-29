@@ -1,7 +1,8 @@
-import { render } from "@redwoodjs/testing/web";
+import { render, renderHook } from "@redwoodjs/testing/web";
 
 import { Loading, Empty, Failure, Success } from "./RecipeIngredientsInputCell";
 import { standard } from "./RecipeIngredientsInputCell.mock";
+import { useState } from "react";
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -35,9 +36,12 @@ describe("RecipeIngredientsInputCell", () => {
   // 2. Add test: expect(screen.getByText('Hello, world')).toBeInTheDocument()
 
   it("renders Success successfully", async () => {
+    const hook = renderHook(() => useState<string[]>([]))
+    const [ingredientIds, setIngredientIds] = hook.result.current;
+
     expect(() => {
       render(
-        <Success recipeIngredientsInput={standard().recipeIngredientsInput} />,
+        <Success value={ingredientIds} onChange={setIngredientIds} ingredients={standard().ingredients} />,
       );
     }).not.toThrow();
   });

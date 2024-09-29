@@ -8,6 +8,7 @@ import {
   deleteRecipe,
 } from './recipes'
 import type { StandardScenario } from './recipes.scenarios'
+import { db } from 'src/lib/db'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -37,6 +38,8 @@ describe('recipes', () => {
         preparationTimeMinutes: 2652393,
         cookingTimeMinutes: 7232567,
         familyId: scenario.recipe.two.familyId,
+        tagIds: [scenario.tag.one.id, scenario.tag.two.id],
+        ingredientIds: [scenario.ingredient.one.id, scenario.ingredient.two.id],
       },
     })
 
@@ -52,7 +55,16 @@ describe('recipes', () => {
     const original = (await recipe({ id: scenario.recipe.one.id })) as Recipe
     const result = await updateRecipe({
       id: original.id,
-      input: { name: 'String2' },
+      input: {
+        name: 'String2',
+        description: 'String',
+        instructions: 'String',
+        preparationTimeMinutes: 2652393,
+        cookingTimeMinutes: 7232567,
+        familyId: scenario.recipe.two.familyId,
+        tagIds: [scenario.tag.one.id, scenario.tag.two.id],
+        ingredientIds: [scenario.ingredient.one.id, scenario.ingredient.two.id],
+      },
     })
 
     expect(result.name).toEqual('String2')

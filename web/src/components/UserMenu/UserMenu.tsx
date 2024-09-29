@@ -21,11 +21,11 @@ export const UserMenu = () => {
         <User user={currentUser} options={{ email: false }} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-white">
-        <DropdownMenuLabel>{t('components.myAccount')}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('user-menu:my-account')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>{t('profile')}</DropdownMenuItem>
+        <DropdownMenuItem>{t('user-menu:profile')}</DropdownMenuItem>
         <DropdownMenuItem onClick={() => logOut()}>
-          {t('logOut')}
+          {t('user-menu:logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

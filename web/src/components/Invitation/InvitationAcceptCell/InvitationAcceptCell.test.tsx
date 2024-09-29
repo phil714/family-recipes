@@ -35,7 +35,7 @@ describe('InvitationAcceptCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success invitationAccept={standard().invitationAccept} />)
+      render(<Success invitationByCode={standard().invitationByCode} queryResult={standard().queryResult} />)
     }).not.toThrow()
   })
 })

@@ -1,6 +1,9 @@
 // Define your own mock data here:
 export const standard = (/* vars, { ctx, req } */) => ({
-  invitationAccept: {
-    id: 42,
+  invitationByCode: {
+    userId: '1',
   },
+  queryResult: {
+    variables: { code: '1' },
+  }
 })

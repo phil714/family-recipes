@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import Tooltip from './Tooltip'
+import { Tooltip, TooltipProvider } from './Tooltip'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +8,8 @@ import Tooltip from './Tooltip'
 describe('Tooltip', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Tooltip />)
+      render(
+        <TooltipProvider delayDuration={0}><Tooltip /></TooltipProvider>)
     }).not.toThrow()
   })
 })

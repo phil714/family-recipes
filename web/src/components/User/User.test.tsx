@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import User from './User'
+import { User } from './User'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +8,7 @@ import User from './User'
 describe('User', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<User />)
+      render(<User user={{ email: 'test@gmail.com', name: 'Michel Tremblay' }} />)
     }).not.toThrow()
   })
 })

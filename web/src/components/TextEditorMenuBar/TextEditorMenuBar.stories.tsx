@@ -12,7 +12,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import TextEditorMenuBar from './TextEditorMenuBar'
+import { TextEditorMenuBar } from './TextEditorMenuBar'
 
 const meta: Meta<typeof TextEditorMenuBar> = {
   component: TextEditorMenuBar,

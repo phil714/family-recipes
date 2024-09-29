@@ -16,7 +16,7 @@ interface Props {
   onChange: (value: string) => void
 }
 
-const TextEditor: React.FC<Props> = (props) => {
+export const TextEditor: React.FC<Props> = (props) => {
   const { value: content, onChange } = props
 
   const editor = useEditor({

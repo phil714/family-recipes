@@ -12,7 +12,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Command from './Command'
+import { Command } from './Command'
 
 const meta: Meta<typeof Command> = {
   component: Command,
