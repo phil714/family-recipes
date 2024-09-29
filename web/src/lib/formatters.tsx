@@ -1,21 +1,6 @@
 import React from 'react'
 
-import humanize from 'humanize-string'
-
 const MAX_STRING_LENGTH = 150
-
-export const formatEnum = (values: string | string[] | null | undefined) => {
-  let output = ''
-
-  if (Array.isArray(values)) {
-    const humanizedValues = values.map((value) => humanize(value))
-    output = humanizedValues.join(', ')
-  } else if (typeof values === 'string') {
-    output = humanize(values)
-  }
-
-  return output
-}
 
 export const jsonDisplay = (obj: unknown) => {
   return (

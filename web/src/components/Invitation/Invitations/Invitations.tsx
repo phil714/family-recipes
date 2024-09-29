@@ -10,7 +10,7 @@ import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Invitation/InvitationsCell'
-import { formatEnum, truncate } from 'src/lib/formatters'
+import { truncate } from 'src/lib/formatters'
 
 const DELETE_INVITATION_MUTATION: TypedDocumentNode<
   DeleteInvitationMutation,
@@ -62,7 +62,7 @@ const InvitationsList = ({ invitations }: FindInvitations) => {
               <td>{truncate(invitation.id)}</td>
               <td>{truncate(invitation.email)}</td>
               <td>{truncate(invitation.familyId)}</td>
-              <td>{formatEnum(invitation.accessRole)}</td>
+              <td>{invitation.accessRole}</td> {/*TODO: translate */}
               <td>
                 <nav className="rw-table-actions">
                   <Link

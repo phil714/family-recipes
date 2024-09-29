@@ -9,8 +9,6 @@ import { useMutation } from '@redwoodjs/web'
 import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { formatEnum } from 'src/lib/formatters'
-
 const DELETE_INVITATION_MUTATION: TypedDocumentNode<
   DeleteInvitationMutation,
   DeleteInvitationMutationVariables
@@ -67,7 +65,7 @@ const Invitation = ({ invitation }: Props) => {
             </tr>
             <tr>
               <th>Access role</th>
-              <td>{formatEnum(invitation.accessRole)}</td>
+              <td>{invitation.accessRole}</td> {/*TODO: translate */}
             </tr>
           </tbody>
         </table>
