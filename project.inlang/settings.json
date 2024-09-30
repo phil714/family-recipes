@@ -14,7 +14,9 @@
     "pathPattern": {
       "common": "./web/src/locales/{languageTag}/common.json",
       "glossary": "./web/src/locales/{languageTag}/glossary.json",
-      "user-menu": "./web/src/locales/{languageTag}/user-menu.json"
+      "user-menu": "./web/src/locales/{languageTag}/user-menu.json",
+      "profile": "./web/src/locales/{languageTag}/profile.json",
+      "user": "./web/src/locales/{languageTag}/user.json"
     }
   }
 }
