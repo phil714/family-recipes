@@ -5,7 +5,8 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
-import { sendEmail } from 'src/lib/email'
+import { mailer } from 'src/lib/mailer'
+import { FamilyInvitation } from 'src/mail/FamilyInvitation/FamilyInvitation'
 
 export const invitations: QueryResolvers['invitations'] = () => {
   return db.invitation.findMany()
@@ -62,12 +63,16 @@ export const createInvitation: MutationResolvers['createInvitation'] = async ({
 
   const url = redirectUrl.replace(':code', invitation.code)
 
-  await sendEmail({
-    to: invitation.email,
-    subject: 'You got invited into a family',
-    html: `<div>Allo<div>${url}</div></div>`,
-    text: `Allo`,
-  })
+  await mailer.send(
+    FamilyInvitation({
+      name: invitation.email,
+      url,
+    }),
+    {
+      to: invitation.email,
+      subject: 'You got invited into a family',
+    }
+  )
 
   return invitation
 }

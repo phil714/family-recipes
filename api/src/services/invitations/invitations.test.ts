@@ -8,6 +8,9 @@ import {
   deleteInvitation,
 } from './invitations'
 import type { StandardScenario } from './invitations.scenarios'
+import { mailer } from 'src/lib/mailer'
+
+import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 
 jest.mock('@sendgrid/mail')
 
@@ -46,6 +49,37 @@ describe('invitations', () => {
     expect(result.email).toEqual('String')
     expect(result.familyId).toEqual(scenario.invitation.two.familyId)
     expect(result.accessRole).toEqual('USER')
+
+    // Mail
+    const testHandler = mailer.getTestHandler() as InMemoryMailHandler
+    expect(testHandler.inbox.length).toBe(1)
+    const sentMail = testHandler.inbox[0]
+    expect({
+      ...sentMail,
+      htmlContent: undefined,
+      textContent: undefined,
+    }).toMatchInlineSnapshot(`
+          {
+            "attachments": [],
+            "bcc": [],
+            "cc": [],
+            "from": "${mailer.defaults.from}",
+            "handler": "nodemailer",
+            "handlerOptions": undefined,
+            "headers": {},
+            "htmlContent": undefined,
+            "renderer": "reactEmail",
+            "rendererOptions": {},
+            "replyTo": "${mailer.defaults.replyTo}",
+            "subject": "You got invited into a family",
+            "textContent": undefined,
+            "to": [
+              "String",
+            ],
+          }
+        `)
+    expect(sentMail.htmlContent).toMatchSnapshot()
+    expect(sentMail.textContent).toMatchSnapshot()
   })
 
   scenario('updates a invitation', async (scenario: StandardScenario) => {
