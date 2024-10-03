@@ -7,12 +7,55 @@ import type {
 import { db } from 'src/lib/db'
 
 export const recipes: QueryResolvers['recipes'] = () => {
-  return db.recipe.findMany()
+  return db.recipe.findMany({
+    where: {
+      family: {
+        familyMembers: {
+          some: {
+            userId: context.currentUser?.id,
+          },
+        },
+      }
+    },
+  })
+}
+
+export const allRecipes: QueryResolvers['recipes'] = () => {
+  return db.recipe.findMany({
+    where: {
+      OR: [
+        {
+          family: {
+            familyMembers: {
+              some: {
+                userId: context.currentUser?.id,
+              },
+            },
+          }
+        },
+        { public: true },
+      ],
+    },
+  })
 }
 
 export const recipe: QueryResolvers['recipe'] = ({ id }) => {
   return db.recipe.findUnique({
-    where: { id },
+    where: {
+      id,
+      OR: [
+        {
+          family: {
+            familyMembers: {
+              some: {
+                userId: context.currentUser?.id,
+              },
+            },
+          }
+        },
+        { public: true },
+      ],
+    },
   })
 }
 
@@ -47,7 +90,9 @@ export const createRecipe: MutationResolvers['createRecipe'] = async ({
       cookingTimeMinutes: input.cookingTimeMinutes,
       preparationTimeMinutes: input.preparationTimeMinutes,
       familyMember,
+      public: input.public,
       tags,
+      ingredients,
       family,
     },
   })
@@ -63,8 +108,8 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   const ingredientsToDisconnect = ingredients.filter((ingredient) => !input.ingredientIds.includes(ingredient.id))
 
   const tags = await db.recipe.findUnique({ where: { id } }).tags() ?? []
-  const toConnect = input.tagIds.map((id) => ({ id }))
-  const toDisconnect = tags.filter((tag) => !input.tagIds.includes(tag.id))
+  const tagsToConnect = input.tagIds.map((id) => ({ id }))
+  const tagsToDisconnect = tags.filter((tag) => !input.tagIds.includes(tag.id))
 
   delete input.tagIds
   delete input.ingredientIds
@@ -73,8 +118,12 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
     data: {
       ...input,
       tags: {
-        connect: toConnect,
-        disconnect: toDisconnect,
+        connect: tagsToConnect,
+        disconnect: tagsToDisconnect,
+      },
+      ingredients: {
+        connect: ingredientsToConnect,
+        disconnect: ingredientsToDisconnect,
       },
     },
     where: { id },

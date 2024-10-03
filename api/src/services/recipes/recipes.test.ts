@@ -6,6 +6,7 @@ import {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  allRecipes,
 } from './recipes'
 import type { StandardScenario } from './recipes.scenarios'
 import { db } from 'src/lib/db'
@@ -17,8 +18,14 @@ import { db } from 'src/lib/db'
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
 describe('recipes', () => {
-  scenario('returns all recipes', async (scenario: StandardScenario) => {
+  scenario('returns private recipes', async (scenario: StandardScenario) => {
     const result = await recipes()
+
+    expect(result.length).toEqual(Object.keys(scenario.recipe).length)
+  })
+
+  scenario('returns all recipes', async (scenario: StandardScenario) => {
+    const result = await allRecipes()
 
     expect(result.length).toEqual(Object.keys(scenario.recipe).length)
   })
@@ -38,6 +45,7 @@ describe('recipes', () => {
         preparationTimeMinutes: 2652393,
         cookingTimeMinutes: 7232567,
         familyId: scenario.recipe.two.familyId,
+        public: false,
         tagIds: [scenario.tag.one.id, scenario.tag.two.id],
         ingredientIds: [scenario.ingredient.one.id, scenario.ingredient.two.id],
       },
@@ -61,6 +69,7 @@ describe('recipes', () => {
         instructions: 'String',
         preparationTimeMinutes: 2652393,
         cookingTimeMinutes: 7232567,
+        public: false,
         familyId: scenario.recipe.two.familyId,
         tagIds: [scenario.tag.one.id, scenario.tag.two.id],
         ingredientIds: [scenario.ingredient.one.id, scenario.ingredient.two.id],

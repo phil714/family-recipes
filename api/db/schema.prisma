@@ -77,15 +77,16 @@ model Recipe {
   id                     String       @id @default(nanoid())
   name                   String
   description            String
-  ingredients            Ingredient[]
   instructions           String
   preparationTimeMinutes Int
   cookingTimeMinutes     Int
+  public                 Boolean      @default(false)
   familyId               String
+  familyMemberId         String
   family                 Family       @relation(fields: [familyId], references: [id])
   tags                   Tag[]
   familyMember           FamilyMember @relation(fields: [familyMemberId], references: [id])
-  familyMemberId         String
+  ingredients            Ingredient[]
 }
 
 model Ingredient {

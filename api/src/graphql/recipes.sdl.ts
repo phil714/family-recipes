@@ -8,13 +8,15 @@ export const schema = gql`
     cookingTimeMinutes: Int!
     familyId: String!
     family: Family!
+    public: Boolean!
     tags: [Tag]!
     ingredients: [Ingredient]!
   }
 
   type Query {
     recipes: [Recipe!]! @requireAuth
-    recipe(id: String!): Recipe @requireAuth
+    recipe(id: String!): Recipe
+    allRecipes: [Recipe!]!
   }
 
   input CreateRecipeInput {
@@ -24,6 +26,7 @@ export const schema = gql`
     instructions: String!
     preparationTimeMinutes: Int!
     cookingTimeMinutes: Int!
+    public: Boolean!
     familyId: String!
     tagIds: [String!]!
   }
@@ -35,6 +38,7 @@ export const schema = gql`
     instructions: String
     preparationTimeMinutes: Int
     cookingTimeMinutes: Int
+    public: Boolean!
     familyId: String
     tagIds: [String!]!
   }
