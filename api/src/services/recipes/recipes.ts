@@ -20,7 +20,7 @@ export const recipes: QueryResolvers['recipes'] = () => {
   })
 }
 
-export const allRecipes: QueryResolvers['recipes'] = () => {
+export const allRecipes: QueryResolvers['allRecipes'] = ({ searchParams }) => {
   return db.recipe.findMany({
     where: {
       OR: [
@@ -35,6 +35,16 @@ export const allRecipes: QueryResolvers['recipes'] = () => {
         },
         { public: true },
       ],
+      tags: {
+        some: {
+          id: { in: searchParams.tagIds },
+        }
+      },
+      ingredients: {
+        some: {
+          id: { in: searchParams.ingredientIds },
+        }
+      }
     },
   })
 }

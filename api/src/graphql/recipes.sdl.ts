@@ -13,10 +13,16 @@ export const schema = gql`
     ingredients: [Ingredient]!
   }
 
+  input AllRecipesSearchParams {
+    searchText: String
+    ingredientIds: [String!]
+    tagIds: [String!]
+  }
+
   type Query {
     recipes: [Recipe!]! @requireAuth
     recipe(id: String!): Recipe @skipAuth
-    allRecipes: [Recipe!]! @skipAuth
+    allRecipes(searchParams: AllRecipesSearchParams): [Recipe!]! @skipAuth
   }
 
   input CreateRecipeInput {
