@@ -8,6 +8,7 @@ import {
   SendIcon,
   UsersIcon,
   AppleIcon,
+  LogInIcon,
 } from 'lucide-react'
 
 import { NavLink, routes } from '@redwoodjs/router'
@@ -21,6 +22,8 @@ import {
 import { cn } from 'src/lib/utils'
 
 import { UserMenu } from '../UserMenu/UserMenu'
+import { useAuth } from 'src/auth'
+import { User } from '../User/User'
 
 interface NavItem {
   title: string
@@ -34,7 +37,22 @@ interface NavItem {
 export const NavigationBar = () => {
   const isCollapsed = false //TODO: implement
 
-  const links: NavItem[] = [
+  const { currentUser } = useAuth()
+
+  const unauthenticatedLinks: NavItem[] = [
+    {
+      title: 'Home',
+      to: routes.home(),
+      icon: HomeIcon,
+    },
+    {
+      title: 'Log in',
+      to: routes.login(),
+      icon: LogInIcon,
+    },
+  ]
+
+  const authenticatedLinks: NavItem[] = [
     {
       title: 'Home',
       to: routes.home(),
@@ -67,13 +85,15 @@ export const NavigationBar = () => {
     },
   ]
 
+  const links = currentUser?.id ? authenticatedLinks : unauthenticatedLinks;
+
   return (
     <div
       data-collapsed={isCollapsed}
       className="border-right group flex w-64 flex-col gap-4 border border-gray-100 py-2"
     >
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center">
-        <UserMenu />
+        {currentUser?.id ? <UserMenu /> : <User user={{ name: '', email: '' }} options={{ email: false }} />}
         {links.map((link, index) => (
           <Tooltip key={index} delayDuration={0}>
             <TooltipTrigger asChild>

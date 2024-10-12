@@ -24,7 +24,7 @@ const defaultOptions = { name: true, email: true, avatar: true }
 export const User: React.FC<Props> = (props) => {
   const { user } = props
   const options = { ...defaultOptions, ...props.options }
-  const fallback = user.name.split(' ').map((str) => str[0].toUpperCase())
+  const fallback = user.name.split(' ').map((str) => str[0]?.toUpperCase())
 
   return (
     <div className="flex items-center gap-4">
