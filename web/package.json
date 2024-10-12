@@ -45,7 +45,8 @@
     "react-dom": "18.3.1",
     "react-i18next": "^15.0.2",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.3"
   },
   "devDependencies": {
     "@redwoodjs/vite": "8.3.0",

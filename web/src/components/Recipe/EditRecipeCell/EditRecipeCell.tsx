@@ -25,6 +25,7 @@ export const QUERY: TypedDocumentNode<EditRecipeById> = gql`
       preparationTimeMinutes
       cookingTimeMinutes
       familyId
+      status
       tags {
         id
         name

@@ -28,6 +28,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
             create: { id: '1', name: 'Family 1' },
           },
         },
+        status: 'PRIVATE',
         familyMember: {
           create: {
             accessRole: 'ADMIN',
@@ -60,6 +61,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
             create: { id: '2', name: 'Family 2' },
           },
         },
+        status: 'PUBLIC',
         familyMember: {
           create: {
             accessRole: 'ADMIN',

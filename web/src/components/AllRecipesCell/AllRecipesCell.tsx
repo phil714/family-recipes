@@ -6,6 +6,9 @@ import type {
   TypedDocumentNode,
 } from "@redwoodjs/web";
 import AllRecipesRecipeDisplay from "../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay";
+import AllRecipesSearchBar from "../AllRecipesSearchBar/AllRecipesSearchBar";
+import { useLocation } from "@redwoodjs/router";
+import { useDeferredValue } from "react";
 
 export const QUERY: TypedDocumentNode<
   AllRecipesQuery,
@@ -42,11 +45,15 @@ export const Failure = ({ error }: CellFailureProps) => (
 );
 
 export const Success = ({ allRecipes }: CellSuccessProps<AllRecipesQuery>) => {
+  const recipes = useDeferredValue(allRecipes);
+
   return (
-    <ul>
-      {allRecipes.map((item) => {
-        return <AllRecipesRecipeDisplay recipe={item} />;
-      })}
-    </ul>
+    <div>
+      <ul>
+        {recipes?.map((item) => {
+          return <AllRecipesRecipeDisplay recipe={item} />;
+        })}
+      </ul>
+    </div>
   );
 };

@@ -10,8 +10,9 @@ datasource db {
 }
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = "native"
+  provider        = "prisma-client-js"
+  binaryTargets   = "native"
+  previewFeatures = ["fullTextSearch"]
 }
 
 // Define your own datamodels here and run `yarn redwood prisma migrate dev`
@@ -73,6 +74,12 @@ model Invitation {
   expiresAt  DateTime   @default(dbgenerated("NOW() + interval '1 day'"))
 }
 
+enum RecipeStatus {
+  DRAFT
+  PRIVATE
+  PUBLIC
+}
+
 model Recipe {
   id                     String       @id @default(nanoid())
   name                   String
@@ -80,7 +87,7 @@ model Recipe {
   instructions           String
   preparationTimeMinutes Int
   cookingTimeMinutes     Int
-  public                 Boolean      @default(false)
+  status                 RecipeStatus @default(DRAFT)
   familyId               String
   familyMemberId         String
   family                 Family       @relation(fields: [familyId], references: [id])

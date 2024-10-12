@@ -4,7 +4,10 @@ import type {
   RecipeRelationResolvers,
 } from 'types/graphql'
 
+import { RecipeStatus } from '@prisma/client'
+
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 export const recipes: QueryResolvers['recipes'] = () => {
   return db.recipe.findMany({
@@ -20,7 +23,14 @@ export const recipes: QueryResolvers['recipes'] = () => {
   })
 }
 
-export const allRecipes: QueryResolvers['allRecipes'] = ({ searchParams }) => {
+export const allRecipes: QueryResolvers['allRecipes'] = (input) => {
+  const tagIds = input?.searchParams?.tagIds ?? []
+  const ingredientIds = input?.searchParams?.ingredientIds ?? []
+  const searchText = input?.searchParams?.searchText.trim() ?? ''
+
+
+  logger.debug('searchText', JSON.stringify(input, null, 2))
+
   return db.recipe.findMany({
     where: {
       OR: [
@@ -31,20 +41,32 @@ export const allRecipes: QueryResolvers['allRecipes'] = ({ searchParams }) => {
                 userId: context.currentUser?.id,
               },
             },
-          }
+          },
+          status: { in: [RecipeStatus.PRIVATE, RecipeStatus.PUBLIC] }
         },
-        { public: true },
+        { status: RecipeStatus.PUBLIC },
       ],
-      tags: {
+      name: searchText.length > 0 ? {
+        contains: searchText, // TODO: find a better search engine later
+        mode: 'insensitive'
+      } : undefined,
+      tags: tagIds.length > 0 ? {
         some: {
-          id: { in: searchParams.tagIds },
+          id: { in: tagIds },
         }
+      } : undefined,
+      ingredients: ingredientIds.length > 0 ? {
+        some: {
+          id: { in: ingredientIds },
+        }
+      } : undefined
+    },
+    orderBy: {
+      _relevance: {
+        fields: ['name'],
+        search: searchText,
+        sort: 'asc'
       },
-      ingredients: {
-        some: {
-          id: { in: searchParams.ingredientIds },
-        }
-      }
     },
   })
 }
@@ -61,9 +83,10 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
                 userId: context.currentUser?.id,
               },
             },
-          }
+          },
+          status: { in: [RecipeStatus.PRIVATE, RecipeStatus.PUBLIC] }
         },
-        { public: true },
+        { status: RecipeStatus.PUBLIC },
       ],
     },
   })
@@ -100,7 +123,7 @@ export const createRecipe: MutationResolvers['createRecipe'] = async ({
       cookingTimeMinutes: input.cookingTimeMinutes,
       preparationTimeMinutes: input.preparationTimeMinutes,
       familyMember,
-      public: input.public,
+      status: input.status,
       tags,
       ingredients,
       family,

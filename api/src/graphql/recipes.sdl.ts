@@ -8,7 +8,7 @@ export const schema = gql`
     cookingTimeMinutes: Int!
     familyId: String!
     family: Family!
-    public: Boolean!
+    status: RecipeStatus!
     tags: [Tag]!
     ingredients: [Ingredient]!
   }
@@ -32,7 +32,7 @@ export const schema = gql`
     instructions: String!
     preparationTimeMinutes: Int!
     cookingTimeMinutes: Int!
-    public: Boolean!
+    status: RecipeStatus!
     familyId: String!
     tagIds: [String!]!
   }
@@ -44,9 +44,15 @@ export const schema = gql`
     instructions: String
     preparationTimeMinutes: Int
     cookingTimeMinutes: Int
-    public: Boolean!
+    status: RecipeStatus!
     familyId: String
     tagIds: [String!]!
+  }
+
+  enum RecipeStatus {
+    DRAFT
+    PRIVATE
+    PUBLIC
   }
 
   type Mutation {

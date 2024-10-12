@@ -16,6 +16,7 @@ import FamilyInputCell from 'src/components/FamilyInputCell'
 import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
 import RecipeIngredientsInputCell from 'src/components/RecipeIngredientsInputCell'
 import TextEditor from 'src/components/TextEditor/TextEditor'
+import RecipeStatusSelect from 'src/components/RecipeStatusSelect/RecipeStatusSelect'
 type FormRecipe = NonNullable<
   Omit<EditRecipeById['recipe'], 'tags'> & { tagIds: string[]; ingredientIds: string[] }
 >
@@ -168,6 +169,26 @@ const RecipeForm = (props: RecipeFormProps) => {
         />
 
         <FieldError name="familyId" className="rw-field-error" />
+
+
+        <Label
+          name="status"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Status
+        </Label>
+        <Controller
+          name="status"
+          defaultValue={props.recipe?.status}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <RecipeStatusSelect id={"status"} value={value} onChange={onChange} />
+          )}
+        />
+        <FieldError name="status" className="rw-field-error" />
+
+
 
         <Label
           name="tagIds"

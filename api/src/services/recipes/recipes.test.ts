@@ -1,4 +1,4 @@
-import type { Recipe } from '@prisma/client'
+import { type Recipe, RecipeStatus } from '@prisma/client'
 
 import {
   recipes,
@@ -45,7 +45,7 @@ describe('recipes', () => {
         preparationTimeMinutes: 2652393,
         cookingTimeMinutes: 7232567,
         familyId: scenario.recipe.two.familyId,
-        public: false,
+        status: RecipeStatus.DRAFT,
         tagIds: [scenario.tag.one.id, scenario.tag.two.id],
         ingredientIds: [scenario.ingredient.one.id, scenario.ingredient.two.id],
       },
@@ -69,7 +69,7 @@ describe('recipes', () => {
         instructions: 'String',
         preparationTimeMinutes: 2652393,
         cookingTimeMinutes: 7232567,
-        public: false,
+        status: RecipeStatus.DRAFT,
         familyId: scenario.recipe.two.familyId,
         tagIds: [scenario.tag.one.id, scenario.tag.two.id],
         ingredientIds: [scenario.ingredient.one.id, scenario.ingredient.two.id],
