@@ -34,28 +34,27 @@ languages.forEach((lang: string) => {
 const addNamespaceToTypes = (namespace: string): void => {
   const typesContent = fs.readFileSync(typesFile, 'utf8');
 
-  const newNamespaceImport = `import en${capitalize(namespace)} from '../src/locales/en/${namespace}.json';`;
-  const newResource = `      ${namespace}: typeof en${capitalize(namespace)}`;
+  const newNamespaceImport = `import en${capitalize(namespace)} from '../src/locales/en/${namespace}.json'`;
+  const newResource = `  ${namespace}: typeof en${capitalize(namespace)}`;
 
-  if (typesContent.includes(newNamespaceImport)) {
+  // Add the new import statement after the last import line
+  if (!typesContent.includes(newNamespaceImport)) {
+    const updatedTypesContent = typesContent.replace(
+      /(import [^\n]+[\n]?)(?![\s\S]*import)/,
+      `$1\n${newNamespaceImport}\n`
+    );
+
+    // Add the new namespace in the resources section
+    const finalTypesContent = updatedTypesContent.replace(
+      /resources: {([^}]*)}/,
+      `resources: {$1${newResource}\n    }`
+    );
+
+    fs.writeFileSync(typesFile, finalTypesContent, 'utf8');
+    console.log(`Updated i18next.d.ts with new namespace: ${namespace}`);
+  } else {
     console.log('Namespace already exists in types file.');
-    return;
   }
-
-  // Add import statement
-  const updatedTypesContent = typesContent.replace(
-    /(import en[^\n]+;)(?![\s\S]*import)/,
-    `$1\n${newNamespaceImport}`
-  );
-
-  // Add new resource type
-  const finalTypesContent = updatedTypesContent.replace(
-    /resources: {([^}]*)}/,
-    `resources: {$1\n${newResource}}`
-  );
-
-  fs.writeFileSync(typesFile, finalTypesContent, 'utf8');
-  console.log(`Updated i18next.d.ts with new namespace: ${namespace}`);
 };
 
 // Step 3: Update i18n configuration ns field

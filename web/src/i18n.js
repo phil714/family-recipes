@@ -11,7 +11,7 @@ i18n
   .init({
     interpolation: { escapeValue: false }, // React already does escaping
     fallbackLng: 'en',
-    ns: ['common', 'glossary', 'user-menu', 'profile', 'user', 'recipe'],
+    ns: ['common', 'glossary', 'user-menu', 'profile', 'user', 'recipe', 'family'],
     defaultNS: 'common',
     backend: {
       // Path to your translation files
