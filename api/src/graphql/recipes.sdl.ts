@@ -19,8 +19,12 @@ export const schema = gql`
     tagIds: [String!]
   }
 
+  input RecipesSearchParams {
+    familyId: String
+  }
+
   type Query {
-    recipes: [Recipe!]! @requireAuth
+    recipes(searchParams: RecipesSearchParams): [Recipe!]! @requireAuth
     recipe(id: String!): Recipe @skipAuth
     allRecipes(searchParams: AllRecipesSearchParams): [Recipe!]! @skipAuth
   }

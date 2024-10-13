@@ -44,6 +44,7 @@ model UserCredential {
 model Family {
   id            String         @id @default(nanoid())
   name          String
+  description   String         @default("")
   recipes       Recipe[]
   familyMembers FamilyMember[]
   invitations   Invitation[]
@@ -100,6 +101,7 @@ model Recipe {
 model Ingredient {
   id          String   @id @default(nanoid())
   name        String
+  color       String
   description String
   tags        Tag[]
   recipes     Recipe[]
