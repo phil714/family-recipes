@@ -31,7 +31,7 @@ const AllRecipesRecipeDisplay = (props: Props) => {
         {props.recipe.tags.map((tag) => <TagDisplay tag={tag} />)}
       </ul>
       <ul>
-        {props.recipe.ingredients.map((ingredient) => <TagDisplay tag={{ ...ingredient, color: 'white' }} />)}
+        {props.recipe.ingredients.map((ingredient) => <TagDisplay tag={{ ...ingredient, color: '#FFFFFF' }} />)}
       </ul>
     </div>
   );

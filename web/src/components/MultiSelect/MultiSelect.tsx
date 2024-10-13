@@ -150,7 +150,7 @@ const MultiSelectFormField = React.forwardRef<
                         style={{
                           animationDuration: `${animation}s`,
                           backgroundColor: option?.color,
-                          color: isDarkBackground(option?.color) ? 'white' : 'black',
+                          color: option?.color && isDarkBackground(option?.color) ? 'white' : 'black',
                         }}
                       >
                         {IconComponent && (
@@ -207,7 +207,7 @@ const MultiSelectFormField = React.forwardRef<
         >
           <Command>
             <CommandInput
-              placeholder={t('common:searchPlaceholder')}
+              placeholder={t('common:search-placeholder')}
               onKeyDown={handleInputKeyDown}
             />
             <CommandList>

@@ -52,6 +52,7 @@ model Family {
 enum AccessRole {
   USER
   ADMIN
+  VIEWER
 }
 
 model FamilyMember {

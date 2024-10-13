@@ -4,7 +4,7 @@ export function hexToRgb(hex: string): { r: number, g: number, b: number } | nul
 
   // Ensure it is a valid 6-character hex string
   if (parsedHex.length !== 6) {
-    return null;
+    return null
   }
 
   // Convert the hex string into RGB components

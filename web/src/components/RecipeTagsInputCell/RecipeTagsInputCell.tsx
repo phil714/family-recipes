@@ -44,7 +44,7 @@ export const Success = ({
       options={tags.map((tag) => ({ value: tag.id, label: tag.name, color: tag.color }))}
       defaultValue={value}
       onValueChange={onChange}
-      placeholder={t("common:select")}
+      placeholder={t("common:select-placeholder")}
       variant="inverted"
     />
   )

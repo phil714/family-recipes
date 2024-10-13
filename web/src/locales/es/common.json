@@ -1,6 +1,6 @@
 {
   "cancel": "Cancelar",
   "save": "Ahorrar",
-  "searchPlaceholder": "Buscar...",
-  "select": "Seleccionar..."
+  "search-placeholder": "Buscar...",
+  "select-placeholder": "Seleccionar..."
 }
