@@ -140,19 +140,20 @@ export default async () => {
     await db.tag.createMany({ data: tags })
 
     const ingredients: Prisma.IngredientCreateManyInput[] = [
-      { id: "1", name: "Tomato", description: "Juicy, tangy fruit, great for cooking and sauces." },
-      { id: "2", name: "Egg", description: "Versatile protein, ideal for scrambling or frying." },
-      { id: "3", name: "Oil", description: "Used for frying and adding richness to dishes." },
-      { id: "4", name: "Salt", description: "Enhances flavor in all types of dishes." },
-      { id: "5", name: "Sugar", description: "Adds a hint of sweetness to balance acidity." },
-      { id: "6", name: "Green Onion", description: "Mild onion flavor, perfect for garnishing dishes." },
-      { id: "7", name: "Whole Chicken", description: "A whole bird, commonly used for roasting or grilling." },
-      { id: "8", name: "Olive Oil", description: "Rich, healthy oil made from pressed olives." },
-      { id: "9", name: "Black Pepper", description: "A pungent spice made from dried peppercorns." },
-      { id: "10", name: "Garlic Powder", description: "Ground garlic in powdered form for easy seasoning." },
-      { id: "11", name: "Paprika", description: "A red spice made from ground sweet peppers." },
-      { id: "12", name: "Lemon", description: "Bright yellow citrus, tart and juicy, commonly used for flavor." }
-    ]
+      { id: "1", name: "Tomato", description: "Juicy, tangy fruit, great for cooking and sauces.", color: "#FF6347" },
+      { id: "2", name: "Egg", description: "Versatile protein, ideal for scrambling or frying.", color: "#FFFACD" },
+      { id: "3", name: "Oil", description: "Used for frying and adding richness to dishes.", color: "#FFD700" },
+      { id: "4", name: "Salt", description: "Enhances flavor in all types of dishes.", color: "#FFFFFF" },
+      { id: "5", name: "Sugar", description: "Adds a hint of sweetness to balance acidity.", color: "#FFFAFA" },
+      { id: "6", name: "Green Onion", description: "Mild onion flavor, perfect for garnishing dishes.", color: "#7CFC00" },
+      { id: "7", name: "Whole Chicken", description: "A whole bird, commonly used for roasting or grilling.", color: "#F5DEB3" },
+      { id: "8", name: "Olive Oil", description: "Rich, healthy oil made from pressed olives.", color: "#BDB76B" },
+      { id: "9", name: "Black Pepper", description: "A pungent spice made from dried peppercorns.", color: "#000000" },
+      { id: "10", name: "Garlic Powder", description: "Ground garlic in powdered form for easy seasoning.", color: "#F8F8FF" },
+      { id: "11", name: "Paprika", description: "A red spice made from ground sweet peppers.", color: "#FF4500" },
+      { id: "12", name: "Lemon", description: "Bright yellow citrus, tart and juicy, commonly used for flavor.", color: "#FFF44F" }
+    ];
+
 
     await db.ingredient.createMany({ data: ingredients })
 

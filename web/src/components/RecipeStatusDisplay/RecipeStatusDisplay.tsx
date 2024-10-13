@@ -8,9 +8,9 @@ interface Props {
 }
 
 const labelMap: Record<RecipeStatus, string> = {
-  DRAFT: 'Draft',
-  PRIVATE: 'Private',
-  PUBLIC: 'Public'
+  DRAFT: t("recipe:status-draft"),
+  PRIVATE: t("recipe:status-private"),
+  PUBLIC: t("recipe:status-public")
 }
 
 const RecipeStatusDisplay = ({ status }: Props) => {

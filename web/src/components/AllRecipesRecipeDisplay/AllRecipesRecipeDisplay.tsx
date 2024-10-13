@@ -11,6 +11,7 @@ interface Recipe {
   ingredients: {
     id: string;
     name: string;
+    color: string;
   }[]
   tags: {
     id: string;
@@ -27,11 +28,9 @@ const AllRecipesRecipeDisplay = (props: Props) => {
   return (
     <div className="w-80 h-80 p-4">
       <h2>{props.recipe.name}</h2>
-      <ul>
+      <ul className="flex flex-wrap gap-1 p-1">
         {props.recipe.tags.map((tag) => <TagDisplay tag={tag} />)}
-      </ul>
-      <ul>
-        {props.recipe.ingredients.map((ingredient) => <TagDisplay tag={{ ...ingredient, color: '#FFFFFF' }} />)}
+        {props.recipe.ingredients.map((ingredient) => <TagDisplay tag={ingredient} />)}
       </ul>
     </div>
   );

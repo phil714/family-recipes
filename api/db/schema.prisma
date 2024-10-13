@@ -101,7 +101,7 @@ model Recipe {
 model Ingredient {
   id          String   @id @default(nanoid())
   name        String
-  color       String
+  color       String   @default("#E2E8F0") // slate-200
   description String
   tags        Tag[]
   recipes     Recipe[]

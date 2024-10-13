@@ -5,13 +5,17 @@ import { t } from "i18next";
 import { navigate, routes, useLocation } from "@redwoodjs/router";
 import { useState } from "react";
 
+interface Props {
+  onChange: (searchText: string) => void;
+}
 
-const AllRecipesSearchBar = React.memo(() => {
+const AllRecipesSearchBar = React.memo((props: Props) => {
   const { search } = useLocation()
   const [searchText, setSearchText] = useState(new URLSearchParams(search).get('search') ?? '');
 
-  const debouncedOnChange = useDebouncedCallback((val: string) => {
+  const debouncedOnChange = useDebouncedCallback((debouncedSearchText: string) => {
     // navigate(routes.home({ search: val }), { replace: true, }) TODO: fix later, make input lose focus
+    props.onChange(debouncedSearchText)
   }, 250);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +25,7 @@ const AllRecipesSearchBar = React.memo(() => {
   };
 
   return (
-    <div className="relative ml-auto flex-1 md:grow-0">
+    <div className="relative flex-1 md:grow-0 gap-4">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input
         type="search"
