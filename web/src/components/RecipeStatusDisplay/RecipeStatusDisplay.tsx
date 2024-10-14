@@ -15,7 +15,7 @@ const labelMap: Record<RecipeStatus, string> = {
 
 const RecipeStatusDisplay = ({ status }: Props) => {
   return (
-    <div className={cn('p-1 rounded-md', status === 'DRAFT' && 'bg-yellow-100', status === 'PUBLIC' && 'bg-green-200')}>
+    <div className={cn('p-1 rounded-md bg-slate-200', status === 'DRAFT' && 'bg-yellow-100', status === 'PUBLIC' && 'bg-green-200')}>
       {labelMap[status]}
     </div>
   );

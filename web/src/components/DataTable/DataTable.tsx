@@ -29,7 +29,7 @@ function DataTable<T>(props: Props<T>) {
         ))}
       </TableHeader>
       <TableBody>
-        {table.getRowModel().rows?.length ? (
+        {
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
@@ -44,17 +44,7 @@ function DataTable<T>(props: Props<T>) {
                 </TableCell>
               ))}
             </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell
-              colSpan={table.getAllColumns().length}
-              className="h-24 text-center"
-            >
-              No results.
-            </TableCell>
-          </TableRow>
-        )}
+          ))}
       </TableBody>
     </Table>
   );

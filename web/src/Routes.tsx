@@ -17,10 +17,6 @@ import CMSLayout from './layouts/CMSLayout/CMSLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Set wrap={CMSLayout}>
-        <Route path="/" page={HomePage} name="home" />
-        <Route path="/recipes/{id}" page={RecipeRecipePage} name="recipe" />
-      </Set>
       <PrivateSet wrap={CMSLayout} unauthenticated="login">
         <Route path="/profile" page={ProfilePage} name="profile" />
         <Set wrap={ScaffoldLayout} title="Invitations" titleTo="invitations" buttonLabel="New Invitation" buttonTo="newInvitation">
@@ -38,7 +34,6 @@ const Routes = () => {
         <Set wrap={ScaffoldLayout} title="Recipes" titleTo="recipes" buttonLabel="New Recipe" buttonTo="newRecipe">
           <Route path="/recipes/new" page={RecipeNewRecipePage} name="newRecipe" />
           <Route path="/recipes/{id}/edit" page={RecipeEditRecipePage} name="editRecipe" />
-
           <Route path="/recipes" page={RecipeRecipesPage} name="recipes" />
         </Set>
         <Set wrap={ScaffoldLayout} title="Families" titleTo="families" buttonLabel="New Family" buttonTo="newFamily">
@@ -54,6 +49,10 @@ const Routes = () => {
           <Route path="/ingredients" page={IngredientIngredientsPage} name="ingredients" />
         </Set>
       </PrivateSet>
+      <Set wrap={CMSLayout}>
+        <Route path="/" page={HomePage} name="home" />
+        <Route path="/recipes/{id}" page={RecipeRecipePage} name="recipe" />
+      </Set>
       <Route path="/login" page={LoginPage} name="login" />
       <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />

@@ -180,7 +180,7 @@ const RecipeForm = (props: RecipeFormProps) => {
         </Label>
         <Controller
           name="status"
-          defaultValue={props.recipe?.status}
+          defaultValue={props.recipe?.status ?? 'DRAFT'}
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <RecipeStatusSelect id={"status"} value={value} onChange={onChange} />

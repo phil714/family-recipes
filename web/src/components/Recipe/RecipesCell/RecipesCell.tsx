@@ -14,6 +14,7 @@ export const QUERY: TypedDocumentNode<FindRecipes, FindRecipesVariables> = gql`
     recipes {
       id
       name
+      status
       description
       instructions
       preparationTimeMinutes

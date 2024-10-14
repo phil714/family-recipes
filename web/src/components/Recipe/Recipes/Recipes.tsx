@@ -13,6 +13,7 @@ import type {
 import { QUERY } from 'src/components/Recipe/RecipesCell'
 import { truncate } from 'src/lib/formatters'
 import DataTable from 'src/components/DataTable/DataTable'
+import RecipeStatusDisplay from 'src/components/RecipeStatusDisplay/RecipeStatusDisplay'
 
 const DELETE_RECIPE_MUTATION = gql`
   mutation DeleteRecipeMutation($id: String!) {
@@ -54,12 +55,20 @@ const RecipesList = ({ recipes }: FindRecipes) => {
         header: () => 'Id',
         cell: ({ getValue }) => getValue(),
       }),
+      columnHelper.accessor((recipe) => recipe.status, {
+        id: 'status',
+        enableColumnFilter: false,
+        enableSorting: false,
+        enableResizing: false,
+        size: 150,
+        header: () => 'Status',
+        cell: ({ getValue }) => <div className='flex flex-none justify-center'><RecipeStatusDisplay status={getValue()} /></div>,
+      }),
       columnHelper.accessor((recipe) => recipe.name, {
         id: 'name',
         header: () => 'Name',
         cell: ({ getValue }) => getValue(),
-        filterFn: 'includesString',
-        enableColumnFilter: false,
+        enableSorting: true,
         size: 220,
       }),
       columnHelper.accessor((recipe) => recipe.description, {
