@@ -10,9 +10,11 @@ import {
   RadioField,
   Submit,
   Controller,
+  EmailField,
 } from '@redwoodjs/forms'
 
 import FamilyInputCell from 'src/components/FamilyInputCell'
+import AccessRoleSelect from 'src/components/AccessRoleSelect/AccessRoleSelect'
 
 type FormInvitation = NonNullable<EditInvitationById['invitation']>
 
@@ -46,12 +48,12 @@ const InvitationForm = (props: InvitationFormProps) => {
           Email
         </Label>
 
-        <TextField
+        <EmailField
           name="email"
           defaultValue={props.invitation?.email}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          validation={{ required: true,  }}
         />
 
         <FieldError name="email" className="rw-field-error" />
@@ -83,29 +85,14 @@ const InvitationForm = (props: InvitationFormProps) => {
           Access role
         </Label>
 
-        <div className="rw-check-radio-items">
-          <RadioField
-            id="invitation-accessRole-0"
-            name="accessRole"
-            defaultValue="USER"
-            defaultChecked={props.invitation?.accessRole?.includes('USER')}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-          />
-          <div>User</div>
-        </div>
-
-        <div className="rw-check-radio-items">
-          <RadioField
-            id="invitation-accessRole-1"
-            name="accessRole"
-            defaultValue="ADMIN"
-            defaultChecked={props.invitation?.accessRole?.includes('ADMIN')}
-            className="rw-input"
-            errorClassName="rw-input rw-input-error"
-          />
-          <div>Admin</div>
-        </div>
+        <Controller
+          name="accessRole"
+          defaultValue={props.invitation?.accessRole ?? "USER"}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <AccessRoleSelect onChange={onChange} value={value} />
+          )}
+        />
 
         <FieldError name="accessRole" className="rw-field-error" />
 

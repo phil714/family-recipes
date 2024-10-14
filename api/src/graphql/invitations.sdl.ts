@@ -40,10 +40,10 @@ export const schema = gql`
   }
 
   type Mutation {
-    createInvitation(input: CreateInvitationInput!): Invitation! @requireAuth
+    createInvitation(input: CreateInvitationInput!): Invitation! @requireAuth(roles: "ADMIN")
     updateInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
-      @requireAuth
-    deleteInvitation(id: String!): Invitation! @requireAuth
+      @requireAuth(roles: "ADMIN")
+    deleteInvitation(id: String!): Invitation! @requireAuth(roles: "ADMIN")
     acceptInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
       @skipAuth
   }

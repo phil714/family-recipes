@@ -24,14 +24,14 @@ export default async () => {
       },
       {
         id: '3',
-        name: 'Philippe Deschesnes Viewer',
-        email: 'philippe.deschesnes+viewer@hotmail.com',
+        name: 'Philippe Deschesnes User',
+        email: 'philippe.deschesnes+user@hotmail.com',
         password: 'AAAaaa111',
       },
       {
         id: '4',
-        name: 'Philippe Deschesnes User',
-        email: 'philippe.deschesnes+user@hotmail.com',
+        name: 'Philippe Deschesnes Viewer',
+        email: 'philippe.deschesnes+viewer@hotmail.com',
         password: 'AAAaaa111',
       },
     ]
@@ -75,18 +75,30 @@ export default async () => {
       },
       {
         id: '2',
+        userId: '3',
+        familyId: '1',
+        accessRole: 'USER',
+      },
+      {
+        id: '3',
+        userId: '4',
+        familyId: '1',
+        accessRole: 'VIEWER',
+      },
+      {
+        id: '4',
         userId: '1',
         familyId: '2',
         accessRole: 'USER',
       },
       {
-        id: '3',
+        id: '5',
         userId: '1',
         familyId: '3',
         accessRole: 'ADMIN',
       },
       {
-        id: '4',
+        id: '6',
         userId: '2',
         familyId: '2',
         accessRole: 'ADMIN',
@@ -181,21 +193,24 @@ export default async () => {
           familyMemberId: '1',
           status: 'PUBLIC',
           instructions: `
-        **Ingredients:**
-        - 2 medium tomatoes, chopped
-        - 3 large eggs
-        - 1 tablespoon oil (vegetable or olive oil)
-        - 1/2 teaspoon salt (adjust to taste)
-        - 1/4 teaspoon sugar (optional)
-        - Green onions, chopped (optional, for garnish)
+          <p><strong>Ingredients:</strong></p>
+          <ul>
+            <li>2 medium tomatoes, chopped</li>
+            <li>3 large eggs</li>
+            <li>1 tablespoon oil (vegetable or olive oil)</li>
+            <li>1/2 teaspoon salt (adjust to taste)</li>
+            <li>1/4 teaspoon sugar (optional)</li>
+            <li>Green onions, chopped (optional, for garnish)</li>
+          </ul>
 
-        **Instructions:**
-
-        1. **Prepare the eggs**: Crack the eggs into a bowl, add a pinch of salt, and beat well until smooth.
-        2. **Cook the eggs**: Heat a tablespoon of oil in a pan over medium heat. Pour in the beaten eggs and scramble gently. Once the eggs are just set but still soft, remove them from the pan and set aside.
-        3. **Cook the tomatoes**: In the same pan, add a little more oil if needed. Add the chopped tomatoes, sprinkle with a bit of salt and sugar, and stir-fry until they soften and release their juices (about 2-3 minutes).
-        4. **Combine**: Add the scrambled eggs back into the pan and stir gently to combine with the tomatoes. Let them cook together for another 1-2 minutes, until the flavors meld.
-        5. **Serve**: Garnish with chopped green onions if desired, and serve hot with rice or on its own.
+          <p><strong>Instructions:</strong></p>
+          <ol>
+            <li><strong>Prepare the eggs</strong>: Crack the eggs into a bowl, add a pinch of salt, and beat well until smooth.</li>
+            <li><strong>Cook the eggs</strong>: Heat a tablespoon of oil in a pan over medium heat. Pour in the beaten eggs and scramble gently. Once the eggs are just set but still soft, remove them from the pan and set aside.</li>
+            <li><strong>Cook the tomatoes</strong>: In the same pan, add a little more oil if needed. Add the chopped tomatoes, sprinkle with a bit of salt and sugar, and stir-fry until they soften and release their juices (about 2-3 minutes).</li>
+            <li><strong>Combine</strong>: Add the scrambled eggs back into the pan and stir gently to combine with the tomatoes. Let them cook together for another 1-2 minutes, until the flavors meld.</li>
+            <li><strong>Serve</strong>: Garnish with chopped green onions if desired, and serve hot with rice or on its own.</li>
+          </ol>
         `,
           tags: {
             connect: [{ id: '1' }]
@@ -216,21 +231,25 @@ export default async () => {
         familyMemberId: '4',
         status: 'PRIVATE',
         instructions: `
-        **Ingredients:**
-        - 1 whole chicken (about 4-5 lbs)
-        - 2 tablespoons olive oil
-        - 1 teaspoon salt
-        - 1/2 teaspoon black pepper
-        - 1 teaspoon garlic powder (optional)
-        - 1 teaspoon paprika (optional)
-        - Lemon (optional, for added flavor)
+        <p><strong>Ingredients:</strong></p>
+        <ul>
+          <li>1 whole chicken (about 4-5 lbs)</li>
+          <li>2 tablespoons olive oil</li>
+          <li>1 teaspoon salt</li>
+          <li>1/2 teaspoon black pepper</li>
+          <li>1 teaspoon garlic powder (optional)</li>
+          <li>1 teaspoon paprika (optional)</li>
+          <li>Lemon (optional, for added flavor)</li>
+        </ul>
 
-        **Instructions:**
-
-        1. **Preheat oven**: Set your oven to 425°F (220°C).
-        2. **Prepare the chicken**: Pat the chicken dry with paper towels. Rub olive oil all over the chicken, and season generously with salt, pepper, garlic powder, and paprika. Optionally, stuff the cavity with lemon slices or fresh herbs for extra flavor.
-        3. **Roast**: Place the chicken breast-side up in a roasting pan or on a baking sheet. Roast for 1 hour to 1 hour and 15 minutes, or until the internal temperature reaches 165°F (75°C).
-        4. **Rest and serve**: Let the chicken rest for 10-15 minutes before carving. Serve with your favorite sides.`,
+        <p><strong>Instructions:</strong></p>
+        <ol>
+          <li><strong>Preheat oven</strong>: Set your oven to 425°F (220°C).</li>
+          <li><strong>Prepare the chicken</strong>: Pat the chicken dry with paper towels. Rub olive oil all over the chicken, and season generously with salt, pepper, garlic powder, and paprika. Optionally, stuff the cavity with lemon slices or fresh herbs for extra flavor.</li>
+          <li><strong>Roast</strong>: Place the chicken breast-side up in a roasting pan or on a baking sheet. Roast for 1 hour to 1 hour and 15 minutes, or until the internal temperature reaches 165°F (75°C).</li>
+          <li><strong>Rest and serve</strong>: Let the chicken rest for 10-15 minutes before carving. Serve with your favorite sides.</li>
+        </ol>
+`,
         tags: {
           connect: [{ id: '2' }]
         },

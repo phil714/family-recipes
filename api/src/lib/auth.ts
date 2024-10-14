@@ -39,7 +39,7 @@ export const getCurrentUser = async (
     throw new Error('Invalid session')
   }
 
-  return await db.user.findUnique({
+  const user = await db.user.findUnique({
     where: { id: session.id },
     select: {
       id: true,
@@ -53,8 +53,10 @@ export const getCurrentUser = async (
         }
       }
     },
-
   })
+  const roles = user.familyMembers.map((fM) => fM.accessRole)
+
+  return { ...user, roles }
 }
 
 /**
@@ -70,7 +72,7 @@ export const isAuthenticated = (): boolean => {
  * When checking role membership, roles can be a single value, a list, or none.
  * You can use Prisma enums too (if you're using them for roles), just import your enum type from `@prisma/client`
  */
-type AllowedRoles = string | string[] | undefined
+type AllowedRoles = AccessRole | AccessRole[] | undefined
 
 /**
  * Checks if the currentUser is authenticated (and assigned one of the given roles)
@@ -87,9 +89,6 @@ export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
   }
 
   const currentUserRoles = context.currentUser?.familyMembers.reduce((acc, curr) => acc.set(curr.familyId, curr.accessRole), new Map<string, AccessRole>())
-
-  logger.info('bruh')
-  logger.info(currentUserRoles)
 
   if (typeof roles === 'string') {
     if (familyId) {
@@ -132,12 +131,12 @@ export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles }: { roles?: AllowedRoles } = {}) => {
+export const requireAuth = ({ roles, familyId }: { roles?: AllowedRoles, familyId?: string } = {}) => {
   if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (roles && !hasRole(roles)) {
+  if (roles && !hasRole(roles, familyId)) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
