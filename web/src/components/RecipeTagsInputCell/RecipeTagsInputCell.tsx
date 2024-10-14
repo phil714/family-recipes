@@ -7,6 +7,7 @@ import type {
 } from '@redwoodjs/web'
 
 import MultiSelectFormField from 'src/components/MultiSelect/MultiSelect'
+import { t } from 'i18next'
 
 export const QUERY: TypedDocumentNode<FindTags, FindTagsVariables> = gql`
   query FindTags {
@@ -40,10 +41,10 @@ export const Success = ({
   return (
     <MultiSelectFormField
       name="tags"
-      options={tags.map((tag) => ({ value: tag.id, label: tag.name }))}
+      options={tags.map((tag) => ({ value: tag.id, label: tag.name, color: tag.color }))}
       defaultValue={value}
       onValueChange={onChange}
-      placeholder="Select options"
+      placeholder={t("common:select-placeholder")}
       variant="inverted"
     />
   )

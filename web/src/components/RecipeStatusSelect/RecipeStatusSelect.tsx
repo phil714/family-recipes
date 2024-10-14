@@ -1,5 +1,6 @@
 import { RecipeStatus } from "types/graphql";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Select/Select";
+import RecipeStatusDisplay from "../RecipeStatusDisplay/RecipeStatusDisplay";
 
 interface Props {
   id?: string;
@@ -14,9 +15,9 @@ const RecipeStatusSelect = ({ id, value, onChange }: Props) => {
         <SelectValue />
       </SelectTrigger>
       <SelectContent position="popper">
-        <SelectItem value="DRAFT">Draft</SelectItem>
-        <SelectItem value="PUBLIC">Public</SelectItem>
-        <SelectItem value="PRIVATE">Private</SelectItem>
+        <SelectItem value="DRAFT"><RecipeStatusDisplay status={"DRAFT"} /></SelectItem>
+        <SelectItem value="PUBLIC"><RecipeStatusDisplay status={"PUBLIC"} /></SelectItem>
+        <SelectItem value="PRIVATE"><RecipeStatusDisplay status={"PRIVATE"} /></SelectItem>
       </SelectContent>
     </Select>
   );

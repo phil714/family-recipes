@@ -7,12 +7,14 @@ import type {
 } from '@redwoodjs/web'
 
 import MultiSelectFormField from 'src/components/MultiSelect/MultiSelect'
+import { t } from 'i18next'
 
 export const QUERY: TypedDocumentNode<FindIngredients, FindIngredientsVariables> = gql`
   query FindIngredients {
     ingredients {
       id
       name
+      color
       description
     }
   }
@@ -40,10 +42,10 @@ export const Success = ({
   return (
     <MultiSelectFormField
       name="ingredients"
-      options={ingredients.map((ingredient) => ({ value: ingredient.id, label: ingredient.name }))}
+      options={ingredients.map((ingredient) => ({ value: ingredient.id, label: ingredient.name, color: ingredient.color }))}
       defaultValue={value}
       onValueChange={onChange}
-      placeholder="Select options"
+      placeholder={t('common:select-placeholder')}
       variant="inverted"
     />
   )

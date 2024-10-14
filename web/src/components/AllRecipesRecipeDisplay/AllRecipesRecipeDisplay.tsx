@@ -1,4 +1,6 @@
+import { Link, routes } from "@redwoodjs/router";
 import TagDisplay from "../TagDisplay/TagDisplay";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
 
 interface Recipe {
   id: string;
@@ -11,6 +13,7 @@ interface Recipe {
   ingredients: {
     id: string;
     name: string;
+    color: string;
   }[]
   tags: {
     id: string;
@@ -23,17 +26,30 @@ interface Props {
   recipe: Recipe;
 }
 
-const AllRecipesRecipeDisplay = (props: Props) => {
+const AllRecipesRecipeDisplay = ({ recipe }: Props) => {
   return (
-    <div className="w-80 h-80 p-4">
-      <h2>{props.recipe.name}</h2>
-      <ul>
-        {props.recipe.tags.map((tag) => <TagDisplay tag={tag} />)}
-      </ul>
-      <ul>
-        {props.recipe.ingredients.map((ingredient) => <TagDisplay tag={{ ...ingredient, color: 'white' }} />)}
-      </ul>
-    </div>
+    <Link
+      to={routes.recipe({ id: recipe.id })}
+      title={'Show recipe ' + recipe.name + ' detail'}
+      className="w-80 h-80"
+    >
+      <Card className="shadow-md h-fit hover:bg-slate-100">
+        <CardHeader className="p-4 pb-0">
+          <CardTitle className="text-xl font-bold">
+            {recipe.name}
+          </CardTitle>
+          <CardDescription className="text-gray-600 line-clamp-4">
+            {recipe.description}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-4 pt-0">
+          <div className="flex flex-wrap gap-2 pt-2">
+            {recipe.tags.map((tag) => <TagDisplay tag={tag} />)}
+            {recipe.ingredients.map((ingredient) => <TagDisplay tag={ingredient} />)}
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 

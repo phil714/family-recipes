@@ -44,6 +44,7 @@ model UserCredential {
 model Family {
   id            String         @id @default(nanoid())
   name          String
+  description   String         @default("")
   recipes       Recipe[]
   familyMembers FamilyMember[]
   invitations   Invitation[]
@@ -52,6 +53,7 @@ model Family {
 enum AccessRole {
   USER
   ADMIN
+  VIEWER
 }
 
 model FamilyMember {
@@ -99,6 +101,7 @@ model Recipe {
 model Ingredient {
   id          String   @id @default(nanoid())
   name        String
+  color       String   @default("#E2E8F0") // slate-200
   description String
   tags        Tag[]
   recipes     Recipe[]

@@ -8,6 +8,7 @@ import {
   Label,
   TextField,
   Submit,
+  ColorField,
 } from '@redwoodjs/forms'
 
 type FormTag = NonNullable<EditTagById['tag']>
@@ -60,7 +61,7 @@ const TagForm = (props: TagFormProps) => {
           Color
         </Label>
 
-        <TextField
+        <ColorField
           name="color"
           defaultValue={props.tag?.color}
           className="rw-input"

@@ -10,6 +10,8 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
+import FamilyMembersCell from 'src/components/FamilyMembersCell'
+
 type FormFamily = NonNullable<EditFamilyById['family']>
 
 interface FamilyFormProps {
@@ -58,6 +60,7 @@ const FamilyForm = (props: FamilyFormProps) => {
           </Submit>
         </div>
       </Form>
+      {props.family?.id && <FamilyMembersCell familyId={props.family.id} />}
     </div>
   )
 }

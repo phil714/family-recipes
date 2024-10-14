@@ -27,6 +27,8 @@ import {
 } from 'src/components/Popover/Popover'
 import { Separator } from 'src/components/Separator/Separator'
 import { cn } from 'src/lib/utils'
+import { isDarkBackground } from 'src/helpers/colors'
+import { t } from 'i18next'
 
 const multiSelectVariants = cva(
   'm-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300',
@@ -55,6 +57,7 @@ interface MultiSelectFormFieldProps
   options: {
     label: string
     value: string
+    color?: string
     icon?: React.ComponentType<{ className?: string }>
   }[]
   defaultValue?: string[]
@@ -146,6 +149,8 @@ const MultiSelectFormField = React.forwardRef<
                         )}
                         style={{
                           animationDuration: `${animation}s`,
+                          backgroundColor: option?.color,
+                          color: option?.color && isDarkBackground(option?.color) ? 'white' : 'black',
                         }}
                       >
                         {IconComponent && (
@@ -202,7 +207,7 @@ const MultiSelectFormField = React.forwardRef<
         >
           <Command>
             <CommandInput
-              placeholder="Search..."
+              placeholder={t('common:search-placeholder')}
               onKeyDown={handleInputKeyDown}
             />
             <CommandList>

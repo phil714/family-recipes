@@ -26,6 +26,7 @@ export const QUERY: TypedDocumentNode<
       ingredients {
         id
         name
+        color
       }
       tags {
         id
@@ -48,12 +49,10 @@ export const Success = ({ allRecipes }: CellSuccessProps<AllRecipesQuery>) => {
   const recipes = useDeferredValue(allRecipes);
 
   return (
-    <div>
-      <ul>
-        {recipes?.map((item) => {
-          return <AllRecipesRecipeDisplay recipe={item} />;
-        })}
-      </ul>
-    </div>
+    <ul className="w-full h-full flex flex-wrap grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 lg:gap-8">
+      {recipes?.map((item) => {
+        return <AllRecipesRecipeDisplay recipe={item} key={item.id} />;
+      })}
+    </ul>
   );
 };

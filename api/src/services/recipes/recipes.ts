@@ -7,9 +7,8 @@ import type {
 import { RecipeStatus } from '@prisma/client'
 
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
 
-export const recipes: QueryResolvers['recipes'] = () => {
+export const recipes: QueryResolvers['recipes'] = ({ searchParams }) => {
   return db.recipe.findMany({
     where: {
       family: {
@@ -18,6 +17,7 @@ export const recipes: QueryResolvers['recipes'] = () => {
             userId: context.currentUser?.id,
           },
         },
+        id: searchParams?.familyId
       }
     },
   })
@@ -27,9 +27,6 @@ export const allRecipes: QueryResolvers['allRecipes'] = (input) => {
   const tagIds = input?.searchParams?.tagIds ?? []
   const ingredientIds = input?.searchParams?.ingredientIds ?? []
   const searchText = input?.searchParams?.searchText.trim() ?? ''
-
-
-  logger.debug('searchText', JSON.stringify(input, null, 2))
 
   return db.recipe.findMany({
     where: {

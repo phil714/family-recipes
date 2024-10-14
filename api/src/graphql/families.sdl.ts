@@ -2,6 +2,7 @@ export const schema = gql`
   type Family {
     id: String!
     name: String!
+    description: String!
     recipes: [Recipe]!
   }
 
@@ -12,10 +13,12 @@ export const schema = gql`
 
   input CreateFamilyInput {
     name: String!
+    description: String
   }
 
   input UpdateFamilyInput {
     name: String
+    description: String
   }
 
   type Mutation {

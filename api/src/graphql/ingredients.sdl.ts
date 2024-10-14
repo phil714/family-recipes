@@ -2,6 +2,7 @@ export const schema = gql`
   type Ingredient {
     id: String!
     name: String!
+    color: String!
     description: String!
     tags: [Tag]!
   }
