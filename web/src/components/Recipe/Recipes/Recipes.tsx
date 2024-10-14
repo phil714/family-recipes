@@ -14,6 +14,9 @@ import { QUERY } from 'src/components/Recipe/RecipesCell'
 import { truncate } from 'src/lib/formatters'
 import DataTable from 'src/components/DataTable/DataTable'
 import RecipeStatusDisplay from 'src/components/RecipeStatusDisplay/RecipeStatusDisplay'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from 'src/components/DropdownMenu/DropdownMenu'
+import { MoreHorizontal } from 'lucide-react'
+import { t } from 'i18next'
 
 const DELETE_RECIPE_MUTATION = gql`
   mutation DeleteRecipeMutation($id: String!) {
@@ -47,14 +50,6 @@ const RecipesList = ({ recipes }: FindRecipes) => {
 
   const columns: ColumnDef<FindRecipes['recipes'][0]>[] = useMemo(
     () => [
-      columnHelper.accessor((recipe) => recipe.id, {
-        id: 'id',
-        enableColumnFilter: false,
-        enableSorting: false,
-        enableResizing: false,
-        header: () => 'Id',
-        cell: ({ getValue }) => getValue(),
-      }),
       columnHelper.accessor((recipe) => recipe.status, {
         id: 'status',
         enableColumnFilter: false,
@@ -112,12 +107,21 @@ const RecipesList = ({ recipes }: FindRecipes) => {
             <Link to={routes.recipe({ id: row.original.id })}>
               <Button>Show</Button>
             </Link>
-            <Link to={routes.editRecipe({ id: row.original.id })}>
-              <Button variant="default">Edit</Button>
-            </Link>
-            <Button variant="destructive" onClick={() => onDeleteClick(row.original.id)}>
-              Delete
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">{t("common:open-menu")}</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <Link to={routes.editRecipe({ id: row.original.id })}>
+                  <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         ),
       }),
