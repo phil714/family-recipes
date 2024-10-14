@@ -59,7 +59,7 @@ enum AccessRole {
 model FamilyMember {
   id         String     @id @default(nanoid())
   userId     String
-  accessRole AccessRole
+  accessRole AccessRole @default(USER)
   familyId   String
   family     Family     @relation(fields: [familyId], references: [id])
   user       User       @relation(fields: [userId], references: [id])

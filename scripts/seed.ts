@@ -22,6 +22,18 @@ export default async () => {
         email: 'philippe.deschesnes+1@hotmail.com',
         password: 'AAAaaa111',
       },
+      {
+        id: '3',
+        name: 'Philippe Deschesnes Viewer',
+        email: 'philippe.deschesnes+viewer@hotmail.com',
+        password: 'AAAaaa111',
+      },
+      {
+        id: '4',
+        name: 'Philippe Deschesnes User',
+        email: 'philippe.deschesnes+user@hotmail.com',
+        password: 'AAAaaa111',
+      },
     ]
 
     for (const user of users) {

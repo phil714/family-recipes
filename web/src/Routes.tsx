@@ -25,12 +25,6 @@ const Routes = () => {
           <Route path="/invitations/{id}" page={InvitationInvitationPage} name="invitation" />
           <Route path="/invitations" page={InvitationInvitationsPage} name="invitations" />
         </Set>
-        <Set wrap={ScaffoldLayout} title="Tags" titleTo="tags" buttonLabel="New Tag" buttonTo="newTag">
-          <Route path="/tags/new" page={TagNewTagPage} name="newTag" />
-          <Route path="/tags/{id}/edit" page={TagEditTagPage} name="editTag" />
-          <Route path="/tags/{id}" page={TagTagPage} name="tag" />
-          <Route path="/tags" page={TagTagsPage} name="tags" />
-        </Set>
         <Set wrap={ScaffoldLayout} title="Recipes" titleTo="recipes" buttonLabel="New Recipe" buttonTo="newRecipe">
           <Route path="/recipes/new" page={RecipeNewRecipePage} name="newRecipe" />
           <Route path="/recipes/{id}/edit" page={RecipeEditRecipePage} name="editRecipe" />
@@ -42,12 +36,20 @@ const Routes = () => {
           <Route path="/families/{id}" page={FamilyFamilyPage} name="family" />
           <Route path="/families" page={FamilyFamiliesPage} name="families" />
         </Set>
-        <Set wrap={ScaffoldLayout} title="Ingredients" titleTo="ingredients" buttonLabel="New Ingredient" buttonTo="newIngredient">
-          <Route path="/ingredients/new" page={IngredientNewIngredientPage} name="newIngredient" />
-          <Route path="/ingredients/{id}/edit" page={IngredientEditIngredientPage} name="editIngredient" />
-          <Route path="/ingredients/{id}" page={IngredientIngredientPage} name="ingredient" />
-          <Route path="/ingredients" page={IngredientIngredientsPage} name="ingredients" />
-        </Set>
+        <PrivateSet unauthenticated="home" roles="ADMIN">
+          <Set wrap={ScaffoldLayout} title="Tags" titleTo="tags" buttonLabel="New Tag" buttonTo="newTag">
+            <Route path="/tags/new" page={TagNewTagPage} name="newTag" />
+            <Route path="/tags/{id}/edit" page={TagEditTagPage} name="editTag" />
+            <Route path="/tags/{id}" page={TagTagPage} name="tag" />
+            <Route path="/tags" page={TagTagsPage} name="tags" />
+          </Set>
+          <Set wrap={ScaffoldLayout} title="Ingredients" titleTo="ingredients" buttonLabel="New Ingredient" buttonTo="newIngredient">
+            <Route path="/ingredients/new" page={IngredientNewIngredientPage} name="newIngredient" />
+            <Route path="/ingredients/{id}/edit" page={IngredientEditIngredientPage} name="editIngredient" />
+            <Route path="/ingredients/{id}" page={IngredientIngredientPage} name="ingredient" />
+            <Route path="/ingredients" page={IngredientIngredientsPage} name="ingredients" />
+          </Set>
+        </PrivateSet>
       </PrivateSet>
       <Set wrap={CMSLayout}>
         <Route path="/" page={HomePage} name="home" />
