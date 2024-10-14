@@ -1,21 +1,20 @@
+import { Link, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+import { useMemo } from 'react'
+import { useReactTable, ColumnDef, createColumnHelper, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
+import { Button } from 'src/components/Button'
+
 import type {
-  DeleteRecipeMutation,
   DeleteRecipeMutationVariables,
   FindRecipes,
 } from 'types/graphql'
 
-import { Link, routes } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
-import type { TypedDocumentNode } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
-
 import { QUERY } from 'src/components/Recipe/RecipesCell'
 import { truncate } from 'src/lib/formatters'
+import DataTable from 'src/components/DataTable/DataTable'
 
-const DELETE_RECIPE_MUTATION: TypedDocumentNode<
-  DeleteRecipeMutation,
-  DeleteRecipeMutationVariables
-> = gql`
+const DELETE_RECIPE_MUTATION = gql`
   mutation DeleteRecipeMutation($id: String!) {
     deleteRecipe(id: $id) {
       id
@@ -31,9 +30,6 @@ const RecipesList = ({ recipes }: FindRecipes) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
-    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
   })
@@ -44,61 +40,104 @@ const RecipesList = ({ recipes }: FindRecipes) => {
     }
   }
 
+  const columnHelper = createColumnHelper<FindRecipes['recipes'][0]>();
+
+  const data = useMemo(() => recipes, [recipes])
+
+  const columns: ColumnDef<FindRecipes['recipes'][0]>[] = useMemo(
+    () => [
+      columnHelper.accessor((recipe) => recipe.id, {
+        id: 'id',
+        enableColumnFilter: false,
+        enableSorting: false,
+        enableResizing: false,
+        header: () => 'Id',
+        cell: ({ getValue }) => getValue(),
+      }),
+      columnHelper.accessor((recipe) => recipe.name, {
+        id: 'name',
+        header: () => 'Name',
+        cell: ({ getValue }) => getValue(),
+        filterFn: 'includesString',
+        enableColumnFilter: false,
+        size: 220,
+      }),
+      columnHelper.accessor((recipe) => recipe.description, {
+        id: 'description',
+        header: () => 'Description',
+        cell: ({ getValue }) => truncate(getValue()),
+        enableColumnFilter: false,
+        size: 300,
+      }),
+      columnHelper.accessor((recipe) => recipe.preparationTimeMinutes, {
+        id: 'preparationTimeMinutes',
+        header: () => 'Prep Time (min)',
+        cell: ({ getValue }) => getValue(),
+        enableSorting: true,
+        sortingFn: 'alphanumeric',
+        size: 150,
+      }),
+      columnHelper.accessor((recipe) => recipe.cookingTimeMinutes, {
+        id: 'cookingTimeMinutes',
+        header: () => 'Cook Time (min)',
+        cell: ({ getValue }) => getValue(),
+        enableSorting: true,
+        sortingFn: 'alphanumeric',
+        size: 150,
+      }),
+      columnHelper.accessor((recipe) => recipe.family.name, {
+        id: 'family.name',
+        header: () => 'Family',
+        cell: ({ getValue }) => getValue(),
+        enableColumnFilter: true,
+        size: 200,
+      }),
+      columnHelper.accessor((recipe) => recipe.id, {
+        id: 'actions',
+        header: () => 'Actions',
+        enableColumnFilter: false,
+        enableSorting: false,
+        size: 220,
+        cell: ({ row }) => (
+          <div className="flex space-x-2">
+            <Link to={routes.recipe({ id: row.original.id })}>
+              <Button>Show</Button>
+            </Link>
+            <Link to={routes.editRecipe({ id: row.original.id })}>
+              <Button variant="default">Edit</Button>
+            </Link>
+            <Button variant="destructive" onClick={() => onDeleteClick(row.original.id)}>
+              Delete
+            </Button>
+          </div>
+        ),
+      }),
+    ],
+    []
+  )
+
+  const table = useReactTable({
+    data,
+    columns,
+    // onSortingChange: setSorting,
+    // onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    // onColumnVisibilityChange: setColumnVisibility,
+    // onRowSelectionChange: setRowSelection,
+    // state: {
+    //   sorting,
+    //   columnFilters,
+    //   columnVisibility,
+    //   rowSelection,
+    // },
+  })
+
   return (
     <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Instructions</th>
-            <th>Preparation time minutes</th>
-            <th>Cooking time minutes</th>
-            <th>Family</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recipes.map((recipe) => (
-            <tr key={recipe.id}>
-              <td>{truncate(recipe.id)}</td>
-              <td>{truncate(recipe.name)}</td>
-              <td>{truncate(recipe.description)}</td>
-              <td>{truncate(recipe.instructions)}</td>
-              <td>{truncate(recipe.preparationTimeMinutes)}</td>
-              <td>{truncate(recipe.cookingTimeMinutes)}</td>
-              <td>{truncate(recipe.family.name)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.recipe({ id: recipe.id })}
-                    title={'Show recipe ' + recipe.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editRecipe({ id: recipe.id })}
-                    title={'Edit recipe ' + recipe.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete recipe ' + recipe.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(recipe.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <DataTable table={table} />
     </div>
   )
 }
