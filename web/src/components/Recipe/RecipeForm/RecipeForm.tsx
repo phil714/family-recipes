@@ -69,13 +69,12 @@ const RecipeForm = (props: RecipeFormProps) => {
           Description
         </Label>
 
-        <Controller
+        <TextField
           name="description"
-          defaultValue={props.recipe?.description || ''}
-          // rules={validation}
-          render={({ field: { value, onChange } }) => (
-            <TextEditor value={value} onChange={onChange} />
-          )}
+          defaultValue={props.recipe?.description}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
         />
 
         <FieldError name="description" className="rw-field-error" />
@@ -105,12 +104,13 @@ const RecipeForm = (props: RecipeFormProps) => {
           Instructions
         </Label>
 
-        <TextField
+        <Controller
           name="instructions"
-          defaultValue={props.recipe?.instructions}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          defaultValue={props.recipe?.instructions || ''}
+          // rules={validation}
+          render={({ field: { value, onChange } }) => (
+            <TextEditor value={value} onChange={onChange} />
+          )}
         />
 
         <FieldError name="instructions" className="rw-field-error" />

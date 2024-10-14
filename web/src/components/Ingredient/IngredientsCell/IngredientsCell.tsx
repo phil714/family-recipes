@@ -17,6 +17,7 @@ export const QUERY: TypedDocumentNode<
     ingredients {
       id
       name
+      color
       description
     }
   }

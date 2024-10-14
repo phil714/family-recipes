@@ -29,6 +29,11 @@ export const QUERY: TypedDocumentNode<
         name
         color
       }
+      ingredients {
+        id
+        name
+        color
+      }
     }
   }
 `

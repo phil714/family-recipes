@@ -19,6 +19,7 @@ const Routes = () => {
     <Router useAuth={useAuth}>
       <Set wrap={CMSLayout}>
         <Route path="/" page={HomePage} name="home" />
+        <Route path="/recipes/{id}" page={RecipeRecipePage} name="recipe" />
       </Set>
       <PrivateSet wrap={CMSLayout} unauthenticated="login">
         <Route path="/profile" page={ProfilePage} name="profile" />
@@ -37,7 +38,7 @@ const Routes = () => {
         <Set wrap={ScaffoldLayout} title="Recipes" titleTo="recipes" buttonLabel="New Recipe" buttonTo="newRecipe">
           <Route path="/recipes/new" page={RecipeNewRecipePage} name="newRecipe" />
           <Route path="/recipes/{id}/edit" page={RecipeEditRecipePage} name="editRecipe" />
-          <Route path="/recipes/{id}" page={RecipeRecipePage} name="recipe" />
+
           <Route path="/recipes" page={RecipeRecipesPage} name="recipes" />
         </Set>
         <Set wrap={ScaffoldLayout} title="Families" titleTo="families" buttonLabel="New Family" buttonTo="newFamily">

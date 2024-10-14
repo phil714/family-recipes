@@ -16,7 +16,9 @@
       "glossary": "./web/src/locales/{languageTag}/glossary.json",
       "user-menu": "./web/src/locales/{languageTag}/user-menu.json",
       "profile": "./web/src/locales/{languageTag}/profile.json",
-      "user": "./web/src/locales/{languageTag}/user.json"
+      "user": "./web/src/locales/{languageTag}/user.json",
+      "recipe": "./web/src/locales/{languageTag}/recipe.json",
+      "family": "./web/src/locales/{languageTag}/family.json"
     }
   }
 }

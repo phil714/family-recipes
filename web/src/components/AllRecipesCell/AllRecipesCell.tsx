@@ -49,9 +49,9 @@ export const Success = ({ allRecipes }: CellSuccessProps<AllRecipesQuery>) => {
   const recipes = useDeferredValue(allRecipes);
 
   return (
-    <ul className="w-full h-full flex flex-wrap">
+    <ul className="w-full h-full flex flex-wrap grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 lg:gap-8">
       {recipes?.map((item) => {
-        return <AllRecipesRecipeDisplay recipe={item} />;
+        return <AllRecipesRecipeDisplay recipe={item} key={item.id} />;
       })}
     </ul>
   );
