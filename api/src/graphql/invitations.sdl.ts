@@ -15,15 +15,10 @@ export const schema = gql`
     userId: String
   }
 
-  enum AccessRole {
-    USER
-    ADMIN
-  }
-
   type Query {
-    invitations: [Invitation!]! @requireAuth
-    invitation(id: String!): Invitation @requireAuth
-    invitationByCode(code: String!): InvitationByCode @skipAuth #TODO: refactor to code
+    invitations: [Invitation!]! @requireAuth(roles: "ADMIN")
+    invitation(id: String!): Invitation @requireAuth(roles: "ADMIN")
+    invitationByCode(code: String!): InvitationByCode @skipAuth
   }
 
   input CreateInvitationInput {

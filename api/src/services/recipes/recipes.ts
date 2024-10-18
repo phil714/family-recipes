@@ -82,7 +82,6 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
               },
             },
           },
-          status: RecipeStatus.PRIVATE
         },
         { status: RecipeStatus.PUBLIC },
       ],

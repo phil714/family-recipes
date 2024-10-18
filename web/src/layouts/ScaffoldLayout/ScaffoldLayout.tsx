@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import { hasRole, useAuth } from 'src/auth'
 
 type LayoutProps = {
   title: string
@@ -15,6 +16,8 @@ const ScaffoldLayout = ({
   buttonTo,
   children,
 }: LayoutProps) => {
+  const { currentUser } = useAuth()
+
   return (
     <div className="rw-scaffold">
       <header className="rw-header">
@@ -23,9 +26,11 @@ const ScaffoldLayout = ({
             {title}
           </Link>
         </h1>
-        <Link to={routes[buttonTo]()} className="rw-button rw-button-green">
-          <div className="rw-button-icon">+</div> {buttonLabel}
-        </Link>
+        {hasRole(['ADMIN', 'USER']) && (
+          <Link to={routes[buttonTo]()} className="rw-button rw-button-green">
+            <div className="rw-button-icon">+</div> {buttonLabel}
+          </Link>
+        )}
       </header>
       <main className="rw-main">{children}</main>
     </div>

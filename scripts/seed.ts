@@ -24,12 +24,18 @@ export default async () => {
       },
       {
         id: '3',
+        name: 'Philippe Deschesnes Admin',
+        email: 'philippe.deschesnes+admin@hotmail.com',
+        password: 'AAAaaa111',
+      },
+      {
+        id: '4',
         name: 'Philippe Deschesnes User',
         email: 'philippe.deschesnes+user@hotmail.com',
         password: 'AAAaaa111',
       },
       {
-        id: '4',
+        id: '5',
         name: 'Philippe Deschesnes Viewer',
         email: 'philippe.deschesnes+viewer@hotmail.com',
         password: 'AAAaaa111',
