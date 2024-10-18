@@ -44,8 +44,8 @@ const AllRecipesRecipeDisplay = ({ recipe }: Props) => {
         </CardHeader>
         <CardContent className="p-4 pt-0">
           <div className="flex flex-wrap gap-2 pt-2">
-            {recipe.tags.map((tag) => <TagDisplay tag={tag} />)}
-            {recipe.ingredients.map((ingredient) => <TagDisplay tag={ingredient} />)}
+            {recipe.tags.map((tag) => <TagDisplay tag={tag} key={tag.id} />)}
+            {recipe.ingredients.map((ingredient) => <TagDisplay tag={ingredient} key={ingredient.id} />)}
           </div>
         </CardContent>
       </Card>

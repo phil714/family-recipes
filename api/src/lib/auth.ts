@@ -5,6 +5,8 @@ import { db } from './db'
 import { AccessRole } from 'types/graphql'
 import { logger } from './logger'
 
+const APP_ADMIN_EMAILS = process.env.APP_ADMIN_EMAILS.split(';')
+
 /**
  * The name of the cookie that dbAuth sets
  *
@@ -55,8 +57,9 @@ export const getCurrentUser = async (
     },
   })
   const roles = user.familyMembers.map((fM) => fM.accessRole)
+  const isSuperAdmin: boolean | undefined = APP_ADMIN_EMAILS.includes(user.email) || undefined
 
-  return { ...user, roles }
+  return { ...user, roles, isSuperAdmin: isSuperAdmin }
 }
 
 /**
@@ -86,6 +89,10 @@ type AllowedRoles = AccessRole | AccessRole[] | undefined
 export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
   if (!isAuthenticated()) {
     return false
+  }
+
+  if (context.currentUser?.isSuperAdmin) {
+    return true;
   }
 
   const currentUserRoles = context.currentUser?.familyMembers.reduce((acc, curr) => acc.set(curr.familyId, curr.accessRole), new Map<string, AccessRole>())

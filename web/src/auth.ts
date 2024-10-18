@@ -15,6 +15,10 @@ export const hasRole = (roles: AllowedRoles, currentUser?: CurrentUser, familyId
     return false
   }
 
+  if (currentUser?.isSuperAdmin) {
+    return true;
+  }
+
   const currentUserRoles = currentUser.familyMembers.reduce((acc, curr) => acc.set(curr.familyId, curr.accessRole), new Map<string, AccessRole>())
 
   if (typeof roles === 'string') {

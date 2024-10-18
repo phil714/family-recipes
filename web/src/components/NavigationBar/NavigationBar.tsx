@@ -22,8 +22,9 @@ import {
 import { cn } from 'src/lib/utils'
 
 import { UserMenu } from '../UserMenu/UserMenu'
-import { useAuth } from 'src/auth'
+import { hasRole, useAuth } from 'src/auth'
 import { User } from '../User/User'
+import { AccessRole } from 'types/graphql'
 
 interface NavItem {
   title: string
@@ -32,6 +33,7 @@ interface NavItem {
   icon: React.ForwardRefExoticComponent<
     Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
   >
+  roles?: AccessRole[]
 }
 
 export const NavigationBar = () => {
@@ -67,21 +69,25 @@ export const NavigationBar = () => {
       title: 'Families',
       to: routes.families(),
       icon: UsersIcon,
+      roles: ["ADMIN"]
     },
     {
       title: 'Invitations',
       to: routes.invitations(),
       icon: SendIcon,
+      roles: ["ADMIN"]
     },
     {
       title: 'Ingredients',
       to: routes.ingredients(),
       icon: AppleIcon,
+      roles: []
     },
     {
       title: 'Tags',
       to: routes.tags(),
       icon: ListIcon,
+      roles: []
     },
   ]
 
@@ -94,7 +100,7 @@ export const NavigationBar = () => {
     >
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center">
         {currentUser?.id ? <UserMenu /> : <User user={{ name: '', email: '' }} options={{ email: false }} />}
-        {links.map((link, index) => (
+        {links.filter((link) => link.roles !== undefined ? hasRole(link.roles, currentUser) : true).map((link, index) => (
           <Tooltip key={index} delayDuration={0}>
             <TooltipTrigger asChild>
               <NavLink
