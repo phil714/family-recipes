@@ -2,6 +2,10 @@ import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
+import { AccessRole } from 'types/graphql'
+import { logger } from './logger'
+
+const APP_ADMIN_EMAILS = process.env.APP_ADMIN_EMAILS.split(';')
 
 /**
  * The name of the cookie that dbAuth sets
@@ -37,10 +41,25 @@ export const getCurrentUser = async (
     throw new Error('Invalid session')
   }
 
-  return await db.user.findUnique({
+  const user = await db.user.findUnique({
     where: { id: session.id },
-    select: { id: true, email: true, name: true },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      familyMembers: {
+        select: {
+          id: true,
+          familyId: true,
+          accessRole: true
+        }
+      }
+    },
   })
+  const roles = user.familyMembers.map((fM) => fM.accessRole)
+  const isSuperAdmin: boolean | undefined = APP_ADMIN_EMAILS.includes(user.email) || undefined
+
+  return { ...user, roles, isSuperAdmin: isSuperAdmin }
 }
 
 /**
@@ -56,7 +75,7 @@ export const isAuthenticated = (): boolean => {
  * When checking role membership, roles can be a single value, a list, or none.
  * You can use Prisma enums too (if you're using them for roles), just import your enum type from `@prisma/client`
  */
-type AllowedRoles = string | string[] | undefined
+type AllowedRoles = AccessRole | AccessRole[] | undefined
 
 /**
  * Checks if the currentUser is authenticated (and assigned one of the given roles)
@@ -66,32 +85,38 @@ type AllowedRoles = string | string[] | undefined
  * @returns {boolean} - Returns true if the currentUser is logged in and assigned one of the given roles,
  * or when no roles are provided to check against. Otherwise returns false.
  */
-export const hasRole = (roles: AllowedRoles): boolean => {
+
+export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
   if (!isAuthenticated()) {
     return false
   }
 
-  const currentUserRoles = context.currentUser?.roles
+  if (context.currentUser?.isSuperAdmin) {
+    return true;
+  }
+
+  const currentUserRoles = context.currentUser?.familyMembers.reduce((acc, curr) => acc.set(curr.familyId, curr.accessRole), new Map<string, AccessRole>())
 
   if (typeof roles === 'string') {
-    if (typeof currentUserRoles === 'string') {
-      // roles to check is a string, currentUser.roles is a string
-      return currentUserRoles === roles
-    } else if (Array.isArray(currentUserRoles)) {
-      // roles to check is a string, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) => roles === allowedRole)
+    if (familyId) {
+      const familyRole = currentUserRoles.get(familyId)
+      return familyRole === roles
+    } else {
+      const allRoles = [...currentUserRoles.values()]
+      logger.info(allRoles)
+      return allRoles.some((allowedRole) => roles === allowedRole)
     }
   }
 
   if (Array.isArray(roles)) {
-    if (Array.isArray(currentUserRoles)) {
-      // roles to check is an array, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) =>
+    if (familyId) {
+      const familyRole = currentUserRoles.get(familyId)
+      return roles.some((allowedRole) => allowedRole === familyRole)
+    } else {
+      const allRoles = [...currentUserRoles.values()]
+      return allRoles.some((allowedRole) =>
         roles.includes(allowedRole)
       )
-    } else if (typeof currentUserRoles === 'string') {
-      // roles to check is an array, currentUser.roles is a string
-      return roles.some((allowedRole) => currentUserRoles === allowedRole)
     }
   }
 
@@ -113,12 +138,12 @@ export const hasRole = (roles: AllowedRoles): boolean => {
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles }: { roles?: AllowedRoles } = {}) => {
+export const requireAuth = ({ roles, familyId }: { roles?: AllowedRoles, familyId?: string } = {}) => {
   if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (roles && !hasRole(roles)) {
+  if (roles && !hasRole(roles, familyId)) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }

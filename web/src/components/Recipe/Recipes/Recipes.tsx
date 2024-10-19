@@ -17,6 +17,7 @@ import RecipeStatusDisplay from 'src/components/RecipeStatusDisplay/RecipeStatus
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from 'src/components/DropdownMenu/DropdownMenu'
 import { MoreHorizontal } from 'lucide-react'
 import { t } from 'i18next'
+import { hasRole, useAuth } from 'src/auth'
 
 const DELETE_RECIPE_MUTATION = gql`
   mutation DeleteRecipeMutation($id: String!) {
@@ -27,6 +28,8 @@ const DELETE_RECIPE_MUTATION = gql`
 `
 
 const RecipesList = ({ recipes }: FindRecipes) => {
+  const { currentUser } = useAuth()
+
   const [deleteRecipe] = useMutation(DELETE_RECIPE_MUTATION, {
     onCompleted: () => {
       toast.success('Recipe deleted')
@@ -107,21 +110,23 @@ const RecipesList = ({ recipes }: FindRecipes) => {
             <Link to={routes.recipe({ id: row.original.id })}>
               <Button>Show</Button>
             </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">{t("common:open-menu")}</span>
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <Link to={routes.editRecipe({ id: row.original.id })}>
-                  <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
-                </Link>
-                <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {hasRole(['ADMIN', 'USER'], currentUser, row.original.family.id) && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">{t("common:open-menu")}</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <Link to={routes.editRecipe({ id: row.original.id })}>
+                    <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         ),
       }),

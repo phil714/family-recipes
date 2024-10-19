@@ -15,15 +15,10 @@ export const schema = gql`
     userId: String
   }
 
-  enum AccessRole {
-    USER
-    ADMIN
-  }
-
   type Query {
-    invitations: [Invitation!]! @requireAuth
-    invitation(id: String!): Invitation @requireAuth
-    invitationByCode(code: String!): InvitationByCode @skipAuth #TODO: refactor to code
+    invitations: [Invitation!]! @requireAuth(roles: "ADMIN")
+    invitation(id: String!): Invitation @requireAuth(roles: "ADMIN")
+    invitationByCode(code: String!): InvitationByCode @skipAuth
   }
 
   input CreateInvitationInput {
@@ -40,10 +35,10 @@ export const schema = gql`
   }
 
   type Mutation {
-    createInvitation(input: CreateInvitationInput!): Invitation! @requireAuth
+    createInvitation(input: CreateInvitationInput!): Invitation! @requireAuth(roles: "ADMIN")
     updateInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
-      @requireAuth
-    deleteInvitation(id: String!): Invitation! @requireAuth
+      @requireAuth(roles: "ADMIN")
+    deleteInvitation(id: String!): Invitation! @requireAuth(roles: "ADMIN")
     acceptInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
       @skipAuth
   }

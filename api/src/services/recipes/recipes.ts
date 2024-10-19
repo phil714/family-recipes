@@ -7,6 +7,7 @@ import type {
 import { RecipeStatus } from '@prisma/client'
 
 import { db } from 'src/lib/db'
+import { requireAuth } from 'src/lib/auth'
 
 export const recipes: QueryResolvers['recipes'] = ({ searchParams }) => {
   return db.recipe.findMany({
@@ -31,17 +32,17 @@ export const allRecipes: QueryResolvers['allRecipes'] = (input) => {
   return db.recipe.findMany({
     where: {
       OR: [
-        {
+        { status: RecipeStatus.PUBLIC },
+        ...(context.currentUser ? [{
+          status: RecipeStatus.PRIVATE,
           family: {
             familyMembers: {
               some: {
-                userId: context.currentUser?.id,
+                userId: context.currentUser.id,
               },
             },
           },
-          status: { in: [RecipeStatus.PRIVATE, RecipeStatus.PUBLIC] }
-        },
-        { status: RecipeStatus.PUBLIC },
+        }] : []),
       ],
       name: searchText.length > 0 ? {
         contains: searchText, // TODO: find a better search engine later
@@ -81,7 +82,6 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
               },
             },
           },
-          status: { in: [RecipeStatus.PRIVATE, RecipeStatus.PUBLIC] }
         },
         { status: RecipeStatus.PUBLIC },
       ],
@@ -92,6 +92,7 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
 export const createRecipe: MutationResolvers['createRecipe'] = async ({
   input,
 }) => {
+  requireAuth({ roles: ["ADMIN", "USER"], familyId: input.familyId })
   const tags = {
     connect: input.tagIds.map((tag) => ({ id: tag })),
   }
@@ -160,7 +161,12 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   })
 }
 
-export const deleteRecipe: MutationResolvers['deleteRecipe'] = ({ id }) => {
+export const deleteRecipe: MutationResolvers['deleteRecipe'] = async ({ id }) => {
+  const recipe = await db.recipe.findUnique({
+    where: { id }
+  })
+  requireAuth({ roles: ["ADMIN", "USER"], familyId: recipe?.familyId })
+
   return db.recipe.delete({
     where: { id },
   })
