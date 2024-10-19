@@ -10,7 +10,7 @@ export interface IUser {
   avatarSrc?: string
 }
 
-interface Props {
+export interface Props {
   user: IUser
   options?: {
     name?: boolean
@@ -19,7 +19,7 @@ interface Props {
   }
 }
 
-const defaultOptions = { name: true, email: true, avatar: true }
+export const defaultOptions = { name: true, email: true, avatar: true }
 
 export const User: React.FC<Props> = (props) => {
   const { user } = props

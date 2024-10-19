@@ -34,6 +34,7 @@ export const TextEditor: React.FC<Props> = (props) => {
     onUpdate({ editor }) {
       onChange(editor.getHTML())
     },
+    editable,
   })
 
   return (

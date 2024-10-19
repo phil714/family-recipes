@@ -67,4 +67,7 @@ export const Family: FamilyRelationResolvers = {
   recipes: (_obj, { root }) => {
     return db.family.findUnique({ where: { id: root?.id } }).recipes()
   },
+  familyMembers: (_obj, { root }) => {
+    return db.family.findUnique({ where: { id: root?.id } }).familyMembers()
+  },
 }

@@ -13,6 +13,7 @@ export const QUERY: TypedDocumentNode<FindTagById, FindTagByIdVariables> = gql`
     tag: tag(id: $id) {
       id
       name
+      description
       color
     }
   }

@@ -15,6 +15,8 @@ import {
 import AccessRoleSelect from "../AccessRoleSelect/AccessRoleSelect";
 import { User } from "../User/User";
 import { toast } from "@redwoodjs/web/toast";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
+import { FamilyMembersCellSkeleton } from "./FamilyMembersCell.skeleton";
 
 export const QUERY: TypedDocumentNode<
   FamilyMembersQuery,
@@ -45,7 +47,7 @@ const UPDATE_FAMILY_MEMBER_MUTATION: TypedDocumentNode<
 `
 
 
-export const Loading = () => <div>Loading...</div>;
+export const Loading = () => <FamilyMembersCellSkeleton />;
 
 export const Empty = () => <div>Empty</div>;
 
@@ -76,13 +78,30 @@ export const Success = ({
   }
 
   return (
-    <ul className="flex flex-col gap-4">
+    <Layout>
       {familyMembers.map((item) => {
         return <li key={item.id} className="flex justify-center">
           <User user={item.user} />
           <AccessRoleSelect value={item.accessRole} onChange={(accessRole) => onSave({ accessRole }, item.id)} />
         </li>;
       })}
-    </ul>
+    </Layout>
   );
 };
+
+export const Layout = ({ children }) => (
+  <Card>
+    <CardHeader>
+      <CardTitle>
+        Members
+      </CardTitle>
+      <CardDescription>
+        Invite your family members to collaborate.
+      </CardDescription>
+    </CardHeader>
+    <CardContent className="flex flex-col gap-4">
+      {children}
+    </CardContent>
+  </Card>
+)
+

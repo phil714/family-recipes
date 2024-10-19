@@ -17,6 +17,17 @@ export const QUERY: TypedDocumentNode<
     families {
       id
       name
+      recipes {
+        id
+      }
+      familyMembers {
+        id
+        user {
+          id
+          name
+          email
+        }
+      }
     }
   }
 `

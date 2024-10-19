@@ -1,4 +1,4 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { useMemo } from 'react'
@@ -106,10 +106,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
         enableSorting: false,
         size: 220,
         cell: ({ row }) => (
-          <div className="flex space-x-2">
-            <Link to={routes.recipe({ id: row.original.id })}>
-              <Button>Show</Button>
-            </Link>
+          <>
             {hasRole(['ADMIN', 'USER'], currentUser, row.original.family.id) && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -118,8 +115,8 @@ const RecipesList = ({ recipes }: FindRecipes) => {
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                  <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
                   <Link to={routes.editRecipe({ id: row.original.id })}>
                     <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
                   </Link>
@@ -127,7 +124,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
-          </div>
+          </>
         ),
       }),
     ],
@@ -139,6 +136,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
     columns,
     // onSortingChange: setSorting,
     // onColumnFiltersChange: setColumnFilters,
+    getRowId: (original) => original.id,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -154,9 +152,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
   })
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <DataTable table={table} />
-    </div>
+    <DataTable table={table} onRowClick={(id) => navigate(routes.recipe({ id }))} />
   )
 }
 

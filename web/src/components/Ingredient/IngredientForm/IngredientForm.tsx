@@ -8,6 +8,7 @@ import {
   Label,
   TextField,
   Submit,
+  ColorField,
 } from "@redwoodjs/forms";
 
 type FormIngredient = NonNullable<EditIngredientById["ingredient"]>;
@@ -69,6 +70,24 @@ const IngredientForm = (props: IngredientFormProps) => {
         />
 
         <FieldError name="description" className="rw-field-error" />
+
+        <Label
+          name="color"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Color
+        </Label>
+
+        <ColorField
+          name="color"
+          defaultValue={props.ingredient?.color}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true }}
+        />
+
+        <FieldError name="color" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
