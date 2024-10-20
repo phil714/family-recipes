@@ -1,98 +1,112 @@
-import type {
-  DeleteIngredientMutation,
-  DeleteIngredientMutationVariables,
-  FindIngredients,
-} from "types/graphql";
+import { Link, routes, navigate } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+import { useMemo } from 'react'
+import { useReactTable, ColumnDef, createColumnHelper, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
+import { Button } from 'src/components/Button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from 'src/components/DropdownMenu/DropdownMenu'
+import { MoreHorizontal } from 'lucide-react'
+import { t } from 'i18next'
 
-import { Link, routes } from "@redwoodjs/router";
-import { useMutation } from "@redwoodjs/web";
-import type { TypedDocumentNode } from "@redwoodjs/web";
-import { toast } from "@redwoodjs/web/toast";
+import type { DeleteIngredientMutationVariables, FindIngredients } from 'types/graphql'
 
-import { QUERY } from "src/components/Ingredient/IngredientsCell";
-import { truncate } from "src/lib/formatters";
+import { QUERY } from 'src/components/Ingredient/IngredientsCell'
+import { truncate } from 'src/lib/formatters'
+import DataTable from 'src/components/DataTable/DataTable'
+import TagDisplay from 'src/components/TagDisplay/TagDisplay'
 
-const DELETE_INGREDIENT_MUTATION: TypedDocumentNode<
-  DeleteIngredientMutation,
-  DeleteIngredientMutationVariables
-> = gql`
+const DELETE_INGREDIENT_MUTATION = gql`
   mutation DeleteIngredientMutation($id: String!) {
     deleteIngredient(id: $id) {
       id
     }
   }
-`;
+`
 
 const IngredientsList = ({ ingredients }: FindIngredients) => {
   const [deleteIngredient] = useMutation(DELETE_INGREDIENT_MUTATION, {
     onCompleted: () => {
-      toast.success("Ingredient deleted");
+      toast.success('Ingredient deleted')
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message)
     },
-    // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
-    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
-  });
+  })
 
-  const onDeleteClick = (id: DeleteIngredientMutationVariables["id"]) => {
-    if (confirm("Are you sure you want to delete ingredient " + id + "?")) {
-      deleteIngredient({ variables: { id } });
+  const onDeleteClick = (id: DeleteIngredientMutationVariables['id']) => {
+    if (confirm('Are you sure you want to delete ingredient ' + id + '?')) {
+      deleteIngredient({ variables: { id } })
     }
-  };
+  }
+
+  const columnHelper = createColumnHelper<FindIngredients['ingredients'][0]>()
+
+  const data = useMemo(() => ingredients, [ingredients])
+
+  const columns: ColumnDef<FindIngredients['ingredients'][0]>[] = useMemo(
+    () => [
+      columnHelper.accessor((ingredient) => ingredient.name, {
+        id: 'name',
+        header: () => 'Name',
+        cell: ({ getValue, row }) => <TagDisplay tag={row.original} />,
+        enableSorting: true,
+        size: 220,
+      }),
+      columnHelper.accessor((ingredient) => ingredient.description, {
+        id: 'description',
+        header: () => 'Description',
+        cell: ({ getValue }) => getValue(),
+        enableColumnFilter: false,
+        size: 300,
+      }),
+      columnHelper.accessor((ingredient) => ingredient.id, {
+        id: 'actions',
+        header: () => t('common:actions'),
+        enableColumnFilter: false,
+        enableSorting: false,
+        size: 220,
+        cell: ({ row }) => (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">{t("common:open-menu")}</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
+                <Link to={routes.ingredient({ id: row.original.id })}>
+                  <DropdownMenuItem>{t("common:open")}</DropdownMenuItem>
+                </Link>
+                <Link to={routes.editIngredient({ id: row.original.id })}>
+                  <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ),
+      }),
+    ],
+    []
+  )
+
+  const table = useReactTable({
+    data,
+    columns,
+    getRowId: (original) => original.id,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  })
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ingredients.map((ingredient) => (
-            <tr key={ingredient.id}>
-              <td>{truncate(ingredient.id)}</td>
-              <td>{truncate(ingredient.name)}</td>
-              <td>{truncate(ingredient.description)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.ingredient({ id: ingredient.id })}
-                    title={"Show ingredient " + ingredient.id + " detail"}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editIngredient({ id: ingredient.id })}
-                    title={"Edit ingredient " + ingredient.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={"Delete ingredient " + ingredient.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(ingredient.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+    <DataTable table={table} onRowClick={(id) => navigate(routes.ingredient({ id }))} />
+  )
+}
 
-export default IngredientsList;
+export default IngredientsList

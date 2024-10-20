@@ -50,7 +50,7 @@ const Recipe = ({ recipe }: Props) => {
           </div>
         </CardContent>
         <CardContent>
-          <h2 className="text-2xl font-semibold mb-4">{t("recipe:instructions")}</h2>
+          <h2 className="text-2xl font-semibold mb-2">{t("recipe:instructions")}</h2>
           <TextEditor editable={false} value={recipe.instructions} onChange={() => {}} className="w-full bg-white h-full" />
         </CardContent>
       </Card>

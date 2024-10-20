@@ -21,6 +21,7 @@ export const QUERY: TypedDocumentNode<EditTagById> = gql`
       id
       name
       color
+      description
     }
   }
 `
@@ -34,6 +35,7 @@ const UPDATE_TAG_MUTATION: TypedDocumentNode<
       id
       name
       color
+      description
     }
   }
 `

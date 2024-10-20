@@ -17,7 +17,10 @@ export const QUERY: TypedDocumentNode<
     invitations {
       id
       email
-      familyId
+      family {
+        id
+        name
+      }
       accessRole
     }
   }

@@ -62,6 +62,10 @@ const Tag = ({ tag }: Props) => {
               <td>{tag.name}</td>
             </tr>
             <tr>
+              <th>Description</th>
+              <td>{tag.description}</td>
+            </tr>
+            <tr>
               <th>Color</th>
               <td>{tag.color}</td>
             </tr>

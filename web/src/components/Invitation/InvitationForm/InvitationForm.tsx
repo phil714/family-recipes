@@ -6,8 +6,6 @@ import {
   FormError,
   FieldError,
   Label,
-  TextField,
-  RadioField,
   Submit,
   Controller,
   EmailField,
@@ -23,6 +21,7 @@ interface InvitationFormProps {
   onSave: (data: UpdateInvitationInput, id?: FormInvitation['id']) => void
   error: RWGqlError
   loading: boolean
+  familyId?: string;
 }
 
 const InvitationForm = (props: InvitationFormProps) => {
@@ -53,30 +52,29 @@ const InvitationForm = (props: InvitationFormProps) => {
           defaultValue={props.invitation?.email}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true,  }}
+          validation={{ required: true, }}
         />
 
         <FieldError name="email" className="rw-field-error" />
 
-        <Label
-          name="familyId"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Family
-        </Label>
-
-        <Controller
-          name="familyId"
-          defaultValue={props.invitation?.familyId}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <FamilyInputCell onChange={onChange} value={value} />
-          )}
-        />
-
-        <FieldError name="familyId" className="rw-field-error" />
-
+        {!props.familyId && <>
+          <Label
+            name="familyId"
+            className="rw-label"
+            errorClassName="rw-label rw-label-error"
+          >
+            Family
+          </Label>
+          <Controller
+            name="familyId"
+            defaultValue={props.invitation?.familyId}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <FamilyInputCell onChange={onChange} value={value} />
+            )}
+          />
+          <FieldError name="familyId" className="rw-field-error" />
+        </>}
         <Label
           name="accessRole"
           className="rw-label"

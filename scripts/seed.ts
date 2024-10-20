@@ -18,26 +18,26 @@ export default async () => {
       },
       {
         id: '2',
-        name: 'Laurence Amyotte',
-        email: 'philippe.deschesnes+1@hotmail.com',
-        password: 'AAAaaa111',
-      },
-      {
-        id: '3',
         name: 'Philippe Deschesnes Admin',
         email: 'philippe.deschesnes+admin@hotmail.com',
         password: 'AAAaaa111',
       },
       {
-        id: '4',
+        id: '3',
         name: 'Philippe Deschesnes User',
         email: 'philippe.deschesnes+user@hotmail.com',
         password: 'AAAaaa111',
       },
       {
-        id: '5',
+        id: '4',
         name: 'Philippe Deschesnes Viewer',
         email: 'philippe.deschesnes+viewer@hotmail.com',
+        password: 'AAAaaa111',
+      },
+      {
+        id: '5',
+        name: 'Laurence Amyotte',
+        email: 'philippe.deschesnes+1@hotmail.com',
         password: 'AAAaaa111',
       },
     ]
@@ -81,34 +81,43 @@ export default async () => {
       },
       {
         id: '2',
+        userId: '2',
+        familyId: '1',
+        accessRole: 'ADMIN',
+      },
+      {
+        id: '3',
         userId: '3',
         familyId: '1',
         accessRole: 'USER',
       },
       {
-        id: '3',
+        id: '4',
         userId: '4',
         familyId: '1',
         accessRole: 'VIEWER',
       },
-      {
-        id: '4',
-        userId: '1',
-        familyId: '2',
-        accessRole: 'USER',
-      },
+
       {
         id: '5',
+        userId: '2',
+        familyId: '2',
+        accessRole: 'VIEWER',
+      },
+      {
+        id: '6',
+        userId: '5',
+        familyId: '2',
+        accessRole: 'ADMIN',
+      },
+
+      {
+        id: '7',
         userId: '1',
         familyId: '3',
         accessRole: 'ADMIN',
       },
-      {
-        id: '6',
-        userId: '2',
-        familyId: '2',
-        accessRole: 'ADMIN',
-      },
+
     ]
 
     await db.familyMember.createMany({ data: familyMembers })
@@ -117,54 +126,65 @@ export default async () => {
       {
         id: '1',
         name: 'Chinese',
-        color: '#FF4500'
+        color: '#FF4500',
+        description: 'A culinary tradition rich in history, known for bold flavors and a balance of sweet, sour, salty, and umami, with popular dishes like stir-fries, dumplings, and noodles.'
       },
       {
         id: '2',
         name: 'French',
-        color: '#4682B4'
+        color: '#4682B4',
+        description: 'Renowned for its attention to detail and sophisticated techniques, this cuisine emphasizes sauces, pastries, and dishes like coq au vin and croissants.'
       },
       {
         id: '3',
         name: 'Canadian',
-        color: '#8FBC8F'
+        color: '#8FBC8F',
+        description: 'A diverse and hearty cuisine influenced by various cultures, featuring iconic dishes like poutine, butter tarts, and a strong focus on maple syrup.'
       },
       {
         id: '4',
         name: 'Mexican',
-        color: '#FFD700'
+        color: '#FFD700',
+        description: 'Bursting with vibrant flavors, it often includes a combination of chiles, beans, corn, and meats in dishes such as tacos, enchiladas, and mole.'
       },
       {
         id: '5',
         name: 'Italian',
-        color: '#FF6347'
+        color: '#FF6347',
+        description: 'Famous for its use of fresh ingredients and simple, yet flavorful combinations, with beloved staples like pasta, pizza, and rich regional specialties.'
       },
       {
         id: '6',
         name: 'Japanese',
-        color: '#FF69B4'
+        color: '#FF69B4',
+        description: 'Focused on seasonal ingredients and delicate presentation, offering dishes like sushi, ramen, and tempura, with an emphasis on balance and freshness.'
       },
       {
         id: '7',
         name: 'Indian',
-        color: '#FF8C00'
+        color: '#FF8C00',
+        description: 'Known for its rich use of spices and complex flavors, this cuisine offers a variety of dishes like curries, biryani, and vegetarian options.'
       },
       {
         id: '8',
         name: 'Thai',
-        color: '#32CD32'
+        color: '#32CD32',
+        description: 'A flavorful cuisine balancing sweet, sour, salty, and spicy, with dishes like pad Thai, curries, and salads that make use of fresh herbs and bold spices.'
       },
       {
         id: '9',
         name: 'Greek',
-        color: '#4682B4'
+        color: '#4682B4',
+        description: 'Rooted in Mediterranean traditions, it features fresh ingredients like olive oil, feta, and herbs, with well-known dishes like souvlaki, moussaka, and tzatziki.'
       },
       {
         id: '10',
         name: 'Spanish',
-        color: '#DC143C'
+        color: '#DC143C',
+        description: 'Known for its variety of small plates (tapas), vibrant spices, and seafood-heavy dishes like paella, with a focus on olive oil and fresh vegetables.'
       }
-    ]
+    ];
+
 
 
     await db.tag.createMany({ data: tags })

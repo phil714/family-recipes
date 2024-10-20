@@ -13,11 +13,13 @@ interface Recipe {
   ingredients: {
     id: string;
     name: string;
+    description: string;
     color: string;
   }[]
   tags: {
     id: string;
     name: string;
+    description: string;
     color: string;
   }[]
 }
@@ -26,7 +28,10 @@ interface Props {
   recipe: Recipe;
 }
 
+import tomato from '../Recipe/Recipe/tomato.jpeg'
+
 const AllRecipesRecipeDisplay = ({ recipe }: Props) => {
+
   return (
     <Link
       to={routes.recipe({ id: recipe.id })}
@@ -35,6 +40,11 @@ const AllRecipesRecipeDisplay = ({ recipe }: Props) => {
     >
       <Card className="shadow-md h-fit hover:bg-slate-100">
         <CardHeader className="p-4 pb-0">
+          <img
+            src={tomato} // TODO: replace with recipe image
+            alt={recipe.name}
+            className="w-full h-40 object-cover rounded-lg pb-2"
+          />
           <CardTitle className="text-xl font-bold">
             {recipe.name}
           </CardTitle>

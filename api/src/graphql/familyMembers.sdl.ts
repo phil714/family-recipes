@@ -1,11 +1,11 @@
 export const schema = gql`
   type FamilyMember {
     id: String!
-    userId: String!
-    accessRole: AccessRole!
+    userId: String! @requireAuth
+    accessRole: AccessRole! @requireAuth
     familyId: String!
     family: Family!
-    user: User!
+    user: User! @requireAuth
     recipes: [Recipe]!
   }
 

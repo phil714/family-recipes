@@ -4,6 +4,7 @@ export const schema = gql`
     name: String!
     description: String!
     recipes: [Recipe]!
+    familyMembers: [FamilyMember]!
   }
 
   type Query {

@@ -36,8 +36,6 @@ const UPDATE_INVITATION_MUTATION: TypedDocumentNode<
   ) {
     updateInvitation(id: $id, input: $input) {
       id
-      email
-      familyId
       accessRole
     }
   }

@@ -1,21 +1,21 @@
-import type {
-  DeleteFamilyMutation,
-  DeleteFamilyMutationVariables,
-  FindFamilies,
-} from 'types/graphql'
-
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useMemo } from 'react'
+import { useReactTable, ColumnDef, createColumnHelper, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
+import { Button } from 'src/components/Button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from 'src/components/DropdownMenu/DropdownMenu'
+import { MoreHorizontal } from 'lucide-react'
+
+import type { DeleteFamilyMutationVariables, FindFamilies } from 'types/graphql'
 
 import { QUERY } from 'src/components/Family/FamiliesCell'
-import { truncate } from 'src/lib/formatters'
+import DataTable from 'src/components/DataTable/DataTable'
+import { t } from 'i18next'
+import { useAuth } from 'src/auth'
+import { UserGroup } from 'src/components/UserGroup/UserGroup'
 
-const DELETE_FAMILY_MUTATION: TypedDocumentNode<
-  DeleteFamilyMutation,
-  DeleteFamilyMutationVariables
-> = gql`
+const DELETE_FAMILY_MUTATION = gql`
   mutation DeleteFamilyMutation($id: String!) {
     deleteFamily(id: $id) {
       id
@@ -24,6 +24,8 @@ const DELETE_FAMILY_MUTATION: TypedDocumentNode<
 `
 
 const FamiliesList = ({ families }: FindFamilies) => {
+  const { currentUser } = useAuth()
+
   const [deleteFamily] = useMutation(DELETE_FAMILY_MUTATION, {
     onCompleted: () => {
       toast.success('Family deleted')
@@ -31,9 +33,6 @@ const FamiliesList = ({ families }: FindFamilies) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
-    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
   })
@@ -44,52 +43,75 @@ const FamiliesList = ({ families }: FindFamilies) => {
     }
   }
 
+  const columnHelper = createColumnHelper<FindFamilies['families'][0]>()
+
+  const data = useMemo(() => families, [families])
+
+  const columns: ColumnDef<FindFamilies['families'][0]>[] = useMemo(
+    () => [
+      columnHelper.accessor((family) => family.name, {
+        id: 'name',
+        header: () => 'Name',
+        cell: ({ getValue }) => getValue(),
+        enableSorting: true,
+        size: 220,
+      }),
+      columnHelper.accessor((family) => family.familyMembers.length, {
+        id: 'members',
+        header: () => 'Members',
+        cell: ({ row }) => <UserGroup users={row.original.familyMembers.map((fM) => fM.user)} />,
+        enableSorting: true,
+        size: 220,
+      }),
+      columnHelper.accessor((family) => family.recipes.length, {
+        id: 'recipes',
+        header: () => 'Recipes',
+        cell: ({ getValue }) => getValue(),
+        enableSorting: true,
+        size: 220,
+      }),
+      columnHelper.accessor((family) => family.id, {
+        id: 'actions',
+        header: () => 'Actions',
+        enableColumnFilter: false,
+        enableSorting: false,
+        size: 220,
+        cell: ({ row }) => (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">{t("common:open-menu")}</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
+                <Link to={routes.editFamily({ id: row.original.id })}>
+                  <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
+                </Link>
+                {/* <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem> */}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ),
+      }),
+    ],
+    []
+  )
+
+  const table = useReactTable({
+    data,
+    columns,
+    getRowId: (original) => original.id,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  })
+
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {families.map((family) => (
-            <tr key={family.id}>
-              <td>{truncate(family.id)}</td>
-              <td>{truncate(family.name)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.family({ id: family.id })}
-                    title={'Show family ' + family.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editFamily({ id: family.id })}
-                    title={'Edit family ' + family.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete family ' + family.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(family.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <DataTable table={table} onRowClick={(id) => navigate(routes.editFamily({ id }))} />
   )
 }
 

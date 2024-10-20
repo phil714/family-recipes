@@ -9,6 +9,7 @@ import AllRecipesRecipeDisplay from "../AllRecipesRecipeDisplay/AllRecipesRecipe
 import AllRecipesSearchBar from "../AllRecipesSearchBar/AllRecipesSearchBar";
 import { useLocation } from "@redwoodjs/router";
 import { useDeferredValue } from "react";
+import { AllRecipesRecipeDisplaySkeleton } from "../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay.skeleton";
 
 export const QUERY: TypedDocumentNode<
   AllRecipesQuery,
@@ -26,18 +27,22 @@ export const QUERY: TypedDocumentNode<
       ingredients {
         id
         name
+        description
         color
       }
       tags {
         id
         name
+        description
         color
       }
     }
   }
 `;
 
-export const Loading = () => <div>Loading...</div>;
+export const Loading = () => <ul className="w-full h-full flex flex-wrap grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 lg:gap-8">
+  {Array.from({ length: 12 }).map(() => <AllRecipesRecipeDisplaySkeleton />)}
+</ul>;
 
 export const Empty = () => <div>Empty</div>;
 

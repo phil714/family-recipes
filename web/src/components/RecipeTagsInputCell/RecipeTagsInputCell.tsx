@@ -15,6 +15,7 @@ export const QUERY: TypedDocumentNode<FindTags, FindTagsVariables> = gql`
       id
       name
       color
+      description
     }
   }
 `

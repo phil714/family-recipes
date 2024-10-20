@@ -21,6 +21,7 @@ export const QUERY: TypedDocumentNode<EditIngredientById> = gql`
       id
       name
       description
+      color
     }
   }
 `;
@@ -37,6 +38,7 @@ const UPDATE_INGREDIENT_MUTATION: TypedDocumentNode<
       id
       name
       description
+      color
     }
   }
 `;

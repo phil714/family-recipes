@@ -112,6 +112,7 @@ model Tag {
   id          String       @id @default(nanoid())
   name        String
   color       String
+  description String
   recipes     Recipe[]
   ingredients Ingredient[]
 }

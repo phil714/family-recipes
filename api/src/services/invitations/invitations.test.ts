@@ -88,7 +88,7 @@ describe('invitations', () => {
     })) as Invitation
     const result = await updateInvitation({
       id: original.id,
-      input: { email: 'String2' },
+      input: { accessRole: 'ADMIN' },
     })
 
     expect(result.email).toEqual('String2')

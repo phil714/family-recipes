@@ -10,8 +10,6 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
-import FamilyMembersCell from 'src/components/FamilyMembersCell'
-
 type FormFamily = NonNullable<EditFamilyById['family']>
 
 interface FamilyFormProps {
@@ -27,7 +25,7 @@ const FamilyForm = (props: FamilyFormProps) => {
   }
 
   return (
-    <div className="rw-form-wrapper">
+    <div className="flex flex-col">
       <Form<FormFamily> onSubmit={onSubmit} error={props.error}>
         <FormError
           error={props.error}
@@ -38,8 +36,8 @@ const FamilyForm = (props: FamilyFormProps) => {
 
         <Label
           name="name"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
+          className="rw-label mt-0"
+          errorClassName="rw-label-error"
         >
           Name
         </Label>
@@ -60,7 +58,6 @@ const FamilyForm = (props: FamilyFormProps) => {
           </Submit>
         </div>
       </Form>
-      {props.family?.id && <FamilyMembersCell familyId={props.family.id} />}
     </div>
   )
 }

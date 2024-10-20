@@ -1,21 +1,21 @@
-import type {
-  DeleteTagMutation,
-  DeleteTagMutationVariables,
-  FindTags,
-} from 'types/graphql'
-
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useMemo } from 'react'
+import { useReactTable, ColumnDef, createColumnHelper, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
+import { Button } from 'src/components/Button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from 'src/components/DropdownMenu/DropdownMenu'
+import { MoreHorizontal } from 'lucide-react'
+import { t } from 'i18next'
+
+import type { DeleteTagMutationVariables, FindTags } from 'types/graphql'
 
 import { QUERY } from 'src/components/Tag/TagsCell'
 import { truncate } from 'src/lib/formatters'
+import DataTable from 'src/components/DataTable/DataTable'
+import TagDisplay from 'src/components/TagDisplay/TagDisplay'
 
-const DELETE_TAG_MUTATION: TypedDocumentNode<
-  DeleteTagMutation,
-  DeleteTagMutationVariables
-> = gql`
+const DELETE_TAG_MUTATION = gql`
   mutation DeleteTagMutation($id: String!) {
     deleteTag(id: $id) {
       id
@@ -31,9 +31,6 @@ const TagsList = ({ tags }: FindTags) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
-    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
   })
@@ -44,54 +41,71 @@ const TagsList = ({ tags }: FindTags) => {
     }
   }
 
+  const columnHelper = createColumnHelper<FindTags['tags'][0]>()
+
+  const data = useMemo(() => tags, [tags])
+
+  const columns: ColumnDef<FindTags['tags'][0]>[] = useMemo(
+    () => [
+      columnHelper.accessor((tag) => tag.name, {
+        id: 'name',
+        header: () => 'Name',
+        cell: ({ getValue, row }) => <TagDisplay tag={row.original} />,
+        enableSorting: true,
+        size: 220,
+      }),
+      columnHelper.accessor((tag) => tag.description, {
+        id: 'description',
+        header: () => 'Description',
+        cell: ({ getValue }) => getValue(),
+        enableColumnFilter: false,
+        size: 150,
+      }),
+      columnHelper.accessor((tag) => tag.id, {
+        id: 'actions',
+        header: () => t('common:actions'),
+        enableColumnFilter: false,
+        enableSorting: false,
+        size: 220,
+        cell: ({ row }) => (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">{t("common:open-menu")}</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
+                <Link to={routes.tag({ id: row.original.id })}>
+                  <DropdownMenuItem>{t("common:open")}</DropdownMenuItem>
+                </Link>
+                <Link to={routes.editTag({ id: row.original.id })}>
+                  <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ),
+      }),
+    ],
+    []
+  )
+
+  const table = useReactTable({
+    data,
+    columns,
+    getRowId: (original) => original.id,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  })
+
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Color</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tags.map((tag) => (
-            <tr key={tag.id}>
-              <td>{truncate(tag.id)}</td>
-              <td>{truncate(tag.name)}</td>
-              <td>{truncate(tag.color)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.tag({ id: tag.id })}
-                    title={'Show tag ' + tag.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editTag({ id: tag.id })}
-                    title={'Edit tag ' + tag.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete tag ' + tag.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(tag.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <DataTable table={table} onRowClick={(id) => navigate(routes.tag({ id }))} />
   )
 }
 

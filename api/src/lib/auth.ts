@@ -103,7 +103,6 @@ export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
       return familyRole === roles
     } else {
       const allRoles = [...currentUserRoles.values()]
-      logger.info(allRoles)
       return allRoles.some((allowedRole) => roles === allowedRole)
     }
   }

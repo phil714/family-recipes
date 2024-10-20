@@ -8,7 +8,17 @@ import AllRecipesRecipeDisplay from "./AllRecipesRecipeDisplay";
 describe("AllRecipesRecipeDisplay", () => {
   it("renders successfully", () => {
     expect(() => {
-      render(<AllRecipesRecipeDisplay />);
+      render(<AllRecipesRecipeDisplay recipe={{
+        id: '1',
+        name: 'Test',
+        description: 'Test',
+        family: {
+          id: '1',
+          name: 'Test',
+        },
+        tags: [],
+        ingredients: []
+      }} />);
     }).not.toThrow();
   });
 });

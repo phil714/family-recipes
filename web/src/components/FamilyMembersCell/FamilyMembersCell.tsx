@@ -15,6 +15,10 @@ import {
 import AccessRoleSelect from "../AccessRoleSelect/AccessRoleSelect";
 import { User } from "../User/User";
 import { toast } from "@redwoodjs/web/toast";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
+import { FamilyMembersCellSkeleton } from "./FamilyMembersCell.skeleton";
+import { FamilyMemberMenu } from "../FamilyMemberMenu/FamilyMemberMenu";
+import { hasRole, useAuth } from "src/auth";
 
 export const QUERY: TypedDocumentNode<
   FamilyMembersQuery,
@@ -24,6 +28,7 @@ export const QUERY: TypedDocumentNode<
     familyMembers(familyId: $familyId) {
       id
       accessRole
+      familyId
       user {
         email
         name
@@ -45,7 +50,7 @@ const UPDATE_FAMILY_MEMBER_MUTATION: TypedDocumentNode<
 `
 
 
-export const Loading = () => <div>Loading...</div>;
+export const Loading = () => <FamilyMembersCellSkeleton />;
 
 export const Empty = () => <div>Empty</div>;
 
@@ -56,6 +61,8 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({
   familyMembers,
 }: CellSuccessProps<FamilyMembersQuery>) => {
+  const { currentUser } = useAuth()
+
   const [updateFamilyMember, { loading, error }] = useMutation(
     UPDATE_FAMILY_MEMBER_MUTATION,
     {
@@ -76,13 +83,37 @@ export const Success = ({
   }
 
   return (
-    <ul className="flex flex-col gap-4">
+    <Layout>
       {familyMembers.map((item) => {
-        return <li key={item.id} className="flex justify-center">
+        return <li key={item.id} className="flex justify-between">
           <User user={item.user} />
-          <AccessRoleSelect value={item.accessRole} onChange={(accessRole) => onSave({ accessRole }, item.id)} />
+          <div className="flex gap-2">
+            <AccessRoleSelect
+              value={item.accessRole}
+              onChange={(accessRole) => onSave({ accessRole }, item.id)}
+              disabled={!hasRole('ADMIN', currentUser, item.familyId)}
+            />
+            <FamilyMemberMenu familyMember={item} />
+          </div>
         </li>;
       })}
-    </ul>
+    </Layout>
   );
 };
+
+export const Layout = ({ children }) => (
+  <Card>
+    <CardHeader>
+      <CardTitle>
+        Members
+      </CardTitle>
+      <CardDescription>
+        Invite your family members to collaborate.
+      </CardDescription>
+    </CardHeader>
+    <CardContent className="flex flex-col gap-4">
+      {children}
+    </CardContent>
+  </Card>
+)
+

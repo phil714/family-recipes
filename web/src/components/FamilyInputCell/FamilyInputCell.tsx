@@ -1,4 +1,4 @@
-import type { FindFamilies, FindFamiliesVariables } from 'types/graphql'
+import type { FamilyInputCellData, FamilyInputCellDataVariables } from 'types/graphql'
 
 import type {
   CellSuccessProps,
@@ -9,10 +9,10 @@ import type {
 import { Combobox } from '../Combobox/Combobox'
 
 export const QUERY: TypedDocumentNode<
-  FindFamilies,
-  FindFamiliesVariables
+  FamilyInputCellData,
+  FamilyInputCellDataVariables
 > = gql`
-  query FindFamilies {
+  query FamilyInputCellData {
     families {
       id
       name
@@ -24,7 +24,7 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Empty</div>
 
-export const Failure = ({ error }: CellFailureProps<FindFamiliesVariables>) => (
+export const Failure = ({ error }: CellFailureProps<FamilyInputCellDataVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
@@ -37,7 +37,7 @@ export const Success = ({
   families,
   onChange,
   value,
-}: CellSuccessProps<FindFamilies, FindFamiliesVariables> & InputProps) => {
+}: CellSuccessProps<FamilyInputCellData, FamilyInputCellDataVariables> & InputProps) => {
   return (
     <Combobox
       onChange={onChange}
