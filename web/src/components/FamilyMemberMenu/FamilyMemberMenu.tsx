@@ -26,11 +26,12 @@ const DELETE_FAMILY_MEMBER_MUTATION = gql`
 interface Props {
   familyMember: {
     id: string;
+    familyId: string;
   }
 }
 
 export const FamilyMemberMenu: React.FC<Props> = (props) => {
-  const { familyMember: { id } } = props;
+  const { familyMember: { id, familyId } } = props;
   const { t } = useTranslation()
 
   const [deleteFamilyMember] = useMutation(DELETE_FAMILY_MEMBER_MUTATION, {
@@ -40,7 +41,7 @@ export const FamilyMemberMenu: React.FC<Props> = (props) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    refetchQueries: [{ query: QUERY }],
+    refetchQueries: [{ query: QUERY, variables: { familyId } }],
     awaitRefetchQueries: true,
   })
 

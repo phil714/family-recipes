@@ -27,6 +27,7 @@ export const QUERY: TypedDocumentNode<
     familyMembers(familyId: $familyId) {
       id
       accessRole
+      familyId
       user {
         email
         name

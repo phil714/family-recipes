@@ -37,11 +37,12 @@ const RESEND_INVITATION_MUTATION = gql`
 interface Props {
   invitation: {
     id: string;
+    familyId: string;
   }
 }
 
 export const FamilyInvitationMenu: React.FC<Props> = (props) => {
-  const { invitation: { id } } = props;
+  const { invitation: { id, familyId } } = props;
 
   const { t } = useTranslation()
 
@@ -52,7 +53,7 @@ export const FamilyInvitationMenu: React.FC<Props> = (props) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    refetchQueries: [{ query: QUERY }],
+    refetchQueries: [{ query: QUERY, variables: { familyId } }],
     awaitRefetchQueries: true,
   })
 
