@@ -8,6 +8,7 @@ import { AccessRole } from "types/graphql";
 interface Props {
   value: AccessRole;
   onChange: (value: AccessRole) => void;
+  disabled?: boolean;
 }
 
 const options: Record<AccessRole, { label: string, description: string }> = {
@@ -34,7 +35,7 @@ const AccessRoleSelect = (props: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="ml-auto">
+        <Button variant="outline" className="ml-auto" disabled={props.disabled}>
           {options[props.value].label}
           <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
         </Button>

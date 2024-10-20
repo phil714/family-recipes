@@ -19,6 +19,8 @@ import { toast } from "@redwoodjs/web/toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
 import { FamilyMembersCellSkeleton } from "../FamilyMembersCell/FamilyMembersCell.skeleton";
 import { UserSkeleton } from "../User/User.skeleton";
+import { Button } from "../Button";
+import { Link, routes } from "@redwoodjs/router";
 
 export const QUERY: TypedDocumentNode<
   FamilyInvitationsQuery,
@@ -50,12 +52,19 @@ export const Loading = () => <Layout>{Array.from({ length: 3 }).map(() => <UserS
 
 export const Empty = () => <Layout><p className="text-gray-500">No pending invitations</p></Layout>;
 
-export const Failure = ({ error }: CellFailureProps) => (
-  <div style={{ color: "red" }}>Error: {error?.message}</div>
-);
+export const Failure = ({ error, errorCode }: CellFailureProps) => {
+  if (errorCode === 'FORBIDDEN') {
+    return <React.Fragment />
+  }
+
+  return (
+    <div style={{ color: "red" }}>Error: {error?.message}</div>
+  )
+};
 
 export const Success = ({
   familyInvitations,
+  queryResult,
 }: CellSuccessProps<FamilyInvitationsQuery>) => {
   const [updateInvitation, { loading, error }] = useMutation(
     UPDATE_INVITATION_MUTATION,
@@ -90,13 +99,16 @@ export const Success = ({
 
 export const Layout = ({ children }) => (
   <Card>
-    <CardHeader>
-      <CardTitle>
-        Invitations
-      </CardTitle>
-      <CardDescription>
-        Pending invitations to your family members.
-      </CardDescription>
+    <CardHeader className="flex flex-row justify-between">
+      <span className="flex flex-col">
+        <CardTitle>
+          Invitations
+        </CardTitle>
+        <CardDescription>
+          Pending invitations to your family members.
+        </CardDescription>
+      </span>
+      <Link to={routes.newInvitation()}><Button>Invite</Button></Link>
     </CardHeader>
     <CardContent className="flex flex-col gap-4">
       {children}

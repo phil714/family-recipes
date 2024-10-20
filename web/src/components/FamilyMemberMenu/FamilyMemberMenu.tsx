@@ -1,6 +1,6 @@
 import { MoreHorizontal } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-
+import React from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +14,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { useMutation } from '@redwoodjs/web'
 
 import { DeleteFamilyMemberMutationVariables } from 'types/graphql'
+import { hasRole, useAuth } from 'src/auth'
 
 const DELETE_FAMILY_MEMBER_MUTATION = gql`
   mutation DeleteFamilyMemberMutation($id: String!) {
@@ -32,6 +33,7 @@ interface Props {
 
 export const FamilyMemberMenu: React.FC<Props> = (props) => {
   const { familyMember: { id, familyId } } = props;
+  const { currentUser } = useAuth()
   const { t } = useTranslation()
 
   const [deleteFamilyMember] = useMutation(DELETE_FAMILY_MEMBER_MUTATION, {
@@ -51,19 +53,23 @@ export const FamilyMemberMenu: React.FC<Props> = (props) => {
     }
   }
 
+  if (!hasRole('ADMIN', currentUser, familyId)) {
+    return <React.Fragment />
+  }
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">{t("common:open-menu")}</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-        <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => onDeleteClick(id)}>{t("common:remove")}</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
+
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">{t("common:open-menu")}</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+          <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => onDeleteClick(id)}>{t("common:remove")}</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
 }

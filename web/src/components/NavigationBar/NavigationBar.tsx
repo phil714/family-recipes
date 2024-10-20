@@ -75,7 +75,7 @@ export const NavigationBar = () => {
       title: 'Invitations',
       to: routes.invitations(),
       icon: SendIcon,
-      roles: ["ADMIN"]
+      roles: []
     },
     {
       title: 'Ingredients',

@@ -18,6 +18,7 @@ import { toast } from "@redwoodjs/web/toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
 import { FamilyMembersCellSkeleton } from "./FamilyMembersCell.skeleton";
 import { FamilyMemberMenu } from "../FamilyMemberMenu/FamilyMemberMenu";
+import { hasRole, useAuth } from "src/auth";
 
 export const QUERY: TypedDocumentNode<
   FamilyMembersQuery,
@@ -60,6 +61,8 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({
   familyMembers,
 }: CellSuccessProps<FamilyMembersQuery>) => {
+  const { currentUser } = useAuth()
+
   const [updateFamilyMember, { loading, error }] = useMutation(
     UPDATE_FAMILY_MEMBER_MUTATION,
     {
@@ -85,7 +88,11 @@ export const Success = ({
         return <li key={item.id} className="flex justify-between">
           <User user={item.user} />
           <div className="flex gap-2">
-            <AccessRoleSelect value={item.accessRole} onChange={(accessRole) => onSave({ accessRole }, item.id)} />
+            <AccessRoleSelect
+              value={item.accessRole}
+              onChange={(accessRole) => onSave({ accessRole }, item.id)}
+              disabled={!hasRole('ADMIN', currentUser, item.familyId)}
+            />
             <FamilyMemberMenu familyMember={item} />
           </div>
         </li>;

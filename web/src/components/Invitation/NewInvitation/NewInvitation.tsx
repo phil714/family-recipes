@@ -22,7 +22,11 @@ const CREATE_INVITATION_MUTATION: TypedDocumentNode<
   }
 `
 
-const NewInvitation = () => {
+interface Props {
+  familyId: string
+}
+
+const NewInvitation = (props: Props) => {
   const [createInvitation, { loading, error }] = useMutation(
     CREATE_INVITATION_MUTATION,
     {
@@ -43,7 +47,7 @@ const NewInvitation = () => {
     )
     createInvitation({
       variables: {
-        input: { ...input, redirectUrl: redirectUrl.toString() },
+        input: { ...input, redirectUrl: redirectUrl.toString(), familyId: props.familyId },
       },
     })
   }
@@ -54,7 +58,7 @@ const NewInvitation = () => {
         <h2 className="rw-heading rw-heading-secondary">New Invitation</h2>
       </header>
       <div className="rw-segment-main">
-        <InvitationForm onSave={onSave} loading={loading} error={error} />
+        <InvitationForm onSave={onSave} loading={loading} error={error} familyId={props.familyId} />
       </div>
     </div>
   )

@@ -18,26 +18,26 @@ export default async () => {
       },
       {
         id: '2',
-        name: 'Laurence Amyotte',
-        email: 'philippe.deschesnes+1@hotmail.com',
-        password: 'AAAaaa111',
-      },
-      {
-        id: '3',
         name: 'Philippe Deschesnes Admin',
         email: 'philippe.deschesnes+admin@hotmail.com',
         password: 'AAAaaa111',
       },
       {
-        id: '4',
+        id: '3',
         name: 'Philippe Deschesnes User',
         email: 'philippe.deschesnes+user@hotmail.com',
         password: 'AAAaaa111',
       },
       {
-        id: '5',
+        id: '4',
         name: 'Philippe Deschesnes Viewer',
         email: 'philippe.deschesnes+viewer@hotmail.com',
+        password: 'AAAaaa111',
+      },
+      {
+        id: '5',
+        name: 'Laurence Amyotte',
+        email: 'philippe.deschesnes+1@hotmail.com',
         password: 'AAAaaa111',
       },
     ]
@@ -81,34 +81,43 @@ export default async () => {
       },
       {
         id: '2',
+        userId: '2',
+        familyId: '1',
+        accessRole: 'ADMIN',
+      },
+      {
+        id: '3',
         userId: '3',
         familyId: '1',
         accessRole: 'USER',
       },
       {
-        id: '3',
+        id: '4',
         userId: '4',
         familyId: '1',
         accessRole: 'VIEWER',
       },
-      {
-        id: '4',
-        userId: '1',
-        familyId: '2',
-        accessRole: 'USER',
-      },
+
       {
         id: '5',
+        userId: '2',
+        familyId: '2',
+        accessRole: 'VIEWER',
+      },
+      {
+        id: '6',
+        userId: '5',
+        familyId: '2',
+        accessRole: 'ADMIN',
+      },
+
+      {
+        id: '7',
         userId: '1',
         familyId: '3',
         accessRole: 'ADMIN',
       },
-      {
-        id: '6',
-        userId: '2',
-        familyId: '2',
-        accessRole: 'ADMIN',
-      },
+
     ]
 
     await db.familyMember.createMany({ data: familyMembers })
