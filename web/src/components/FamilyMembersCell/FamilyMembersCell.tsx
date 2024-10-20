@@ -17,6 +17,7 @@ import { User } from "../User/User";
 import { toast } from "@redwoodjs/web/toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
 import { FamilyMembersCellSkeleton } from "./FamilyMembersCell.skeleton";
+import { FamilyMemberMenu } from "../FamilyMemberMenu/FamilyMemberMenu";
 
 export const QUERY: TypedDocumentNode<
   FamilyMembersQuery,
@@ -80,9 +81,12 @@ export const Success = ({
   return (
     <Layout>
       {familyMembers.map((item) => {
-        return <li key={item.id} className="flex justify-center">
+        return <li key={item.id} className="flex justify-between">
           <User user={item.user} />
-          <AccessRoleSelect value={item.accessRole} onChange={(accessRole) => onSave({ accessRole }, item.id)} />
+          <div className="flex gap-2">
+            <AccessRoleSelect value={item.accessRole} onChange={(accessRole) => onSave({ accessRole }, item.id)} />
+            <FamilyMemberMenu familyMember={item} />
+          </div>
         </li>;
       })}
     </Layout>

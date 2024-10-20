@@ -12,7 +12,9 @@
     "csstools.postcss",
     "bradlc.vscode-tailwindcss",
     "lokalise.i18n-ally",
-    "inlang.vs-code-extension"
+    "inlang.vs-code-extension",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
   ],
   "unwantedRecommendations": []
 }

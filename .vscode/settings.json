@@ -21,4 +21,13 @@
   "i18n-ally.translate.engines": [
     "google"
   ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "Local GitPod",
+      "connectString": "postgres://postgres:postgres@localhost:5432/development_db"
+    }
+  ],
 }

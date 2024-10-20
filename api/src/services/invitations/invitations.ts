@@ -7,9 +7,19 @@ import type {
 import { db } from 'src/lib/db'
 import { mailer } from 'src/lib/mailer'
 import { FamilyInvitation } from 'src/mail/FamilyInvitation/FamilyInvitation'
+import { requireAuth } from 'src/lib/auth'
 
 export const invitations: QueryResolvers['invitations'] = () => {
   return db.invitation.findMany()
+}
+
+export const invitationsByFamilyId: QueryResolvers['invitationsByFamilyId'] = ({ familyId }) => {
+  requireAuth({ roles: 'ADMIN', familyId })
+  return db.invitation.findMany({
+    where: {
+      familyId,
+    }
+  })
 }
 
 export const invitation: QueryResolvers['invitation'] = ({ id }) => {
@@ -55,33 +65,44 @@ export const invitationByCode: QueryResolvers['invitationByCode'] = async ({
 export const createInvitation: MutationResolvers['createInvitation'] = async ({
   input,
 }) => {
+  requireAuth({ roles: 'ADMIN', familyId: input.familyId })
+
   const { redirectUrl } = input
   delete input.redirectUrl
   const invitation = await db.invitation.create({
     data: input,
   })
 
-  const url = redirectUrl.replace(':code', invitation.code)
-
-  await mailer.send(
-    FamilyInvitation({
-      name: invitation.email,
-      url,
-    }),
-    {
-      to: invitation.email,
-      subject: 'You got invited into a family',
-    }
-  )
+  await sendInvitation({ email: invitation.email, redirectUrl, code: invitation.code })
 
   return invitation
 }
 
-export const updateInvitation: MutationResolvers['updateInvitation'] = ({
+export const resendInvitation: MutationResolvers['resendInvitation'] = async ({
   id,
   input,
 }) => {
-  // probably remove this
+  const invitation = await db.invitation.findFirst({
+    where: { id },
+  })
+  requireAuth({ roles: 'ADMIN', familyId: invitation.familyId })
+
+  const { redirectUrl } = input
+  delete input.redirectUrl
+
+  await sendInvitation({ email: invitation.email, redirectUrl, code: invitation.code })
+
+  return invitation
+}
+
+export const updateInvitation: MutationResolvers['updateInvitation'] = async ({
+  id,
+  input,
+}) => {
+  const invitation = await db.invitation.findFirst({
+    where: { id }
+  })
+  requireAuth({ roles: 'ADMIN', familyId: invitation.familyId })
 
   return db.invitation.update({
     data: input,
@@ -89,9 +110,14 @@ export const updateInvitation: MutationResolvers['updateInvitation'] = ({
   })
 }
 
-export const deleteInvitation: MutationResolvers['deleteInvitation'] = ({
+export const deleteInvitation: MutationResolvers['deleteInvitation'] = async ({
   id,
 }) => {
+  const invitation = await db.invitation.findFirst({
+    where: { id }
+  })
+  requireAuth({ roles: 'ADMIN', familyId: invitation.familyId })
+
   return db.invitation.delete({
     where: { id },
   })
@@ -101,4 +127,19 @@ export const Invitation: InvitationRelationResolvers = {
   family: (_obj, { root }) => {
     return db.invitation.findUnique({ where: { id: root?.id } }).family()
   },
+}
+
+async function sendInvitation(invitation: { email: string, redirectUrl: string, code: string }) {
+  const url = invitation.redirectUrl.replace(':code', invitation.code)
+
+  await mailer.send(
+    FamilyInvitation({
+      name: invitation.email,
+      url: url,
+    }),
+    {
+      to: invitation.email,
+      subject: 'You got invited into a family',
+    }
+  )
 }

@@ -6,6 +6,8 @@ import enUser from '../src/locales/en/user.json'
 import enRecipe from '../src/locales/en/recipe.json'
 import enFamily from '../src/locales/en/family.json'
 
+import enInvitation from '../src/locales/en/invitation.json'
+
 declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'common'
@@ -17,6 +19,7 @@ declare module 'i18next' {
       user: typeof enUser
       recipe: typeof enRecipe
       family: typeof enFamily
+      invitation: typeof enInvitation
     }
   }
 }

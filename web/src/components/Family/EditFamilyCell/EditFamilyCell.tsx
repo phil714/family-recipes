@@ -15,6 +15,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import FamilyForm from 'src/components/Family/FamilyForm'
 import FamilyMembersCell from 'src/components/FamilyMembersCell'
+import FamilyInvitationsCell from 'src/components/FamilyInvitationsCell'
 
 export const QUERY: TypedDocumentNode<EditFamilyById> = gql`
   query EditFamilyById($id: String!) {
@@ -79,7 +80,12 @@ export const Success = ({ family }: CellSuccessProps<EditFamilyById>) => {
           loading={loading}
         />
       </div>
-      {family?.id && <div className='flex flex-col w-full lg:w-1/2'><FamilyMembersCell familyId={family.id} /></div>}
+      {family?.id &&
+        <div className='flex flex-col w-full lg:w-1/2 gap-4'>
+          <FamilyInvitationsCell familyId={family.id} />
+          <FamilyMembersCell familyId={family.id} />
+        </div>
+      }
     </div>
   )
 }

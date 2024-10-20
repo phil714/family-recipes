@@ -47,6 +47,7 @@ const AccessRoleSelect = (props: Props) => {
             <CommandGroup className="p-1.5">
               {Object.entries(options).map(([value, { label, description }]) =>
                 <Option
+                  key={value}
                   label={label}
                   description={description}
                   onSelect={handleSelect(value as AccessRole)}

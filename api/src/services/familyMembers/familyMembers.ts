@@ -5,6 +5,7 @@ import type {
 } from "types/graphql";
 
 import { db } from "src/lib/db";
+import { requireAuth } from "src/lib/auth";
 
 export const familyMembers: QueryResolvers["familyMembers"] = ({ familyId }) => {
   return db.familyMember.findMany({ where: { familyId } });
@@ -29,9 +30,30 @@ export const updateFamilyMember: MutationResolvers["updateFamilyMember"] = ({
 export const deleteFamilyMember: MutationResolvers["deleteFamilyMember"] = ({
   id,
 }) => {
-  return db.familyMember.delete({
-    where: { id },
+  return db.$transaction(async (tx) => {
+    const familyMember = await tx.familyMember.findFirst({
+      where: { id },
+    });
+    requireAuth({ roles: 'ADMIN', familyId: familyMember.familyId })
+    const output = await tx.familyMember.delete({
+      where: { id },
+    });
+
+    const adminCount = await tx.familyMember.count({
+      where: {
+        accessRole: 'ADMIN',
+        familyId: familyMember.familyId
+      }
+    });
+
+    if (adminCount === 0) {
+      throw new Error('cannot delete last admin')
+    }
+
+    return output
   });
+
+
 };
 
 export const FamilyMember: FamilyMemberRelationResolvers = {
