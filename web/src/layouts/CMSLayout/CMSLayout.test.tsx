@@ -9,7 +9,11 @@ import 'src/i18n'
 
 describe('CMSLayout', () => {
   it('renders successfully', () => {
-    mockCurrentUser({ id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' })
+    mockCurrentUser({
+      id: '1',
+      name: 'Michel Tremblay',
+      email: 'micheltremblay@gmail.com',
+    })
 
     expect(() => {
       render(<CMSLayout />)

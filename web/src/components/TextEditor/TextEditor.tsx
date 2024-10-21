@@ -6,8 +6,9 @@ import {
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
-import { TextEditorMenuBar } from '../TextEditorMenuBar/TextEditorMenuBar'
 import { cn } from 'src/lib/utils'
+
+import { TextEditorMenuBar } from '../TextEditorMenuBar/TextEditorMenuBar'
 
 // define your extension array
 const extensions = [StarterKit.configure()]
@@ -15,8 +16,8 @@ const extensions = [StarterKit.configure()]
 interface Props {
   value: string
   onChange: (value: string) => void
-  editable?: boolean;
-  className?: string;
+  editable?: boolean
+  className?: string
 }
 
 export const TextEditor: React.FC<Props> = (props) => {

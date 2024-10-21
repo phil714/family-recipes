@@ -1,4 +1,7 @@
-import type { FamilyInputCellData, FamilyInputCellDataVariables } from 'types/graphql'
+import type {
+  FamilyInputCellData,
+  FamilyInputCellDataVariables,
+} from 'types/graphql'
 
 import type {
   CellSuccessProps,
@@ -24,7 +27,9 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Empty</div>
 
-export const Failure = ({ error }: CellFailureProps<FamilyInputCellDataVariables>) => (
+export const Failure = ({
+  error,
+}: CellFailureProps<FamilyInputCellDataVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
@@ -37,7 +42,8 @@ export const Success = ({
   families,
   onChange,
   value,
-}: CellSuccessProps<FamilyInputCellData, FamilyInputCellDataVariables> & InputProps) => {
+}: CellSuccessProps<FamilyInputCellData, FamilyInputCellDataVariables> &
+  InputProps) => {
   return (
     <Combobox
       onChange={onChange}

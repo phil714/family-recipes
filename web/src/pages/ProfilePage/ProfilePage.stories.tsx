@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import ProfilePage from "./ProfilePage";
+import ProfilePage from './ProfilePage'
 
 const meta: Meta<typeof ProfilePage> = {
   component: ProfilePage,
-};
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof ProfilePage>;
+type Story = StoryObj<typeof ProfilePage>
 
-export const Primary: Story = {};
+export const Primary: Story = {}

@@ -1,7 +1,8 @@
 import { render } from '@redwoodjs/testing/web'
 
-import { NavigationBar } from './NavigationBar'
 import { TooltipProvider } from '../Tooltip/Tooltip'
+
+import { NavigationBar } from './NavigationBar'
 
 import 'src/i18n'
 
@@ -10,11 +11,18 @@ import 'src/i18n'
 
 describe('NavigationBar', () => {
   it('renders successfully', () => {
-    mockCurrentUser({ id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' })
+    mockCurrentUser({
+      id: '1',
+      name: 'Michel Tremblay',
+      email: 'micheltremblay@gmail.com',
+    })
 
     expect(() => {
       render(
-        <TooltipProvider delayDuration={0}><NavigationBar /></TooltipProvider>)
+        <TooltipProvider delayDuration={0}>
+          <NavigationBar />
+        </TooltipProvider>
+      )
     }).not.toThrow()
   })
 })

@@ -1,11 +1,11 @@
-import IngredientCell from "src/components/Ingredient/IngredientCell";
+import IngredientCell from 'src/components/Ingredient/IngredientCell'
 
 type IngredientPageProps = {
-  id: string;
-};
+  id: string
+}
 
 const IngredientPage = ({ id }: IngredientPageProps) => {
-  return <IngredientCell id={id} />;
-};
+  return <IngredientCell id={id} />
+}
 
-export default IngredientPage;
+export default IngredientPage

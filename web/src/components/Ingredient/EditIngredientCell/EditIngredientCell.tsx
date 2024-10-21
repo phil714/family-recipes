@@ -2,18 +2,18 @@ import type {
   EditIngredientById,
   UpdateIngredientInput,
   UpdateIngredientMutationVariables,
-} from "types/graphql";
+} from 'types/graphql'
 
-import { navigate, routes } from "@redwoodjs/router";
+import { navigate, routes } from '@redwoodjs/router'
 import type {
   CellSuccessProps,
   CellFailureProps,
   TypedDocumentNode,
-} from "@redwoodjs/web";
-import { useMutation } from "@redwoodjs/web";
-import { toast } from "@redwoodjs/web/toast";
+} from '@redwoodjs/web'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
-import IngredientForm from "src/components/Ingredient/IngredientForm";
+import IngredientForm from 'src/components/Ingredient/IngredientForm'
 
 export const QUERY: TypedDocumentNode<EditIngredientById> = gql`
   query EditIngredientById($id: String!) {
@@ -24,7 +24,7 @@ export const QUERY: TypedDocumentNode<EditIngredientById> = gql`
       color
     }
   }
-`;
+`
 
 const UPDATE_INGREDIENT_MUTATION: TypedDocumentNode<
   EditIngredientById,
@@ -41,13 +41,13 @@ const UPDATE_INGREDIENT_MUTATION: TypedDocumentNode<
       color
     }
   }
-`;
+`
 
-export const Loading = () => <div>Loading...</div>;
+export const Loading = () => <div>Loading...</div>
 
 export const Failure = ({ error }: CellFailureProps) => (
   <div className="rw-cell-error">{error?.message}</div>
-);
+)
 
 export const Success = ({
   ingredient,
@@ -56,21 +56,21 @@ export const Success = ({
     UPDATE_INGREDIENT_MUTATION,
     {
       onCompleted: () => {
-        toast.success("Ingredient updated");
-        navigate(routes.ingredients());
+        toast.success('Ingredient updated')
+        navigate(routes.ingredients())
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message)
       },
-    },
-  );
+    }
+  )
 
   const onSave = (
     input: UpdateIngredientInput,
-    id: EditIngredientById["ingredient"]["id"],
+    id: EditIngredientById['ingredient']['id']
   ) => {
-    updateIngredient({ variables: { id, input } });
-  };
+    updateIngredient({ variables: { id, input } })
+  }
 
   return (
     <div className="rw-segment">
@@ -88,5 +88,5 @@ export const Success = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}

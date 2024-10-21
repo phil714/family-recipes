@@ -11,8 +11,8 @@ import {
   EmailField,
 } from '@redwoodjs/forms'
 
-import FamilyInputCell from 'src/components/FamilyInputCell'
 import AccessRoleSelect from 'src/components/AccessRoleSelect/AccessRoleSelect'
+import FamilyInputCell from 'src/components/FamilyInputCell'
 
 type FormInvitation = NonNullable<EditInvitationById['invitation']>
 
@@ -21,7 +21,7 @@ interface InvitationFormProps {
   onSave: (data: UpdateInvitationInput, id?: FormInvitation['id']) => void
   error: RWGqlError
   loading: boolean
-  familyId?: string;
+  familyId?: string
 }
 
 const InvitationForm = (props: InvitationFormProps) => {
@@ -52,29 +52,31 @@ const InvitationForm = (props: InvitationFormProps) => {
           defaultValue={props.invitation?.email}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true, }}
+          validation={{ required: true }}
         />
 
         <FieldError name="email" className="rw-field-error" />
 
-        {!props.familyId && <>
-          <Label
-            name="familyId"
-            className="rw-label"
-            errorClassName="rw-label rw-label-error"
-          >
-            Family
-          </Label>
-          <Controller
-            name="familyId"
-            defaultValue={props.invitation?.familyId}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <FamilyInputCell onChange={onChange} value={value} />
-            )}
-          />
-          <FieldError name="familyId" className="rw-field-error" />
-        </>}
+        {!props.familyId && (
+          <>
+            <Label
+              name="familyId"
+              className="rw-label"
+              errorClassName="rw-label rw-label-error"
+            >
+              Family
+            </Label>
+            <Controller
+              name="familyId"
+              defaultValue={props.invitation?.familyId}
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <FamilyInputCell onChange={onChange} value={value} />
+              )}
+            />
+            <FieldError name="familyId" className="rw-field-error" />
+          </>
+        )}
         <Label
           name="accessRole"
           className="rw-label"
@@ -85,7 +87,7 @@ const InvitationForm = (props: InvitationFormProps) => {
 
         <Controller
           name="accessRole"
-          defaultValue={props.invitation?.accessRole ?? "USER"}
+          defaultValue={props.invitation?.accessRole ?? 'USER'}
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <AccessRoleSelect onChange={onChange} value={value} />

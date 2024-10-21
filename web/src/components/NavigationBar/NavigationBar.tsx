@@ -10,9 +10,11 @@ import {
   AppleIcon,
   LogInIcon,
 } from 'lucide-react'
+import { AccessRole } from 'types/graphql'
 
 import { NavLink, routes } from '@redwoodjs/router'
 
+import { hasRole, useAuth } from 'src/auth'
 import { buttonVariants } from 'src/components/Button/Button'
 import {
   Tooltip,
@@ -21,10 +23,8 @@ import {
 } from 'src/components/Tooltip/Tooltip'
 import { cn } from 'src/lib/utils'
 
-import { UserMenu } from '../UserMenu/UserMenu'
-import { hasRole, useAuth } from 'src/auth'
 import { User } from '../User/User'
-import { AccessRole } from 'types/graphql'
+import { UserMenu } from '../UserMenu/UserMenu'
 
 interface NavItem {
   title: string
@@ -69,29 +69,29 @@ export const NavigationBar = () => {
       title: 'Families',
       to: routes.families(),
       icon: UsersIcon,
-      roles: ["ADMIN"]
+      roles: ['ADMIN'],
     },
     {
       title: 'Invitations',
       to: routes.invitations(),
       icon: SendIcon,
-      roles: []
+      roles: [],
     },
     {
       title: 'Ingredients',
       to: routes.ingredients(),
       icon: AppleIcon,
-      roles: []
+      roles: [],
     },
     {
       title: 'Tags',
       to: routes.tags(),
       icon: ListIcon,
-      roles: []
+      roles: [],
     },
   ]
 
-  const links = currentUser?.id ? authenticatedLinks : unauthenticatedLinks;
+  const links = currentUser?.id ? authenticatedLinks : unauthenticatedLinks
 
   return (
     <div
@@ -99,42 +99,50 @@ export const NavigationBar = () => {
       className="border-right group flex w-64 flex-col gap-4 border border-gray-100 py-2"
     >
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center">
-        {currentUser?.id ? <UserMenu /> : <User user={{ name: '', email: '' }} options={{ email: false }} />}
-        {links.filter((link) => link.roles !== undefined ? hasRole(link.roles, currentUser) : true).map((link, index) => (
-          <Tooltip key={index} delayDuration={0}>
-            <TooltipTrigger asChild>
-              <NavLink
-                to={link.to}
-                className={cn(
-                  buttonVariants({
-                    variant: 'ghost',
-                    size: isCollapsed ? 'icon' : 'default',
-                  }),
-                  'flex items-center gap-2'
+        {currentUser?.id ? (
+          <UserMenu />
+        ) : (
+          <User user={{ name: '', email: '' }} options={{ email: false }} />
+        )}
+        {links
+          .filter((link) =>
+            link.roles !== undefined ? hasRole(link.roles, currentUser) : true
+          )
+          .map((link, index) => (
+            <Tooltip key={index} delayDuration={0}>
+              <TooltipTrigger asChild>
+                <NavLink
+                  to={link.to}
+                  className={cn(
+                    buttonVariants({
+                      variant: 'ghost',
+                      size: isCollapsed ? 'icon' : 'default',
+                    }),
+                    'flex items-center gap-2'
+                  )}
+                  activeClassName={cn(
+                    buttonVariants({
+                      variant: 'default',
+                      size: isCollapsed ? 'icon' : 'default',
+                    }),
+                    'flex items-center gap-2 hover:text-primary-foreground'
+                  )}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {!isCollapsed && <span>{link.title}</span>}
+                  {!isCollapsed && link.label && <span>{link.label}</span>}
+                </NavLink>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="flex items-center gap-4">
+                {link.title}
+                {link.label && (
+                  <span className="ml-auto text-muted-foreground">
+                    {link.label}
+                  </span>
                 )}
-                activeClassName={cn(
-                  buttonVariants({
-                    variant: 'default',
-                    size: isCollapsed ? 'icon' : 'default',
-                  }),
-                  'flex items-center gap-2 hover:text-primary-foreground'
-                )}
-              >
-                <link.icon className="h-4 w-4" />
-                {!isCollapsed && <span>{link.title}</span>}
-                {!isCollapsed && link.label && <span>{link.label}</span>}
-              </NavLink>
-            </TooltipTrigger>
-            <TooltipContent side="right" className="flex items-center gap-4">
-              {link.title}
-              {link.label && (
-                <span className="ml-auto text-muted-foreground">
-                  {link.label}
-                </span>
-              )}
-            </TooltipContent>
-          </Tooltip>
-        ))}
+              </TooltipContent>
+            </Tooltip>
+          ))}
       </nav>
     </div>
   )

@@ -9,7 +9,7 @@ import { useMutation } from '@redwoodjs/web'
 import type { TypedDocumentNode } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { } from 'src/lib/formatters'
+import {} from 'src/lib/formatters'
 import { useTranslation } from 'react-i18next'
 
 const DELETE_FAMILY_MUTATION: TypedDocumentNode<

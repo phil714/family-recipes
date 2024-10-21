@@ -1,5 +1,7 @@
 import { type Recipe, RecipeStatus } from '@prisma/client'
 
+import { db } from 'src/lib/db'
+
 import {
   recipes,
   recipe,
@@ -9,7 +11,6 @@ import {
   allRecipes,
 } from './recipes'
 import type { StandardScenario } from './recipes.scenarios'
-import { db } from 'src/lib/db'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.

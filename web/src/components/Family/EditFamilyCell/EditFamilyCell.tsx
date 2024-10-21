@@ -14,8 +14,8 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import FamilyForm from 'src/components/Family/FamilyForm'
-import FamilyMembersCell from 'src/components/FamilyMembersCell'
 import FamilyInvitationsCell from 'src/components/FamilyInvitationsCell'
+import FamilyMembersCell from 'src/components/FamilyMembersCell'
 
 export const QUERY: TypedDocumentNode<EditFamilyById> = gql`
   query EditFamilyById($id: String!) {
@@ -66,13 +66,13 @@ export const Success = ({ family }: CellSuccessProps<EditFamilyById>) => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col gap-4 md:flex-row">
       {/* <header className="rw-segment-header">
         <h2 className="rw-heading rw-heading-secondary">
           Edit Family {family?.id}
         </h2>
       </header> */}
-      <div className='flex flex-col w-full lg:w-1/2'>
+      <div className="flex w-full flex-col lg:w-1/2">
         <FamilyForm
           family={family}
           onSave={onSave}
@@ -80,12 +80,12 @@ export const Success = ({ family }: CellSuccessProps<EditFamilyById>) => {
           loading={loading}
         />
       </div>
-      {family?.id &&
-        <div className='flex flex-col w-full lg:w-1/2 gap-4'>
+      {family?.id && (
+        <div className="flex w-full flex-col gap-4 lg:w-1/2">
           <FamilyInvitationsCell familyId={family.id} />
           <FamilyMembersCell familyId={family.id} />
         </div>
-      }
+      )}
     </div>
   )
 }

@@ -17,7 +17,8 @@ export const schema = gql`
 
   type Query {
     invitations: [Invitation!]! @requireAuth(roles: "ADMIN")
-    invitationsByFamilyId(familyId: String!): [Invitation!]! @requireAuth(roles: "ADMIN")
+    invitationsByFamilyId(familyId: String!): [Invitation!]!
+      @requireAuth(roles: "ADMIN")
     invitation(id: String!): Invitation @requireAuth(roles: "ADMIN")
     invitationByCode(code: String!): InvitationByCode @skipAuth
   }
@@ -37,7 +38,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    createInvitation(input: CreateInvitationInput!): Invitation! @requireAuth(roles: "ADMIN")
+    createInvitation(input: CreateInvitationInput!): Invitation!
+      @requireAuth(roles: "ADMIN")
     updateInvitation(id: String!, input: UpdateInvitationInput!): Invitation!
       @requireAuth(roles: "ADMIN")
     resendInvitation(id: String!, input: ResendInvitationInput!): Invitation!

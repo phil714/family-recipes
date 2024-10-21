@@ -28,4 +28,4 @@ export const schema = gql`
       @requireAuth
     deleteIngredient(id: String!): Ingredient! @requireAuth
   }
-`;
+`

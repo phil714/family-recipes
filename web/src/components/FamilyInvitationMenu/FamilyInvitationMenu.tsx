@@ -1,5 +1,10 @@
-import { Link, routes } from '@redwoodjs/router'
+import { MoreHorizontal } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { DeleteInvitationMutationVariables } from 'types/graphql'
+
+import { Link, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import {
@@ -11,12 +16,9 @@ import {
   DropdownMenuTrigger,
 } from 'src/components/DropdownMenu/DropdownMenu'
 import { User } from 'src/components/User/User'
+
 import { Button } from '../Button'
-import { MoreHorizontal } from 'lucide-react'
-import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from '../FamilyInvitationsCell/FamilyInvitationsCell'
-import { DeleteInvitationMutationVariables } from 'types/graphql'
 
 const DELETE_INVITATION_MUTATION = gql`
   mutation DeleteInvitationMutation($id: String!) {
@@ -27,7 +29,10 @@ const DELETE_INVITATION_MUTATION = gql`
 `
 
 const RESEND_INVITATION_MUTATION = gql`
-  mutation ResendInvitationMutation($id: String!, $input: ResendInvitationInput!) {
+  mutation ResendInvitationMutation(
+    $id: String!
+    $input: ResendInvitationInput!
+  ) {
     resendInvitation(id: $id, input: $input) {
       id
     }
@@ -36,13 +41,15 @@ const RESEND_INVITATION_MUTATION = gql`
 
 interface Props {
   invitation: {
-    id: string;
-    familyId: string;
+    id: string
+    familyId: string
   }
 }
 
 export const FamilyInvitationMenu: React.FC<Props> = (props) => {
-  const { invitation: { id, familyId } } = props;
+  const {
+    invitation: { id, familyId },
+  } = props
 
   const { t } = useTranslation()
 
@@ -84,14 +91,18 @@ export const FamilyInvitationMenu: React.FC<Props> = (props) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">{t("common:open-menu")}</span>
+          <span className="sr-only">{t('common:open-menu')}</span>
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-        <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => onResendClick(id)}>{t("invitation:resend")}</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onDeleteClick(id)}>{t("common:delete")}</DropdownMenuItem>
+        <DropdownMenuLabel>{t('common:actions')}</DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => onResendClick(id)}>
+          {t('invitation:resend')}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onDeleteClick(id)}>
+          {t('common:delete')}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

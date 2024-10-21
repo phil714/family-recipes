@@ -10,17 +10,17 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import Skeleton from "./Skeleton";
+import Skeleton from './Skeleton'
 
 const meta: Meta<typeof Skeleton> = {
   component: Skeleton,
-  tags: ["autodocs"],
-};
+  tags: ['autodocs'],
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof Skeleton>;
+type Story = StoryObj<typeof Skeleton>
 
-export const Primary: Story = {};
+export const Primary: Story = {}

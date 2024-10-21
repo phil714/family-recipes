@@ -1,4 +1,4 @@
-import { useAuth } from 'src/auth';
+import { useAuth } from 'src/auth'
 import ProfileCell from 'src/components/ProfileCell'
 
 type ProfilePageProps = {
@@ -6,7 +6,7 @@ type ProfilePageProps = {
 }
 
 const ProfilePage = ({ id }: ProfilePageProps) => {
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuth()
 
   return <ProfileCell id={currentUser.id} />
 }

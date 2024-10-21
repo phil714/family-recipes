@@ -8,17 +8,15 @@ import type {
 
 import Family from 'src/components/Family/Family'
 
-export const QUERY: TypedDocumentNode<
-  FindFamilyById,
-  FindFamilyByIdVariables
-> = gql`
-  query FindFamilyById($id: String!) {
-    family: family(id: $id) {
-      id
-      name
+export const QUERY: TypedDocumentNode<FindFamilyById, FindFamilyByIdVariables> =
+  gql`
+    query FindFamilyById($id: String!) {
+      family: family(id: $id) {
+        id
+        name
+      }
     }
-  }
-`
+  `
 
 export const Loading = () => <div>Loading...</div>
 

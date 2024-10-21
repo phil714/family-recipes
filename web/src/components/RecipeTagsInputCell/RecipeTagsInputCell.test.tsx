@@ -1,7 +1,9 @@
+import { useState } from 'react'
+
 import { render, renderHook } from '@redwoodjs/testing/web'
+
 import { Loading, Empty, Failure, Success } from './RecipeTagsInputCell'
 import { standard } from './RecipeTagsInputCell.mock'
-import { useState } from 'react'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -36,10 +38,12 @@ describe('RecipeTagsInputCell', () => {
 
   it('renders Success successfully', async () => {
     const hook = renderHook(() => useState<string[]>([]))
-    const [tagIds, setTagIds] = hook.result.current;
+    const [tagIds, setTagIds] = hook.result.current
 
     expect(() => {
-      render(<Success value={tagIds} onChange={setTagIds} tags={standard().tags} />)
+      render(
+        <Success value={tagIds} onChange={setTagIds} tags={standard().tags} />
+      )
     }).not.toThrow()
   })
 })

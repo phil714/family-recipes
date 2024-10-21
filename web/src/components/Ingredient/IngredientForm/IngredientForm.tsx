@@ -1,6 +1,6 @@
-import type { EditIngredientById, UpdateIngredientInput } from "types/graphql";
+import type { EditIngredientById, UpdateIngredientInput } from 'types/graphql'
 
-import type { RWGqlError } from "@redwoodjs/forms";
+import type { RWGqlError } from '@redwoodjs/forms'
 import {
   Form,
   FormError,
@@ -9,21 +9,21 @@ import {
   TextField,
   Submit,
   ColorField,
-} from "@redwoodjs/forms";
+} from '@redwoodjs/forms'
 
-type FormIngredient = NonNullable<EditIngredientById["ingredient"]>;
+type FormIngredient = NonNullable<EditIngredientById['ingredient']>
 
 interface IngredientFormProps {
-  ingredient?: EditIngredientById["ingredient"];
-  onSave: (data: UpdateIngredientInput, id?: FormIngredient["id"]) => void;
-  error: RWGqlError;
-  loading: boolean;
+  ingredient?: EditIngredientById['ingredient']
+  onSave: (data: UpdateIngredientInput, id?: FormIngredient['id']) => void
+  error: RWGqlError
+  loading: boolean
 }
 
 const IngredientForm = (props: IngredientFormProps) => {
   const onSubmit = (data: FormIngredient) => {
-    props.onSave(data, props?.ingredient?.id);
-  };
+    props.onSave(data, props?.ingredient?.id)
+  }
 
   return (
     <div className="rw-form-wrapper">
@@ -96,7 +96,7 @@ const IngredientForm = (props: IngredientFormProps) => {
         </div>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default IngredientForm;
+export default IngredientForm

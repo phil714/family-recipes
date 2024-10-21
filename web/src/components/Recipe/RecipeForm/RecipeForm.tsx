@@ -13,12 +13,15 @@ import {
 } from '@redwoodjs/forms'
 
 import FamilyInputCell from 'src/components/FamilyInputCell'
-import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
 import RecipeIngredientsInputCell from 'src/components/RecipeIngredientsInputCell'
-import TextEditor from 'src/components/TextEditor/TextEditor'
 import RecipeStatusSelect from 'src/components/RecipeStatusSelect/RecipeStatusSelect'
+import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
+import TextEditor from 'src/components/TextEditor/TextEditor'
 type FormRecipe = NonNullable<
-  Omit<EditRecipeById['recipe'], 'tags'> & { tagIds: string[]; ingredientIds: string[] }
+  Omit<EditRecipeById['recipe'], 'tags'> & {
+    tagIds: string[]
+    ingredientIds: string[]
+  }
 >
 
 interface RecipeFormProps {
@@ -88,7 +91,9 @@ const RecipeForm = (props: RecipeFormProps) => {
         </Label>
         <Controller
           name="ingredientIds"
-          defaultValue={props.recipe?.ingredients.map((ingredient) => ingredient.id) || []}
+          defaultValue={
+            props.recipe?.ingredients.map((ingredient) => ingredient.id) || []
+          }
           // rules={validation}
           render={({ field: { onChange, value } }) => (
             <RecipeIngredientsInputCell onChange={onChange} value={value} />
@@ -170,7 +175,6 @@ const RecipeForm = (props: RecipeFormProps) => {
 
         <FieldError name="familyId" className="rw-field-error" />
 
-
         <Label
           name="status"
           className="rw-label"
@@ -183,12 +187,14 @@ const RecipeForm = (props: RecipeFormProps) => {
           defaultValue={props.recipe?.status ?? 'DRAFT'}
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
-            <RecipeStatusSelect id={"status"} value={value} onChange={onChange} />
+            <RecipeStatusSelect
+              id={'status'}
+              value={value}
+              onChange={onChange}
+            />
           )}
         />
         <FieldError name="status" className="rw-field-error" />
-
-
 
         <Label
           name="tagIds"

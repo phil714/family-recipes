@@ -16,7 +16,7 @@ import { user, type StandardScenario } from './families.scenarios'
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
 describe('families', () => {
-  scenario('returns all families', async (scenario: StandardScenario) => {
+  scenario('returns all families', async (_scenario: StandardScenario) => {
     mockCurrentUser(user)
 
     const result = await families()

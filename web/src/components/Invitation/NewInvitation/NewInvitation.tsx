@@ -47,7 +47,11 @@ const NewInvitation = (props: Props) => {
     )
     createInvitation({
       variables: {
-        input: { ...input, redirectUrl: redirectUrl.toString(), familyId: props.familyId },
+        input: {
+          ...input,
+          redirectUrl: redirectUrl.toString(),
+          familyId: props.familyId,
+        },
       },
     })
   }
@@ -58,7 +62,12 @@ const NewInvitation = (props: Props) => {
         <h2 className="rw-heading rw-heading-secondary">New Invitation</h2>
       </header>
       <div className="rw-segment-main">
-        <InvitationForm onSave={onSave} loading={loading} error={error} familyId={props.familyId} />
+        <InvitationForm
+          onSave={onSave}
+          loading={loading}
+          error={error}
+          familyId={props.familyId}
+        />
       </div>
     </div>
   )

@@ -2,14 +2,14 @@ import type {
   DeleteIngredientMutation,
   DeleteIngredientMutationVariables,
   FindIngredientById,
-} from "types/graphql";
+} from 'types/graphql'
 
-import { Link, routes, navigate } from "@redwoodjs/router";
-import { useMutation } from "@redwoodjs/web";
-import type { TypedDocumentNode } from "@redwoodjs/web";
-import { toast } from "@redwoodjs/web/toast";
+import { Link, routes, navigate } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import type { TypedDocumentNode } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
-import {} from "src/lib/formatters";
+import {} from 'src/lib/formatters'
 
 const DELETE_INGREDIENT_MUTATION: TypedDocumentNode<
   DeleteIngredientMutation,
@@ -20,28 +20,28 @@ const DELETE_INGREDIENT_MUTATION: TypedDocumentNode<
       id
     }
   }
-`;
+`
 
 interface Props {
-  ingredient: NonNullable<FindIngredientById["ingredient"]>;
+  ingredient: NonNullable<FindIngredientById['ingredient']>
 }
 
 const Ingredient = ({ ingredient }: Props) => {
   const [deleteIngredient] = useMutation(DELETE_INGREDIENT_MUTATION, {
     onCompleted: () => {
-      toast.success("Ingredient deleted");
-      navigate(routes.ingredients());
+      toast.success('Ingredient deleted')
+      navigate(routes.ingredients())
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message)
     },
-  });
+  })
 
-  const onDeleteClick = (id: DeleteIngredientMutationVariables["id"]) => {
-    if (confirm("Are you sure you want to delete ingredient " + id + "?")) {
-      deleteIngredient({ variables: { id } });
+  const onDeleteClick = (id: DeleteIngredientMutationVariables['id']) => {
+    if (confirm('Are you sure you want to delete ingredient ' + id + '?')) {
+      deleteIngredient({ variables: { id } })
     }
-  };
+  }
 
   return (
     <>
@@ -84,7 +84,7 @@ const Ingredient = ({ ingredient }: Props) => {
         </button>
       </nav>
     </>
-  );
-};
+  )
+}
 
-export default Ingredient;
+export default Ingredient

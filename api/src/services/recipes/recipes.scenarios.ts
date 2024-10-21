@@ -1,8 +1,8 @@
 import type { Prisma, Recipe } from '@prisma/client'
-import { hashPassword } from '@redwoodjs/auth-dbauth-api'
-import type { ScenarioData } from '@redwoodjs/testing/api'
 import { Ingredient, Tag } from 'types/graphql'
 
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
+import type { ScenarioData } from '@redwoodjs/testing/api'
 
 const [hashedPassword, salt] = hashPassword('AAAaaa111')
 export const user = {
@@ -13,7 +13,9 @@ export const user = {
   salt,
 }
 
-export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreateArgs | Prisma.IngredientCreateArgs>({
+export const standard = defineScenario<
+  Prisma.RecipeCreateArgs | Prisma.TagCreateArgs | Prisma.IngredientCreateArgs
+>({
   recipe: {
     one: {
       data: {
@@ -36,7 +38,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               connectOrCreate: {
                 where: { id: user.id },
                 create: user,
-              }
+              },
             },
             family: {
               connectOrCreate: {
@@ -45,7 +47,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               },
             },
           },
-        }
+        },
       },
     },
     two: {
@@ -69,7 +71,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               connectOrCreate: {
                 where: { id: user.id },
                 create: user,
-              }
+              },
             },
             family: {
               connectOrCreate: {
@@ -78,7 +80,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               },
             },
           },
-        }
+        },
       },
     },
   },
@@ -88,15 +90,15 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
         id: '1',
         name: 'Chinese',
         color: '#FFFFFF',
-      }
+      },
     },
     two: {
       data: {
         id: '2',
         name: 'America',
         color: '#000000',
-      }
-    }
+      },
+    },
   },
   ingredient: {
     one: {
@@ -111,9 +113,11 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
         id: '2',
         name: 'Brocoli',
         description: 'A leefy green',
-      }
-    }
-  }
+      },
+    },
+  },
 })
 
-export type StandardScenario = ScenarioData<Recipe, 'recipe'> & ScenarioData<Tag, 'tag'> & ScenarioData<Ingredient, 'ingredient'>
+export type StandardScenario = ScenarioData<Recipe, 'recipe'> &
+  ScenarioData<Tag, 'tag'> &
+  ScenarioData<Ingredient, 'ingredient'>

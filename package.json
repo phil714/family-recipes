@@ -6,6 +6,9 @@
       "web"
     ]
   },
+  "lint-staged": {
+    "(web|api)/src/**": "yarn rw lint --fix"
+  },
   "scripts": {
     "add-namespace": "ts-node scripts/addNamespace.ts"
   },

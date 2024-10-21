@@ -1,7 +1,7 @@
 import type { Prisma, Family } from '@prisma/client'
+
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 import type { ScenarioData } from '@redwoodjs/testing/api'
-
 
 const [hashedPassword, salt] = hashPassword('AAAaaa111')
 
@@ -9,6 +9,8 @@ export const user = {
   id: '1',
   name: 'Michel Tremblay',
   email: 'micheltremblay@gmail.com',
+  isSuperAdmin: undefined,
+  roles: ['ADMIN'],
   hashedPassword,
   salt,
 }
@@ -24,16 +26,16 @@ export const standard = defineScenario<Prisma.FamilyCreateArgs>({
             {
               accessRole: 'ADMIN',
               user: { create: user },
-            }
+            },
           ],
-        }
-      }
+        },
+      },
     },
     two: {
       data: {
         id: '2',
         name: 'Family 2',
-      }
+      },
     },
   },
 })

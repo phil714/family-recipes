@@ -8,7 +8,9 @@ import { User } from './User'
 describe('User', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<User user={{ email: 'test@gmail.com', name: 'Michel Tremblay' }} />)
+      render(
+        <User user={{ email: 'test@gmail.com', name: 'Michel Tremblay' }} />
+      )
     }).not.toThrow()
   })
 })

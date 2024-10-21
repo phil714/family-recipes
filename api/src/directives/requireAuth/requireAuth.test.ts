@@ -11,7 +11,15 @@ describe('requireAuth directive', () => {
   it('requireAuth has stub implementation. Should not throw when current user', () => {
     // If you want to set values in context, pass it through e.g.
 
-    const mockExecution = mockRedwoodDirective(requireAuth, { context: { currentUser: { id: '1', name: 'Michel Tremblay', email: 'micheltremblay@gmail.com' } } })
+    const mockExecution = mockRedwoodDirective(requireAuth, {
+      context: {
+        currentUser: {
+          id: '1',
+          name: 'Michel Tremblay',
+          email: 'micheltremblay@gmail.com',
+        },
+      },
+    })
 
     expect(mockExecution).not.toThrow()
   })

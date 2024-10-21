@@ -15,6 +15,7 @@
     "inlang.vs-code-extension",
     "mtxr.sqltools",
     "mtxr.sqltools-driver-pg",
+    "esbenp.prettier-vscode"
   ],
   "unwantedRecommendations": []
 }

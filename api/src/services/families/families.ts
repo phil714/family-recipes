@@ -31,14 +31,16 @@ export const family: QueryResolvers['family'] = ({ id }) => {
   })
 }
 
-export const createFamily: MutationResolvers['createFamily'] = async ({ input }) => {
+export const createFamily: MutationResolvers['createFamily'] = async ({
+  input,
+}) => {
   const family = await db.family.create({
     data: input,
   })
 
   await db.familyMember.create({
     data: {
-      accessRole: "ADMIN",
+      accessRole: 'ADMIN',
       familyId: family.id,
       userId: context.currentUser?.id,
     },

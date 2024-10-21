@@ -1,5 +1,9 @@
 import type { Invitation } from '@prisma/client'
 
+import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
+
+import { mailer } from 'src/lib/mailer'
+
 import {
   invitations,
   invitation,
@@ -8,9 +12,6 @@ import {
   deleteInvitation,
 } from './invitations'
 import type { StandardScenario } from './invitations.scenarios'
-import { mailer } from 'src/lib/mailer'
-
-import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 
 jest.mock('@sendgrid/mail')
 
@@ -42,7 +43,7 @@ describe('invitations', () => {
         email: 'String',
         familyId: scenario.invitation.two.familyId,
         accessRole: 'USER',
-        redirectUrl: 'localhost:8910/invitations/2/accept'
+        redirectUrl: 'localhost:8910/invitations/2/accept',
       },
     })
 
