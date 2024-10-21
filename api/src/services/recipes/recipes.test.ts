@@ -1,7 +1,5 @@
 import { type Recipe, RecipeStatus } from '@prisma/client'
 
-import { db } from 'src/lib/db'
-
 import {
   recipes,
   recipe,
