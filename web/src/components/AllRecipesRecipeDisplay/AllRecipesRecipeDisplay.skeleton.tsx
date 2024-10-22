@@ -9,13 +9,13 @@ export function AllRecipesRecipeDisplaySkeleton() {
       <Skeleton className="my-2 h-8 w-full" />
       <Skeleton className="h-20 w-full" />
       <div className="mt-2 flex justify-evenly gap-2">
-        {Array.from({ length: 4 }).map(() => (
-          <Skeleton className="h-5 w-16 rounded-full p-1" />
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton className="h-5 w-16 rounded-full p-1" key={index} />
         ))}
       </div>
       <div className="mt-2 flex justify-evenly gap-2">
-        {Array.from({ length: 4 }).map(() => (
-          <Skeleton className="h-5 w-16 rounded-full p-1" />
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton className="h-5 w-16 rounded-full p-1" key={index} />
         ))}
       </div>
     </Card>

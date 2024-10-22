@@ -56,10 +56,10 @@ const Recipe = ({ recipe }: Props) => {
             </div>
             <div className="col-span-3 flex gap-2">
               {recipe.tags.map((tag) => (
-                <TagDisplay tag={tag} />
+                <TagDisplay tag={tag} key={tag.id} />
               ))}
               {recipe.ingredients.map((ingredient) => (
-                <TagDisplay tag={ingredient} />
+                <TagDisplay tag={ingredient} key={ingredient.id} />
               ))}
             </div>
           </div>

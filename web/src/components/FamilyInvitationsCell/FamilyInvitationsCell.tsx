@@ -25,7 +25,6 @@ import {
   CardHeader,
   CardTitle,
 } from '../Card'
-import { FamilyMembersCellSkeleton } from '../FamilyMembersCell/FamilyMembersCell.skeleton'
 import { User } from '../User/User'
 import { UserSkeleton } from '../User/User.skeleton'
 
@@ -59,8 +58,8 @@ const UPDATE_INVITATION_MUTATION: TypedDocumentNode<
 
 export const Loading = () => (
   <Layout>
-    {Array.from({ length: 3 }).map(() => (
-      <UserSkeleton />
+    {Array.from({ length: 3 }).map((_, index) => (
+      <UserSkeleton key={index} />
     ))}
   </Layout>
 )
@@ -81,19 +80,15 @@ export const Failure = ({ error, errorCode }: CellFailureProps) => {
 
 export const Success = ({
   familyInvitations,
-  queryResult,
 }: CellSuccessProps<FamilyInvitationsQuery>) => {
-  const [updateInvitation, { loading, error }] = useMutation(
-    UPDATE_INVITATION_MUTATION,
-    {
-      onCompleted: () => {
-        toast.success('Invitation updated')
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    }
-  )
+  const [updateInvitation] = useMutation(UPDATE_INVITATION_MUTATION, {
+    onCompleted: () => {
+      toast.success('Invitation updated')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
   const onSave = (
     input: UpdateFamilyMemberInput,

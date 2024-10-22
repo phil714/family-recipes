@@ -1,5 +1,4 @@
 import type {
-  AccessRole,
   FamilyMembersQuery,
   FamilyMembersQueryVariables,
   MutationupdateFamilyMemberArgs,
@@ -74,17 +73,14 @@ export const Success = ({
 }: CellSuccessProps<FamilyMembersQuery>) => {
   const { currentUser } = useAuth()
 
-  const [updateFamilyMember, { loading, error }] = useMutation(
-    UPDATE_FAMILY_MEMBER_MUTATION,
-    {
-      onCompleted: () => {
-        toast.success('Family member updated')
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    }
-  )
+  const [updateFamilyMember] = useMutation(UPDATE_FAMILY_MEMBER_MUTATION, {
+    onCompleted: () => {
+      toast.success('Family member updated')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
   const onSave = (
     input: UpdateFamilyMemberInput,

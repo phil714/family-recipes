@@ -2,20 +2,17 @@ import { MoreHorizontal } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { DeleteInvitationMutationVariables } from 'types/graphql'
 
-import { Link, routes } from '@redwoodjs/router'
+import { routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { useAuth } from 'src/auth'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'src/components/DropdownMenu/DropdownMenu'
-import { User } from 'src/components/User/User'
 
 import { Button } from '../Button'
 import { QUERY } from '../FamilyInvitationsCell/FamilyInvitationsCell'

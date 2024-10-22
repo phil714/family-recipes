@@ -2,7 +2,6 @@ import { useDeferredValue } from 'react'
 
 import type { AllRecipesQuery, AllRecipesQueryVariables } from 'types/graphql'
 
-import { useLocation } from '@redwoodjs/router'
 import type {
   CellSuccessProps,
   CellFailureProps,
@@ -11,7 +10,6 @@ import type {
 
 import AllRecipesRecipeDisplay from '../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay'
 import { AllRecipesRecipeDisplaySkeleton } from '../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay.skeleton'
-import AllRecipesSearchBar from '../AllRecipesSearchBar/AllRecipesSearchBar'
 
 export const QUERY: TypedDocumentNode<
   AllRecipesQuery,
@@ -44,8 +42,8 @@ export const QUERY: TypedDocumentNode<
 
 export const Loading = () => (
   <ul className="flex h-full w-full grid-cols-1 flex-wrap sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
-    {Array.from({ length: 12 }).map(() => (
-      <AllRecipesRecipeDisplaySkeleton />
+    {Array.from({ length: 12 }).map((_, index) => (
+      <AllRecipesRecipeDisplaySkeleton key={index} />
     ))}
   </ul>
 )

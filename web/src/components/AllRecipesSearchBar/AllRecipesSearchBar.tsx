@@ -4,7 +4,7 @@ import { t } from 'i18next'
 import { Search } from 'lucide-react'
 import { useDebouncedCallback } from 'use-debounce'
 
-import { navigate, routes, useLocation } from '@redwoodjs/router'
+import { useLocation } from '@redwoodjs/router'
 
 import { Input } from '../Input/Input'
 

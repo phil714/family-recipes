@@ -5,8 +5,8 @@ import { Layout } from './FamilyMembersCell'
 export const FamilyMembersCellSkeleton = () => {
   return (
     <Layout>
-      {Array.from({ length: 3 }).map(() => (
-        <UserSkeleton />
+      {Array.from({ length: 3 }).map((_, index) => (
+        <UserSkeleton key={index} />
       ))}
     </Layout>
   )

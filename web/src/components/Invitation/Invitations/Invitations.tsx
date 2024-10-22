@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   useReactTable,
@@ -30,7 +30,6 @@ import {
   DropdownMenuTrigger,
 } from 'src/components/DropdownMenu/DropdownMenu'
 import { QUERY } from 'src/components/Invitation/InvitationsCell'
-import { truncate } from 'src/lib/formatters'
 
 const DELETE_INVITATION_MUTATION = gql`
   mutation DeleteInvitationMutation($id: String!) {
@@ -52,11 +51,14 @@ const InvitationsList = ({ invitations }: FindInvitations) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteInvitationMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete invitation ' + id + '?')) {
-      deleteInvitation({ variables: { id } })
-    }
-  }
+  const onDeleteClick = useCallback(
+    (id: DeleteInvitationMutationVariables['id']) => {
+      if (confirm('Are you sure you want to delete invitation ' + id + '?')) {
+        deleteInvitation({ variables: { id } })
+      }
+    },
+    [deleteInvitation]
+  )
 
   const columnHelper = createColumnHelper<FindInvitations['invitations'][0]>()
 
@@ -118,7 +120,7 @@ const InvitationsList = ({ invitations }: FindInvitations) => {
         ),
       }),
     ],
-    []
+    [columnHelper, onDeleteClick]
   )
 
   const table = useReactTable({

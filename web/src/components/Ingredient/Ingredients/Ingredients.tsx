@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   useReactTable,
@@ -31,7 +31,6 @@ import {
 } from 'src/components/DropdownMenu/DropdownMenu'
 import { QUERY } from 'src/components/Ingredient/IngredientsCell'
 import TagDisplay from 'src/components/TagDisplay/TagDisplay'
-import { truncate } from 'src/lib/formatters'
 
 const DELETE_INGREDIENT_MUTATION = gql`
   mutation DeleteIngredientMutation($id: String!) {
@@ -53,11 +52,14 @@ const IngredientsList = ({ ingredients }: FindIngredients) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteIngredientMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete ingredient ' + id + '?')) {
-      deleteIngredient({ variables: { id } })
-    }
-  }
+  const onDeleteClick = useCallback(
+    (id: DeleteIngredientMutationVariables['id']) => {
+      if (confirm('Are you sure you want to delete ingredient ' + id + '?')) {
+        deleteIngredient({ variables: { id } })
+      }
+    },
+    [deleteIngredient]
+  )
 
   const columnHelper = createColumnHelper<FindIngredients['ingredients'][0]>()
 
@@ -68,7 +70,7 @@ const IngredientsList = ({ ingredients }: FindIngredients) => {
       columnHelper.accessor((ingredient) => ingredient.name, {
         id: 'name',
         header: () => 'Name',
-        cell: ({ getValue, row }) => <TagDisplay tag={row.original} />,
+        cell: ({ row }) => <TagDisplay tag={row.original} />,
         enableSorting: true,
         size: 220,
       }),
@@ -116,7 +118,7 @@ const IngredientsList = ({ ingredients }: FindIngredients) => {
         ),
       }),
     ],
-    []
+    [columnHelper, onDeleteClick]
   )
 
   const table = useReactTable({

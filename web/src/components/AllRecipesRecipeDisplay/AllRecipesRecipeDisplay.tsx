@@ -1,6 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
 
-import TagDisplay from '../TagDisplay/TagDisplay'
 import {
   Card,
   CardContent,
@@ -8,6 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from '../Card'
+import tomato from '../Recipe/Recipe/tomato.jpeg'
+import TagDisplay from '../TagDisplay/TagDisplay'
 
 interface Recipe {
   id: string
@@ -34,8 +35,6 @@ interface Recipe {
 interface Props {
   recipe: Recipe
 }
-
-import tomato from '../Recipe/Recipe/tomato.jpeg'
 
 const AllRecipesRecipeDisplay = ({ recipe }: Props) => {
   return (

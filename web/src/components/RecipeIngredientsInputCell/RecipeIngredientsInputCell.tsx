@@ -3,7 +3,6 @@ import type {
   FindIngredients,
   FindIngredientsVariables,
   FindTags,
-  FindTagsVariables,
 } from 'types/graphql'
 
 import type {

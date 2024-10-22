@@ -77,11 +77,11 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
   // const [avatarSrc, setAvatarSrc] = useState("/placeholder.svg?height=100&width=100")
   const [language, setLanguage] = useState(user.language ?? i18n.language)
 
-  const [updateUser, { loading, error }] = useMutation(UPDATE_USER_MUTATION, {
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
     onCompleted: () => {
       toast.success('Profile updated')
-      // i18n.changeLanguage(language);
-      // reauthenticate();
+      i18n.changeLanguage(language)
+      reauthenticate()
     },
     onError: (error) => {
       toast.error(error.message)

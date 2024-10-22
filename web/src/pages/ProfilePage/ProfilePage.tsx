@@ -1,7 +1,6 @@
 import { useAuth } from 'src/auth'
 import ProfileCell from 'src/components/ProfileCell'
 
-
 const ProfilePage = () => {
   const { currentUser } = useAuth()
 

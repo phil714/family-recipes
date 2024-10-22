@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   useReactTable,
@@ -28,7 +28,6 @@ import {
 } from 'src/components/DropdownMenu/DropdownMenu'
 import { QUERY } from 'src/components/Tag/TagsCell'
 import TagDisplay from 'src/components/TagDisplay/TagDisplay'
-import { truncate } from 'src/lib/formatters'
 
 const DELETE_TAG_MUTATION = gql`
   mutation DeleteTagMutation($id: String!) {
@@ -50,11 +49,14 @@ const TagsList = ({ tags }: FindTags) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteTagMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete tag ' + id + '?')) {
-      deleteTag({ variables: { id } })
-    }
-  }
+  const onDeleteClick = useCallback(
+    (id: DeleteTagMutationVariables['id']) => {
+      if (confirm('Are you sure you want to delete tag ' + id + '?')) {
+        deleteTag({ variables: { id } })
+      }
+    },
+    [deleteTag]
+  )
 
   const columnHelper = createColumnHelper<FindTags['tags'][0]>()
 
@@ -65,7 +67,7 @@ const TagsList = ({ tags }: FindTags) => {
       columnHelper.accessor((tag) => tag.name, {
         id: 'name',
         header: () => 'Name',
-        cell: ({ getValue, row }) => <TagDisplay tag={row.original} />,
+        cell: ({ row }) => <TagDisplay tag={row.original} />,
         enableSorting: true,
         size: 220,
       }),
@@ -113,7 +115,7 @@ const TagsList = ({ tags }: FindTags) => {
         ),
       }),
     ],
-    []
+    [columnHelper, onDeleteClick]
   )
 
   const table = useReactTable({

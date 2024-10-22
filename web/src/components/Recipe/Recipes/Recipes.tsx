@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   useReactTable,
@@ -53,11 +53,14 @@ const RecipesList = ({ recipes }: FindRecipes) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteRecipeMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete recipe ' + id + '?')) {
-      deleteRecipe({ variables: { id } })
-    }
-  }
+  const onDeleteClick = useCallback(
+    (id: DeleteRecipeMutationVariables['id']) => {
+      if (confirm('Are you sure you want to delete recipe ' + id + '?')) {
+        deleteRecipe({ variables: { id } })
+      }
+    },
+    [deleteRecipe]
+  )
 
   const columnHelper = createColumnHelper<FindRecipes['recipes'][0]>()
 
@@ -155,7 +158,7 @@ const RecipesList = ({ recipes }: FindRecipes) => {
         ),
       }),
     ],
-    []
+    [columnHelper, onDeleteClick, currentUser]
   )
 
   const table = useReactTable({

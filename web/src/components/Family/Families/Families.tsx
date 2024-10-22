@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   useReactTable,
@@ -17,7 +17,6 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { useAuth } from 'src/auth'
 import { Button } from 'src/components/Button'
 import DataTable from 'src/components/DataTable/DataTable'
 import {
@@ -39,8 +38,6 @@ const DELETE_FAMILY_MUTATION = gql`
 `
 
 const FamiliesList = ({ families }: FindFamilies) => {
-  const { currentUser } = useAuth()
-
   const [deleteFamily] = useMutation(DELETE_FAMILY_MUTATION, {
     onCompleted: () => {
       toast.success('Family deleted')
@@ -52,11 +49,14 @@ const FamiliesList = ({ families }: FindFamilies) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteFamilyMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete family ' + id + '?')) {
-      deleteFamily({ variables: { id } })
-    }
-  }
+  const onDeleteClick = useCallback(
+    (id: DeleteFamilyMutationVariables['id']) => {
+      if (confirm('Are you sure you want to delete family ' + id + '?')) {
+        deleteFamily({ variables: { id } })
+      }
+    },
+    [deleteFamily]
+  )
 
   const columnHelper = createColumnHelper<FindFamilies['families'][0]>()
 
@@ -110,14 +110,18 @@ const FamiliesList = ({ families }: FindFamilies) => {
                 <Link to={routes.editFamily({ id: row.original.id })}>
                   <DropdownMenuItem>{t('common:edit')}</DropdownMenuItem>
                 </Link>
-                {/* <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem> */}
+                <DropdownMenuItem
+                  onClick={() => onDeleteClick(row.original.id)}
+                >
+                  {t('common:delete')}
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </>
         ),
       }),
     ],
-    []
+    [columnHelper, onDeleteClick]
   )
 
   const table = useReactTable({
