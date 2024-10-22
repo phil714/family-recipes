@@ -1,16 +1,29 @@
-import type { Prisma, User } from '@prisma/client'
+import { type Prisma, type User } from '@prisma/client'
 
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 import type { ScenarioData } from '@redwoodjs/testing/api'
+
+const [hashedPassword, salt] = hashPassword('AAAaaa111')
+
+export const user = {
+  id: '1',
+  name: 'Michel Tremblay',
+  email: 'micheltremblay@gmail.com',
+  hashedPassword,
+  salt,
+}
+
+export const userContext = {
+  ...user,
+  roles: [],
+  isSuperAdmin: undefined,
+  familyMembers: [],
+}
 
 export const standard = defineScenario<Prisma.UserCreateArgs>({
   user: {
     one: {
-      data: {
-        email: 'String5507439',
-        name: 'String',
-        hashedPassword: 'String',
-        salt: 'String',
-      },
+      data: user,
     },
     two: {
       data: {

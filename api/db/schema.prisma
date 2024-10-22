@@ -59,8 +59,11 @@ enum AccessRole {
 model FamilyMember {
   id         String     @id @default(nanoid())
   userId     String
-  accessRole AccessRole @default(USER)
   familyId   String
+  accessRole AccessRole @default(USER)
+
+  @@unique([userId, familyId])
+
   family     Family     @relation(fields: [familyId], references: [id])
   user       User       @relation(fields: [userId], references: [id])
   recipes    Recipe[]
@@ -73,7 +76,7 @@ model Invitation {
   family     Family     @relation(fields: [familyId], references: [id])
   accessRole AccessRole
   code       String     @default(nanoid())
-  expiresAt  DateTime   @default(dbgenerated("NOW() + interval '1 day'"))
+  expiresAt  DateTime   @default(dbgenerated("NOW() + interval '7 day'"))
 }
 
 enum RecipeStatus {

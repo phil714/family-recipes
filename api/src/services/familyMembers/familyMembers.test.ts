@@ -1,13 +1,14 @@
 import type { FamilyMember } from '@prisma/client'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import {
   familyMembers,
   familyMember,
-  createFamilyMember,
   updateFamilyMember,
   deleteFamilyMember,
 } from './familyMembers'
-import type { StandardScenario } from './familyMembers.scenarios'
+import { userContext, type StandardScenario } from './familyMembers.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -17,35 +18,26 @@ import type { StandardScenario } from './familyMembers.scenarios'
 
 describe('familyMembers', () => {
   scenario('returns all familyMembers', async (scenario: StandardScenario) => {
-    const result = await familyMembers()
+    mockCurrentUser(userContext)
+    const result = await familyMembers({
+      familyId: scenario.familyMember.one.familyId,
+    })
 
-    expect(result.length).toEqual(Object.keys(scenario.familyMember).length)
+    expect(result.length).toEqual(1)
   })
 
   scenario(
     'returns a single familyMember',
     async (scenario: StandardScenario) => {
+      mockCurrentUser(userContext)
       const result = await familyMember({ id: scenario.familyMember.one.id })
 
       expect(result).toEqual(scenario.familyMember.one)
     }
   )
 
-  scenario('creates a familyMember', async (scenario: StandardScenario) => {
-    const result = await createFamilyMember({
-      input: {
-        userId: scenario.familyMember.two.userId,
-        accessRole: 'USER',
-        familyId: scenario.familyMember.two.familyId,
-      },
-    })
-
-    expect(result.userId).toEqual(scenario.familyMember.two.userId)
-    expect(result.accessRole).toEqual('USER')
-    expect(result.familyId).toEqual(scenario.familyMember.two.familyId)
-  })
-
   scenario('updates a familyMember', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const original = (await familyMember({
       id: scenario.familyMember.one.id,
     })) as FamilyMember
@@ -57,9 +49,32 @@ describe('familyMembers', () => {
     expect(result.accessRole).toEqual('ADMIN')
   })
 
+  scenario(
+    'not delete a family member when is last admin',
+    async (scenario: StandardScenario) => {
+      mockCurrentUser(userContext)
+      const original = (await deleteFamilyMember({
+        id: scenario.familyMember.one.id,
+      })) as FamilyMember
+      await expect(familyMember({ id: original.id })).rejects.toThrow(Error)
+    }
+  )
+  scenario(
+    'not delete a family member when unauthorized',
+    async (scenario: StandardScenario) => {
+      mockCurrentUser(userContext)
+      const original = (await deleteFamilyMember({
+        id: scenario.familyMember.two.id,
+      })) as FamilyMember
+      await expect(familyMember({ id: original.id })).rejects.toThrow(
+        ForbiddenError
+      )
+    }
+  )
   scenario('deletes a familyMember', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const original = (await deleteFamilyMember({
-      id: scenario.familyMember.one.id,
+      id: scenario.familyMember.four.id,
     })) as FamilyMember
     const result = await familyMember({ id: original.id })
 

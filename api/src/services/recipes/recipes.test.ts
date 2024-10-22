@@ -8,7 +8,7 @@ import {
   deleteRecipe,
   allRecipes,
 } from './recipes'
-import type { StandardScenario } from './recipes.scenarios'
+import { userContext, type StandardScenario } from './recipes.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -18,15 +18,25 @@ import type { StandardScenario } from './recipes.scenarios'
 
 describe('recipes', () => {
   scenario('returns private recipes', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const result = await recipes()
 
     expect(result.length).toEqual(Object.keys(scenario.recipe).length)
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(scenario.recipe.one),
+        expect.objectContaining(scenario.recipe.two),
+      ])
+    )
   })
 
   scenario('returns all recipes', async (scenario: StandardScenario) => {
     const result = await allRecipes()
 
-    expect(result.length).toEqual(Object.keys(scenario.recipe).length)
+    expect(result.length).toEqual(1)
+    expect(result).toEqual(
+      expect.arrayContaining([expect.objectContaining(scenario.recipe.two)])
+    )
   })
 
   scenario('returns a single recipe', async (scenario: StandardScenario) => {
@@ -36,6 +46,7 @@ describe('recipes', () => {
   })
 
   scenario('creates a recipe', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const result = await createRecipe({
       input: {
         name: 'String',
@@ -59,6 +70,7 @@ describe('recipes', () => {
   })
 
   scenario('updates a recipe', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const original = (await recipe({ id: scenario.recipe.one.id })) as Recipe
     const result = await updateRecipe({
       id: original.id,
@@ -79,6 +91,7 @@ describe('recipes', () => {
   })
 
   scenario('deletes a recipe', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const original = (await deleteRecipe({
       id: scenario.recipe.one.id,
     })) as Recipe

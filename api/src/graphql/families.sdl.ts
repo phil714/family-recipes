@@ -27,5 +27,6 @@ export const schema = gql`
     updateFamily(id: String!, input: UpdateFamilyInput!): Family!
       @requireAuth(roles: ["ADMIN"])
     deleteFamily(id: String!): Family! @requireAuth(roles: ["ADMIN"])
+    leaveFamily(id: String!): Family! @requireAuth
   }
 `
