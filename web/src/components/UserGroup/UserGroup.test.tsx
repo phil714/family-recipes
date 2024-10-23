@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import UserGroup from './UserGroup'
+import { UserGroup } from './UserGroup'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +8,11 @@ import UserGroup from './UserGroup'
 describe('UserGroup', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<UserGroup />)
+      render(
+        <UserGroup
+          users={[{ email: 'test@test.com', name: 'Michel Tremblay' }]}
+        />
+      )
     }).not.toThrow()
   })
 })

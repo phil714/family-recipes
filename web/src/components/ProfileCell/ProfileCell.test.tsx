@@ -1,6 +1,10 @@
+import { I18nextProvider } from 'react-i18next'
+
 import { render } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './ProfileCell'
+import i18n from 'src/i18n'
+
+import { Empty, Failure, Loading, Success } from './ProfileCell'
 import { standard } from './ProfileCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
@@ -36,7 +40,11 @@ describe('ProfileCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success profile={standard().profile} />)
+      render(
+        <I18nextProvider i18n={i18n}>
+          <Success user={standard().profile} />
+        </I18nextProvider>
+      )
     }).not.toThrow()
   })
 })

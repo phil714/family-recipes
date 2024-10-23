@@ -3,10 +3,10 @@ import type { FamilyMember } from '@prisma/client'
 import { ForbiddenError } from '@redwoodjs/graphql-server'
 
 import {
-  familyMembers,
-  familyMember,
-  updateFamilyMember,
   deleteFamilyMember,
+  familyMember,
+  familyMembers,
+  updateFamilyMember,
 } from './familyMembers'
 import { userContext, type StandardScenario } from './familyMembers.scenarios'
 
@@ -53,22 +53,22 @@ describe('familyMembers', () => {
     'not delete a family member when is last admin',
     async (scenario: StandardScenario) => {
       mockCurrentUser(userContext)
-      const original = (await deleteFamilyMember({
-        id: scenario.familyMember.one.id,
-      })) as FamilyMember
-      await expect(familyMember({ id: original.id })).rejects.toThrow(Error)
+      await expect(
+        deleteFamilyMember({
+          id: scenario.familyMember.one.id,
+        })
+      ).rejects.toThrow('cannot delete last admin')
     }
   )
   scenario(
     'not delete a family member when unauthorized',
     async (scenario: StandardScenario) => {
       mockCurrentUser(userContext)
-      const original = (await deleteFamilyMember({
-        id: scenario.familyMember.two.id,
-      })) as FamilyMember
-      await expect(familyMember({ id: original.id })).rejects.toThrow(
-        ForbiddenError
-      )
+      await expect(
+        deleteFamilyMember({
+          id: scenario.familyMember.two.id,
+        })
+      ).rejects.toThrow(`You don't have access to do that.`)
     }
   )
   scenario('deletes a familyMember', async (scenario: StandardScenario) => {

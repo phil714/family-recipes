@@ -1,6 +1,8 @@
+import { TooltipProvider } from '@radix-ui/react-tooltip'
+
 import { render } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './AllRecipesCell'
+import { Empty, Failure, Loading, Success } from './AllRecipesCell'
 import { standard } from './AllRecipesCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
@@ -36,7 +38,11 @@ describe('AllRecipesCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success allRecipes={standard().allRecipes} />)
+      render(
+        <TooltipProvider>
+          <Success allRecipes={standard().allRecipes} />
+        </TooltipProvider>
+      )
     }).not.toThrow()
   })
 })

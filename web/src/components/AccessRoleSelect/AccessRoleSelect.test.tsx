@@ -1,3 +1,5 @@
+import { noop } from '@tanstack/react-table'
+
 import { render } from '@redwoodjs/testing/web'
 
 import AccessRoleSelect from './AccessRoleSelect'
@@ -8,7 +10,7 @@ import AccessRoleSelect from './AccessRoleSelect'
 describe('AccessRoleSelect', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<AccessRoleSelect />)
+      render(<AccessRoleSelect value={'ADMIN'} onChange={noop} />)
     }).not.toThrow()
   })
 })

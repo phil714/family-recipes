@@ -11,7 +11,7 @@ import {
   updateInvitation,
   deleteInvitation,
 } from './invitations'
-import type { StandardScenario } from './invitations.scenarios'
+import { userContext, type StandardScenario } from './invitations.scenarios'
 
 jest.mock('@sendgrid/mail')
 
@@ -38,17 +38,18 @@ describe('invitations', () => {
   )
 
   scenario('creates a invitation', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const result = await createInvitation({
       input: {
         email: 'String',
-        familyId: scenario.invitation.two.familyId,
+        familyId: scenario.invitation.one.familyId,
         accessRole: 'USER',
         redirectUrl: 'localhost:8910/invitations/2/accept',
       },
     })
 
     expect(result.email).toEqual('String')
-    expect(result.familyId).toEqual(scenario.invitation.two.familyId)
+    expect(result.familyId).toEqual(scenario.invitation.one.familyId)
     expect(result.accessRole).toEqual('USER')
 
     // Mail
@@ -84,6 +85,7 @@ describe('invitations', () => {
   })
 
   scenario('updates a invitation', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const original = (await invitation({
       id: scenario.invitation.one.id,
     })) as Invitation
@@ -92,10 +94,11 @@ describe('invitations', () => {
       input: { accessRole: 'ADMIN' },
     })
 
-    expect(result.email).toEqual('String2')
+    expect(result.accessRole).toEqual('ADMIN')
   })
 
   scenario('deletes a invitation', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
     const original = (await deleteInvitation({
       id: scenario.invitation.one.id,
     })) as Invitation

@@ -8,7 +8,7 @@ import type {
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
-export const recipes: QueryResolvers['recipes'] = ({ searchParams }) => {
+export const recipes: QueryResolvers['recipes'] = (input) => {
   return db.recipe.findMany({
     where: {
       family: {
@@ -17,7 +17,7 @@ export const recipes: QueryResolvers['recipes'] = ({ searchParams }) => {
             userId: context.currentUser?.id,
           },
         },
-        id: searchParams?.familyId,
+        id: input?.searchParams?.familyId,
       },
     },
   })

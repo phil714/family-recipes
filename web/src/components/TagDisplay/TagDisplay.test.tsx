@@ -1,3 +1,5 @@
+import { TooltipProvider } from '@radix-ui/react-tooltip'
+
 import { render } from '@redwoodjs/testing/web'
 
 import TagDisplay from './TagDisplay'
@@ -8,7 +10,18 @@ import TagDisplay from './TagDisplay'
 describe('TagDisplay', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<TagDisplay />)
+      render(
+        <TooltipProvider>
+          <TagDisplay
+            tag={{
+              id: '1',
+              name: 'Chinese',
+              color: '#FF0000',
+              description: 'A traditional cuisine from China',
+            }}
+          />
+        </TooltipProvider>
+      )
     }).not.toThrow()
   })
 })

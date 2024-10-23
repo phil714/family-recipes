@@ -1,4 +1,6 @@
-import { render } from '@redwoodjs/testing/web'
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
+
+import { render, renderHook } from '@redwoodjs/testing/web'
 
 import DataTable from './DataTable'
 
@@ -8,7 +10,15 @@ import DataTable from './DataTable'
 describe('DataTable', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<DataTable />)
+      const hook = renderHook(() =>
+        useReactTable({
+          columns: [],
+          data: [],
+          getCoreRowModel: getCoreRowModel(),
+        })
+      )
+
+      render(<DataTable table={hook.result.current} />)
     }).not.toThrow()
   })
 })
