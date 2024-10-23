@@ -1,6 +1,6 @@
 import { type Prisma, type Invitation, AccessRole } from '@prisma/client'
-import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 const [hashedPassword, salt] = hashPassword('AAAaaa111')

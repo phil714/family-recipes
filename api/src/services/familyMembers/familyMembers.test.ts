@@ -1,7 +1,5 @@
 import type { FamilyMember } from '@prisma/client'
 
-import { ForbiddenError } from '@redwoodjs/graphql-server'
-
 import {
   deleteFamilyMember,
   familyMember,
