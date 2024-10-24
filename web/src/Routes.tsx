@@ -19,8 +19,8 @@ const Routes = () => {
     <Router useAuth={useAuth}>
       <PrivateSet wrap={CMSLayout} unauthenticated="home">
         <Route path="/profile" page={ProfilePage} name="profile" />
-        <Set wrap={ScaffoldLayout} title="Recipes" titleTo="recipes" buttonLabel="New Recipe" buttonTo="newRecipe" >
-          <PrivateSet roles={['ADMIN', 'USER']} unauthenticated='home'>
+        <Set wrap={ScaffoldLayout} title="Recipes" titleTo="recipes" buttonLabel="New Recipe" buttonTo="newRecipe">
+          <PrivateSet roles={['ADMIN', 'USER']} unauthenticated="home">
             <Route path="/recipes/new" page={RecipeNewRecipePage} name="newRecipe" />
             <Route path="/recipes/{id}/edit" page={RecipeEditRecipePage} name="editRecipe" />
           </PrivateSet>

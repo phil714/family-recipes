@@ -1,7 +1,7 @@
-import IngredientsCell from "src/components/Ingredient/IngredientsCell";
+import IngredientsCell from 'src/components/Ingredient/IngredientsCell'
 
 const IngredientsPage = () => {
-  return <IngredientsCell />;
-};
+  return <IngredientsCell />
+}
 
-export default IngredientsPage;
+export default IngredientsPage

@@ -10,17 +10,17 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import AccessRoleSelect from "./AccessRoleSelect";
+import AccessRoleSelect from './AccessRoleSelect'
 
 const meta: Meta<typeof AccessRoleSelect> = {
   component: AccessRoleSelect,
-  tags: ["autodocs"],
-};
+  tags: ['autodocs'],
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof AccessRoleSelect>;
+type Story = StoryObj<typeof AccessRoleSelect>
 
-export const Primary: Story = {};
+export const Primary: Story = {}

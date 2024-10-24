@@ -1,11 +1,11 @@
-import EditIngredientCell from "src/components/Ingredient/EditIngredientCell";
+import EditIngredientCell from 'src/components/Ingredient/EditIngredientCell'
 
 type IngredientPageProps = {
-  id: string;
-};
+  id: string
+}
 
 const EditIngredientPage = ({ id }: IngredientPageProps) => {
-  return <EditIngredientCell id={id} />;
-};
+  return <EditIngredientCell id={id} />
+}
 
-export default EditIngredientPage;
+export default EditIngredientPage

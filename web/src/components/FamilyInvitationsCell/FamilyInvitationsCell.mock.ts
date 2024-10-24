@@ -2,16 +2,22 @@
 export const standard = (/* vars, { ctx, req } */) => ({
   familyInvitations: [
     {
-      __typename: "FamilyInvitations" as const,
-      id: 42,
+      __typename: 'FamilyMember' as const,
+      id: '42',
+      accessRole: 'ADMIN',
+      email: 'test@test.com',
     },
     {
-      __typename: "FamilyInvitations" as const,
-      id: 43,
+      __typename: 'FamilyMember' as const,
+      id: '43',
+      accessRole: 'ADMIN',
+      email: 'test@test.com',
     },
     {
-      __typename: "FamilyInvitations" as const,
-      id: 44,
+      __typename: 'FamilyMember' as const,
+      id: '44',
+      accessRole: 'ADMIN',
+      email: 'test@test.com',
     },
   ],
-});
+})

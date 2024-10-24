@@ -1,15 +1,14 @@
+import { RecipeStatus } from '@prisma/client'
 import type {
   QueryResolvers,
   MutationResolvers,
   RecipeRelationResolvers,
 } from 'types/graphql'
 
-import { RecipeStatus } from '@prisma/client'
-
-import { db } from 'src/lib/db'
 import { requireAuth } from 'src/lib/auth'
+import { db } from 'src/lib/db'
 
-export const recipes: QueryResolvers['recipes'] = ({ searchParams }) => {
+export const recipes: QueryResolvers['recipes'] = (input) => {
   return db.recipe.findMany({
     where: {
       family: {
@@ -18,8 +17,8 @@ export const recipes: QueryResolvers['recipes'] = ({ searchParams }) => {
             userId: context.currentUser?.id,
           },
         },
-        id: searchParams?.familyId
-      }
+        id: input?.searchParams?.familyId,
+      },
     },
   })
 }
@@ -33,37 +32,50 @@ export const allRecipes: QueryResolvers['allRecipes'] = (input) => {
     where: {
       OR: [
         { status: RecipeStatus.PUBLIC },
-        ...(context.currentUser ? [{
-          status: RecipeStatus.PRIVATE,
-          family: {
-            familyMembers: {
-              some: {
-                userId: context.currentUser.id,
+        ...(context.currentUser
+          ? [
+              {
+                status: RecipeStatus.PRIVATE,
+                family: {
+                  familyMembers: {
+                    some: {
+                      userId: context.currentUser.id,
+                    },
+                  },
+                },
               },
-            },
-          },
-        }] : []),
+            ]
+          : []),
       ],
-      name: searchText.length > 0 ? {
-        contains: searchText, // TODO: find a better search engine later
-        mode: 'insensitive'
-      } : undefined,
-      tags: tagIds.length > 0 ? {
-        some: {
-          id: { in: tagIds },
-        }
-      } : undefined,
-      ingredients: ingredientIds.length > 0 ? {
-        some: {
-          id: { in: ingredientIds },
-        }
-      } : undefined
+      name:
+        searchText.length > 0
+          ? {
+              contains: searchText, // TODO: find a better search engine later
+              mode: 'insensitive',
+            }
+          : undefined,
+      tags:
+        tagIds.length > 0
+          ? {
+              some: {
+                id: { in: tagIds },
+              },
+            }
+          : undefined,
+      ingredients:
+        ingredientIds.length > 0
+          ? {
+              some: {
+                id: { in: ingredientIds },
+              },
+            }
+          : undefined,
     },
     orderBy: {
       _relevance: {
         fields: ['name'],
         search: searchText,
-        sort: 'asc'
+        sort: 'asc',
       },
     },
   })
@@ -92,7 +104,7 @@ export const recipe: QueryResolvers['recipe'] = ({ id }) => {
 export const createRecipe: MutationResolvers['createRecipe'] = async ({
   input,
 }) => {
-  requireAuth({ roles: ["ADMIN", "USER"], familyId: input.familyId })
+  requireAuth({ roles: ['ADMIN', 'USER'], familyId: input.familyId })
   const tags = {
     connect: input.tagIds.map((tag) => ({ id: tag })),
   }
@@ -133,12 +145,14 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   id,
   input,
 }) => {
-
-  const ingredients = await db.recipe.findUnique({ where: { id } }).ingredients() ?? []
+  const ingredients =
+    (await db.recipe.findUnique({ where: { id } }).ingredients()) ?? []
   const ingredientsToConnect = input.ingredientIds.map((id) => ({ id }))
-  const ingredientsToDisconnect = ingredients.filter((ingredient) => !input.ingredientIds.includes(ingredient.id))
+  const ingredientsToDisconnect = ingredients.filter(
+    (ingredient) => !input.ingredientIds.includes(ingredient.id)
+  )
 
-  const tags = await db.recipe.findUnique({ where: { id } }).tags() ?? []
+  const tags = (await db.recipe.findUnique({ where: { id } }).tags()) ?? []
   const tagsToConnect = input.tagIds.map((id) => ({ id }))
   const tagsToDisconnect = tags.filter((tag) => !input.tagIds.includes(tag.id))
 
@@ -161,11 +175,13 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   })
 }
 
-export const deleteRecipe: MutationResolvers['deleteRecipe'] = async ({ id }) => {
+export const deleteRecipe: MutationResolvers['deleteRecipe'] = async ({
+  id,
+}) => {
   const recipe = await db.recipe.findUnique({
-    where: { id }
+    where: { id },
   })
-  requireAuth({ roles: ["ADMIN", "USER"], familyId: recipe?.familyId })
+  requireAuth({ roles: ['ADMIN', 'USER'], familyId: recipe?.familyId })
 
   return db.recipe.delete({
     where: { id },

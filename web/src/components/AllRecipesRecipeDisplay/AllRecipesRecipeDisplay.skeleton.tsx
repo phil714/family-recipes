@@ -1,14 +1,23 @@
-import { Skeleton } from "src/components/Skeleton"
-import { Card } from "../Card"
+import { Skeleton } from 'src/components/Skeleton'
+
+import { Card } from '../Card'
 
 export function AllRecipesRecipeDisplaySkeleton() {
   return (
-    <Card className="h-80 w-80 flex flex-col shadow-md p-4">
-      <Skeleton className="w-full h-40" />
-      <Skeleton className="w-full h-8 my-2" />
-      <Skeleton className="w-full h-20" />
-      <div className="flex gap-2 mt-2 justify-evenly">{Array.from({ length: 4 }).map(() => <Skeleton className="w-16 h-5 p-1 rounded-full"/>)}</div>
-      <div className="flex gap-2 mt-2 justify-evenly">{Array.from({ length: 4 }).map(() => <Skeleton className="w-16 h-5 p-1 rounded-full" />)}</div>
+    <Card className="flex h-80 w-80 flex-col p-4 shadow-md">
+      <Skeleton className="h-40 w-full" />
+      <Skeleton className="my-2 h-8 w-full" />
+      <Skeleton className="h-20 w-full" />
+      <div className="mt-2 flex justify-evenly gap-2">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton className="h-5 w-16 rounded-full p-1" key={index} />
+        ))}
+      </div>
+      <div className="mt-2 flex justify-evenly gap-2">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton className="h-5 w-16 rounded-full p-1" key={index} />
+        ))}
+      </div>
     </Card>
   )
 }

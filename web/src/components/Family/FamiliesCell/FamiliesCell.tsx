@@ -9,28 +9,26 @@ import type {
 
 import Families from 'src/components/Family/Families'
 
-export const QUERY: TypedDocumentNode<
-  FindFamilies,
-  FindFamiliesVariables
-> = gql`
-  query FindFamilies {
-    families {
-      id
-      name
-      recipes {
+export const QUERY: TypedDocumentNode<FindFamilies, FindFamiliesVariables> =
+  gql`
+    query FindFamilies {
+      families {
         id
-      }
-      familyMembers {
-        id
-        user {
+        name
+        recipes {
           id
-          name
-          email
+        }
+        familyMembers {
+          id
+          user {
+            id
+            name
+            email
+          }
         }
       }
     }
-  }
-`
+  `
 
 export const Loading = () => <div>Loading...</div>
 

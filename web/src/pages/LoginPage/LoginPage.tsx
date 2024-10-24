@@ -6,7 +6,6 @@ import {
   Label,
   TextField,
   PasswordField,
-  Submit,
   FieldError,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'

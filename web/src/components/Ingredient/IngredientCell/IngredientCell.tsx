@@ -1,15 +1,15 @@
 import type {
   FindIngredientById,
   FindIngredientByIdVariables,
-} from "types/graphql";
+} from 'types/graphql'
 
 import type {
   CellSuccessProps,
   CellFailureProps,
   TypedDocumentNode,
-} from "@redwoodjs/web";
+} from '@redwoodjs/web'
 
-import Ingredient from "src/components/Ingredient/Ingredient";
+import Ingredient from 'src/components/Ingredient/Ingredient'
 
 export const QUERY: TypedDocumentNode<
   FindIngredientById,
@@ -23,20 +23,20 @@ export const QUERY: TypedDocumentNode<
       color
     }
   }
-`;
+`
 
-export const Loading = () => <div>Loading...</div>;
+export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>Ingredient not found</div>;
+export const Empty = () => <div>Ingredient not found</div>
 
 export const Failure = ({
   error,
 }: CellFailureProps<FindIngredientByIdVariables>) => (
   <div className="rw-cell-error">{error?.message}</div>
-);
+)
 
 export const Success = ({
   ingredient,
 }: CellSuccessProps<FindIngredientById, FindIngredientByIdVariables>) => {
-  return <Ingredient ingredient={ingredient} />;
-};
+  return <Ingredient ingredient={ingredient} />
+}

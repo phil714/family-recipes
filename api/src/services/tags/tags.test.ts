@@ -24,7 +24,7 @@ describe('tags', () => {
 
   scenario('creates a tag', async () => {
     const result = await createTag({
-      input: { name: 'String', color: 'String' },
+      input: { name: 'String', color: 'String', description: 'String' },
     })
 
     expect(result.name).toEqual('String')

@@ -10,17 +10,17 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import DataTable from "./DataTable";
+import DataTable from './DataTable'
 
 const meta: Meta<typeof DataTable> = {
   component: DataTable,
-  tags: ["autodocs"],
-};
+  tags: ['autodocs'],
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof DataTable>;
+type Story = StoryObj<typeof DataTable>
 
-export const Primary: Story = {};
+export const Primary: Story = {}

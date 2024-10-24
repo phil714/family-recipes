@@ -7,7 +7,7 @@ import {
   updateFamily,
   deleteFamily,
 } from './families'
-import { user, type StandardScenario } from './families.scenarios'
+import { userContext, type StandardScenario } from './families.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -16,8 +16,8 @@ import { user, type StandardScenario } from './families.scenarios'
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
 describe('families', () => {
-  scenario('returns all families', async (scenario: StandardScenario) => {
-    mockCurrentUser(user)
+  scenario('returns all families', async (_scenario: StandardScenario) => {
+    mockCurrentUser(userContext)
 
     const result = await families()
 
@@ -25,7 +25,7 @@ describe('families', () => {
   })
 
   scenario('returns a single family', async (scenario: StandardScenario) => {
-    mockCurrentUser(user)
+    mockCurrentUser(userContext)
 
     const result = await family({ id: scenario.family.one.id })
 
@@ -33,6 +33,7 @@ describe('families', () => {
   })
 
   scenario('creates a family', async () => {
+    mockCurrentUser(userContext)
     const result = await createFamily({
       input: { name: 'String' },
     })

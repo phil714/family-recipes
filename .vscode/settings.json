@@ -3,7 +3,8 @@
   "files.trimTrailingWhitespace": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.sortImports": "explicit"
   },
   "[prisma]": {
     "editor.formatOnSave": true
@@ -30,4 +31,7 @@
       "connectString": "postgres://postgres:postgres@localhost:5432/development_db"
     }
   ],
+  "jest.runMode": {
+    "type": "on-demand"
+  },
 }

@@ -1,26 +1,32 @@
+import React from 'react'
+
 import type {
   FamilyInvitationsQuery,
   FamilyInvitationsQueryVariables,
   MutationupdateInvitationArgs,
   UpdateFamilyMemberInput,
-} from "types/graphql";
+} from 'types/graphql'
 
-import React from 'react'
-
+import { Link, routes } from '@redwoodjs/router'
 import {
   type CellSuccessProps,
   type CellFailureProps,
   type TypedDocumentNode,
   useMutation,
-} from "@redwoodjs/web";
-import AccessRoleSelect from "../AccessRoleSelect/AccessRoleSelect";
-import { User } from "../User/User";
-import { toast } from "@redwoodjs/web/toast";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
-import { FamilyMembersCellSkeleton } from "../FamilyMembersCell/FamilyMembersCell.skeleton";
-import { UserSkeleton } from "../User/User.skeleton";
-import { Button } from "../Button";
-import { Link, routes } from "@redwoodjs/router";
+} from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import AccessRoleSelect from '../AccessRoleSelect/AccessRoleSelect'
+import { Button } from '../Button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../Card'
+import { User } from '../User/User'
+import { UserSkeleton } from '../User/User.skeleton'
 
 export const QUERY: TypedDocumentNode<
   FamilyInvitationsQuery,
@@ -33,13 +39,16 @@ export const QUERY: TypedDocumentNode<
       email
     }
   }
-`;
+`
 
 const UPDATE_INVITATION_MUTATION: TypedDocumentNode<
   FamilyInvitationsQuery,
   MutationupdateInvitationArgs
 > = gql`
-  mutation UpdateInvitationMutation($id: String!, $input: UpdateInvitationInput!) {
+  mutation UpdateInvitationMutation(
+    $id: String!
+    $input: UpdateInvitationInput!
+  ) {
     updateInvitation(id: $id, input: $input) {
       id
       accessRole
@@ -47,36 +56,39 @@ const UPDATE_INVITATION_MUTATION: TypedDocumentNode<
   }
 `
 
+export const Loading = () => (
+  <Layout>
+    {Array.from({ length: 3 }).map((_, index) => (
+      <UserSkeleton key={index} />
+    ))}
+  </Layout>
+)
 
-export const Loading = () => <Layout>{Array.from({ length: 3 }).map(() => <UserSkeleton />)}</Layout>;
-
-export const Empty = () => <Layout><p className="text-gray-500">No pending invitations</p></Layout>;
+export const Empty = () => (
+  <Layout>
+    <p className="text-gray-500">No pending invitations</p>
+  </Layout>
+)
 
 export const Failure = ({ error, errorCode }: CellFailureProps) => {
   if (errorCode === 'FORBIDDEN') {
     return <React.Fragment />
   }
 
-  return (
-    <div style={{ color: "red" }}>Error: {error?.message}</div>
-  )
-};
+  return <div style={{ color: 'red' }}>Error: {error?.message}</div>
+}
 
 export const Success = ({
   familyInvitations,
-  queryResult,
 }: CellSuccessProps<FamilyInvitationsQuery>) => {
-  const [updateInvitation, { loading, error }] = useMutation(
-    UPDATE_INVITATION_MUTATION,
-    {
-      onCompleted: () => {
-        toast.success('Invitation updated')
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    }
-  )
+  const [updateInvitation] = useMutation(UPDATE_INVITATION_MUTATION, {
+    onCompleted: () => {
+      toast.success('Invitation updated')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
   const onSave = (
     input: UpdateFamilyMemberInput,
@@ -88,31 +100,33 @@ export const Success = ({
   return (
     <Layout>
       {familyInvitations.map((item) => {
-        return <li key={item.id} className="flex justify-center">
-          <User user={{ name: item.email, email: item.email }} />
-          <AccessRoleSelect value={item.accessRole} onChange={(accessRole) => onSave({ accessRole }, item.id)} />
-        </li>;
+        return (
+          <li key={item.id} className="flex justify-center">
+            <User user={{ name: item.email, email: item.email }} />
+            <AccessRoleSelect
+              value={item.accessRole}
+              onChange={(accessRole) => onSave({ accessRole }, item.id)}
+            />
+          </li>
+        )
       })}
     </Layout>
-  );
-};
+  )
+}
 
 export const Layout = ({ children }) => (
   <Card>
     <CardHeader className="flex flex-row justify-between">
       <span className="flex flex-col">
-        <CardTitle>
-          Invitations
-        </CardTitle>
+        <CardTitle>Invitations</CardTitle>
         <CardDescription>
           Pending invitations to your family members.
         </CardDescription>
       </span>
-      <Link to={routes.newInvitation()}><Button>Invite</Button></Link>
+      <Link to={routes.newInvitation()}>
+        <Button>Invite</Button>
+      </Link>
     </CardHeader>
-    <CardContent className="flex flex-col gap-4">
-      {children}
-    </CardContent>
+    <CardContent className="flex flex-col gap-4">{children}</CardContent>
   </Card>
 )
-

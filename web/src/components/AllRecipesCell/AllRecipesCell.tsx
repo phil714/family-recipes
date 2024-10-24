@@ -1,15 +1,15 @@
-import type { AllRecipesQuery, AllRecipesQueryVariables } from "types/graphql";
+import { useDeferredValue } from 'react'
+
+import type { AllRecipesQuery, AllRecipesQueryVariables } from 'types/graphql'
 
 import type {
   CellSuccessProps,
   CellFailureProps,
   TypedDocumentNode,
-} from "@redwoodjs/web";
-import AllRecipesRecipeDisplay from "../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay";
-import AllRecipesSearchBar from "../AllRecipesSearchBar/AllRecipesSearchBar";
-import { useLocation } from "@redwoodjs/router";
-import { useDeferredValue } from "react";
-import { AllRecipesRecipeDisplaySkeleton } from "../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay.skeleton";
+} from '@redwoodjs/web'
+
+import AllRecipesRecipeDisplay from '../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay'
+import { AllRecipesRecipeDisplaySkeleton } from '../AllRecipesRecipeDisplay/AllRecipesRecipeDisplay.skeleton'
 
 export const QUERY: TypedDocumentNode<
   AllRecipesQuery,
@@ -38,26 +38,30 @@ export const QUERY: TypedDocumentNode<
       }
     }
   }
-`;
+`
 
-export const Loading = () => <ul className="w-full h-full flex flex-wrap grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 lg:gap-8">
-  {Array.from({ length: 12 }).map(() => <AllRecipesRecipeDisplaySkeleton />)}
-</ul>;
+export const Loading = () => (
+  <ul className="flex h-full w-full grid-cols-1 flex-wrap sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+    {Array.from({ length: 12 }).map((_, index) => (
+      <AllRecipesRecipeDisplaySkeleton key={index} />
+    ))}
+  </ul>
+)
 
-export const Empty = () => <div>Empty</div>;
+export const Empty = () => <div>Empty</div>
 
 export const Failure = ({ error }: CellFailureProps) => (
-  <div style={{ color: "red" }}>Error: {error?.message}</div>
-);
+  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+)
 
 export const Success = ({ allRecipes }: CellSuccessProps<AllRecipesQuery>) => {
-  const recipes = useDeferredValue(allRecipes);
+  const recipes = useDeferredValue(allRecipes)
 
   return (
-    <ul className="w-full h-full flex flex-wrap grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 lg:gap-8">
+    <ul className="flex h-full w-full grid-cols-1 flex-wrap sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
       {recipes?.map((item) => {
-        return <AllRecipesRecipeDisplay recipe={item} key={item.id} />;
+        return <AllRecipesRecipeDisplay recipe={item} key={item.id} />
       })}
     </ul>
-  );
-};
+  )
+}

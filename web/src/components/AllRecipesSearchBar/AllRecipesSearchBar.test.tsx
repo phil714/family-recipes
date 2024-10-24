@@ -1,14 +1,14 @@
-import { render } from "@redwoodjs/testing/web";
+import { render } from '@redwoodjs/testing/web'
 
-import AllRecipesSearchBar from "./AllRecipesSearchBar";
+import AllRecipesSearchBar from './AllRecipesSearchBar'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe("AllRecipesSearchBar", () => {
-  it("renders successfully", () => {
+describe('AllRecipesSearchBar', () => {
+  it('renders successfully', () => {
     expect(() => {
-      render(<AllRecipesSearchBar />);
-    }).not.toThrow();
-  });
-});
+      render(<AllRecipesSearchBar />)
+    }).not.toThrow()
+  })
+})
