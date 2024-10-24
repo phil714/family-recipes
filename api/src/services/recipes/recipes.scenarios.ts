@@ -1,19 +1,40 @@
-import type { Prisma, Recipe } from '@prisma/client'
-import { hashPassword } from '@redwoodjs/auth-dbauth-api'
-import type { ScenarioData } from '@redwoodjs/testing/api'
+import { AccessRole, type Prisma, type Recipe } from '@prisma/client'
 import { Ingredient, Tag } from 'types/graphql'
 
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
+import type { ScenarioData } from '@redwoodjs/testing/api'
 
 const [hashedPassword, salt] = hashPassword('AAAaaa111')
+
 export const user = {
   id: '1',
   name: 'Michel Tremblay',
   email: 'micheltremblay@gmail.com',
+  isSuperAdmin: undefined,
   hashedPassword,
   salt,
 }
 
-export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreateArgs | Prisma.IngredientCreateArgs>({
+export const userContext = {
+  ...user,
+  roles: [AccessRole.ADMIN, AccessRole.ADMIN],
+  familyMembers: [
+    {
+      id: '1',
+      familyId: '1',
+      accessRole: AccessRole.ADMIN,
+    },
+    {
+      id: '2',
+      familyId: '2',
+      accessRole: AccessRole.ADMIN,
+    },
+  ],
+}
+
+export const standard = defineScenario<
+  Prisma.RecipeCreateArgs | Prisma.TagCreateArgs | Prisma.IngredientCreateArgs
+>({
   recipe: {
     one: {
       data: {
@@ -36,7 +57,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               connectOrCreate: {
                 where: { id: user.id },
                 create: user,
-              }
+              },
             },
             family: {
               connectOrCreate: {
@@ -45,7 +66,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               },
             },
           },
-        }
+        },
       },
     },
     two: {
@@ -69,7 +90,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               connectOrCreate: {
                 where: { id: user.id },
                 create: user,
-              }
+              },
             },
             family: {
               connectOrCreate: {
@@ -78,7 +99,7 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
               },
             },
           },
-        }
+        },
       },
     },
   },
@@ -88,15 +109,19 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
         id: '1',
         name: 'Chinese',
         color: '#FFFFFF',
-      }
+        description:
+          'A culinary tradition rich in history, known for bold flavors and a balance of sweet, sour, salty, and umami, with popular dishes like stir-fries, dumplings, and noodles.',
+      },
     },
     two: {
       data: {
         id: '2',
-        name: 'America',
+        name: 'French',
         color: '#000000',
-      }
-    }
+        description:
+          'Renowned for its attention to detail and sophisticated techniques, this cuisine emphasizes sauces, pastries, and dishes like coq au vin and croissants.',
+      },
+    },
   },
   ingredient: {
     one: {
@@ -111,9 +136,11 @@ export const standard = defineScenario<Prisma.RecipeCreateArgs | Prisma.TagCreat
         id: '2',
         name: 'Brocoli',
         description: 'A leefy green',
-      }
-    }
-  }
+      },
+    },
+  },
 })
 
-export type StandardScenario = ScenarioData<Recipe, 'recipe'> & ScenarioData<Tag, 'tag'> & ScenarioData<Ingredient, 'ingredient'>
+export type StandardScenario = ScenarioData<Recipe, 'recipe'> &
+  ScenarioData<Tag, 'tag'> &
+  ScenarioData<Ingredient, 'ingredient'>

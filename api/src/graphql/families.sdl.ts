@@ -24,7 +24,9 @@ export const schema = gql`
 
   type Mutation {
     createFamily(input: CreateFamilyInput!): Family! @requireAuth
-    updateFamily(id: String!, input: UpdateFamilyInput!): Family! @requireAuth(roles: ["ADMIN"])
+    updateFamily(id: String!, input: UpdateFamilyInput!): Family!
+      @requireAuth(roles: ["ADMIN"])
     deleteFamily(id: String!): Family! @requireAuth(roles: ["ADMIN"])
+    leaveFamily(id: String!): Family! @requireAuth
   }
 `

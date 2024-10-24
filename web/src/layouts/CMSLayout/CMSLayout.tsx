@@ -1,4 +1,5 @@
 import { TooltipProvider } from '@radix-ui/react-tooltip'
+
 import { Toaster } from '@redwoodjs/web/toast'
 
 import { NavigationBar } from 'src/components/NavigationBar/NavigationBar'

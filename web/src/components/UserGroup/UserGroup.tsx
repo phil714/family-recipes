@@ -1,11 +1,12 @@
 import React from 'react'
+
 import { User, IUser } from '../User'
 
 interface UserGroupProps {
   users: IUser[]
 }
 
-const DISPLAYED_USER_COUNT = 5;
+const DISPLAYED_USER_COUNT = 5
 
 export const UserGroup: React.FC<UserGroupProps> = ({ users }) => {
   // Limit the number of avatars to display to a maximum of 5
@@ -15,7 +16,11 @@ export const UserGroup: React.FC<UserGroupProps> = ({ users }) => {
   return (
     <div className="flex">
       {displayedUsers.map((user, index) => (
-        <div key={index} className="relative first:ml-0 -ml-8" style={{ zIndex: DISPLAYED_USER_COUNT - index }}>
+        <div
+          key={index}
+          className="relative -ml-8 first:ml-0"
+          style={{ zIndex: DISPLAYED_USER_COUNT - index }}
+        >
           <User
             user={user}
             options={{ name: false, email: false, avatar: true }}
@@ -25,7 +30,7 @@ export const UserGroup: React.FC<UserGroupProps> = ({ users }) => {
 
       {/* If there are more users than displayed, show a "+X" avatar */}
       {extraUsersCount > 0 && (
-        <div className="h-9 w-9 bg-gray-200 text-gray-600 border-2 border-white flex items-center justify-center rounded-full">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-200 text-gray-600">
           <span className="text-xs font-medium">+{extraUsersCount}</span>
         </div>
       )}

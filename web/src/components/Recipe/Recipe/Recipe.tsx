@@ -1,28 +1,35 @@
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "src/components/Card";
-import TagDisplay from "src/components/TagDisplay/TagDisplay";
-import TextEditor from "src/components/TextEditor/TextEditor";
-import type { FindRecipeById } from 'types/graphql';
+import { t } from 'i18next'
+import type { FindRecipeById } from 'types/graphql'
+
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from 'src/components/Card'
+import TagDisplay from 'src/components/TagDisplay/TagDisplay'
+import TextEditor from 'src/components/TextEditor/TextEditor'
 
 import tomato from './tomato.jpeg'
-import { t } from "i18next";
 
 interface Props {
-  recipe: NonNullable<FindRecipeById['recipe']>;
+  recipe: NonNullable<FindRecipeById['recipe']>
 }
 
 const Recipe = ({ recipe }: Props) => {
   return (
-    <div className="container mx-auto py-8 px-4 max-w-4xl">
+    <div className="container mx-auto max-w-4xl px-4 py-8">
       <div className="mb-6">
         <img
           src={tomato} // TODO: replace with recipe image
           alt={recipe.name}
-          className="w-full h-80 object-cover rounded-lg shadow-md"
+          className="h-80 w-full rounded-lg object-cover shadow-md"
         />
       </div>
-      <Card className="shadow-lg mb-6 h-fit">
+      <Card className="mb-6 h-fit shadow-lg">
         <CardHeader>
-          <CardTitle className="text-4xl font-bold mb-2">
+          <CardTitle className="mb-2 text-4xl font-bold">
             {recipe.name}
           </CardTitle>
           <CardDescription className="text-lg text-gray-600">
@@ -32,30 +39,45 @@ const Recipe = ({ recipe }: Props) => {
         <CardContent>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <h3 className="font-bold">{t("recipe:preparation-time")}</h3>
-              <p>{recipe.preparationTimeMinutes} {t("recipe:minutes")}</p>
+              <h3 className="font-bold">{t('recipe:preparation-time')}</h3>
+              <p>
+                {recipe.preparationTimeMinutes} {t('recipe:minutes')}
+              </p>
             </div>
             <div>
-              <h3 className="font-bold">{t("recipe:cook-time")}</h3>
-              <p>{recipe.cookingTimeMinutes} {t("recipe:minutes")}</p>
+              <h3 className="font-bold">{t('recipe:cook-time')}</h3>
+              <p>
+                {recipe.cookingTimeMinutes} {t('recipe:minutes')}
+              </p>
             </div>
             <div>
               <h3 className="font-bold">{t('glossary:family')}</h3>
               <p>{recipe.family.name}</p>
             </div>
             <div className="col-span-3 flex gap-2">
-              {recipe.tags.map((tag) => <TagDisplay tag={tag} />)}
-              {recipe.ingredients.map((ingredient) => <TagDisplay tag={ingredient} />)}
+              {recipe.tags.map((tag) => (
+                <TagDisplay tag={tag} key={tag.id} />
+              ))}
+              {recipe.ingredients.map((ingredient) => (
+                <TagDisplay tag={ingredient} key={ingredient.id} />
+              ))}
             </div>
           </div>
         </CardContent>
         <CardContent>
-          <h2 className="text-2xl font-semibold mb-2">{t("recipe:instructions")}</h2>
-          <TextEditor editable={false} value={recipe.instructions} onChange={() => {}} className="w-full bg-white h-full" />
+          <h2 className="mb-2 text-2xl font-semibold">
+            {t('recipe:instructions')}
+          </h2>
+          <TextEditor
+            editable={false}
+            value={recipe.instructions}
+            onChange={() => {}}
+            className="h-full w-full bg-white"
+          />
         </CardContent>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Recipe;
+export default Recipe

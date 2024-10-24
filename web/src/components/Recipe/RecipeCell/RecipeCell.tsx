@@ -8,37 +8,35 @@ import type {
 
 import Recipe from 'src/components/Recipe/Recipe'
 
-export const QUERY: TypedDocumentNode<
-  FindRecipeById,
-  FindRecipeByIdVariables
-> = gql`
-  query FindRecipeById($id: String!) {
-    recipe: recipe(id: $id) {
-      id
-      name
-      description
-      instructions
-      preparationTimeMinutes
-      cookingTimeMinutes
-      family {
-        id
-        name
-      }
-      tags {
+export const QUERY: TypedDocumentNode<FindRecipeById, FindRecipeByIdVariables> =
+  gql`
+    query FindRecipeById($id: String!) {
+      recipe: recipe(id: $id) {
         id
         name
         description
-        color
-      }
-      ingredients {
-        id
-        name
-        description
-        color
+        instructions
+        preparationTimeMinutes
+        cookingTimeMinutes
+        family {
+          id
+          name
+        }
+        tags {
+          id
+          name
+          description
+          color
+        }
+        ingredients {
+          id
+          name
+          description
+          color
+        }
       }
     }
-  }
-`
+  `
 
 export const Loading = () => <div>Loading...</div>
 

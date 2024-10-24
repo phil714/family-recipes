@@ -1,7 +1,7 @@
-import NewIngredient from "src/components/Ingredient/NewIngredient";
+import NewIngredient from 'src/components/Ingredient/NewIngredient'
 
 const NewIngredientPage = () => {
-  return <NewIngredient />;
-};
+  return <NewIngredient />
+}
 
-export default NewIngredientPage;
+export default NewIngredientPage

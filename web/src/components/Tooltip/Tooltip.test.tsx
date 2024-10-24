@@ -9,7 +9,10 @@ describe('Tooltip', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
-        <TooltipProvider delayDuration={0}><Tooltip /></TooltipProvider>)
+        <TooltipProvider delayDuration={0}>
+          <Tooltip />
+        </TooltipProvider>
+      )
     }).not.toThrow()
   })
 })

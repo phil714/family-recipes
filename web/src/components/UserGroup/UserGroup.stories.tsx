@@ -10,41 +10,49 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { UserGroup } from "./UserGroup";
+import { UserGroup } from './UserGroup'
 
 const meta: Meta<typeof UserGroup> = {
   component: UserGroup,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
-    users: [{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },{
-      email: 'test@test.com',
-      name: 'John Smith',
-    },]
-  }
-};
+    users: [
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+      {
+        email: 'test@test.com',
+        name: 'John Smith',
+      },
+    ],
+  },
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof UserGroup>;
+type Story = StoryObj<typeof UserGroup>
 
-export const Primary: Story = {};
+export const Primary: Story = {}

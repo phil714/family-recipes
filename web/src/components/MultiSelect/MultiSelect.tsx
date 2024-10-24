@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { cva, type VariantProps } from 'class-variance-authority'
+import { t } from 'i18next'
 import {
   CheckIcon,
   CircleXIcon,
@@ -26,9 +27,8 @@ import {
   PopoverTrigger,
 } from 'src/components/Popover/Popover'
 import { Separator } from 'src/components/Separator/Separator'
-import { cn } from 'src/lib/utils'
 import { isDarkBackground } from 'src/helpers/colors'
-import { t } from 'i18next'
+import { cn } from 'src/lib/utils'
 
 const multiSelectVariants = cva(
   'm-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300',
@@ -52,7 +52,7 @@ const multiSelectVariants = cva(
 
 interface MultiSelectFormFieldProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof multiSelectVariants> {
+    VariantProps<typeof multiSelectVariants> {
   asChild?: boolean
   options: {
     label: string
@@ -150,7 +150,10 @@ const MultiSelectFormField = React.forwardRef<
                         style={{
                           animationDuration: `${animation}s`,
                           backgroundColor: option?.color,
-                          color: option?.color && isDarkBackground(option?.color) ? 'white' : 'black',
+                          color:
+                            option?.color && isDarkBackground(option?.color)
+                              ? 'white'
+                              : 'black',
                         }}
                       >
                         {IconComponent && (

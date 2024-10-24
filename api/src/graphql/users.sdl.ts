@@ -21,4 +21,4 @@ export const schema = gql`
     updateUser(id: String!, input: UpdateUserInput!): User! @requireAuth
     deleteUser(id: String!): User! @requireAuth
   }
-`;
+`

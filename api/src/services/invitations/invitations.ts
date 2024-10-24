@@ -4,21 +4,23 @@ import type {
   InvitationRelationResolvers,
 } from 'types/graphql'
 
+import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import { mailer } from 'src/lib/mailer'
 import { FamilyInvitation } from 'src/mail/FamilyInvitation/FamilyInvitation'
-import { requireAuth } from 'src/lib/auth'
 
 export const invitations: QueryResolvers['invitations'] = () => {
   return db.invitation.findMany()
 }
 
-export const invitationsByFamilyId: QueryResolvers['invitationsByFamilyId'] = ({ familyId }) => {
+export const invitationsByFamilyId: QueryResolvers['invitationsByFamilyId'] = ({
+  familyId,
+}) => {
   requireAuth({ roles: 'ADMIN', familyId })
   return db.invitation.findMany({
     where: {
       familyId,
-    }
+    },
   })
 }
 
@@ -73,7 +75,11 @@ export const createInvitation: MutationResolvers['createInvitation'] = async ({
     data: input,
   })
 
-  await sendInvitation({ email: invitation.email, redirectUrl, code: invitation.code })
+  await sendInvitation({
+    email: invitation.email,
+    redirectUrl,
+    code: invitation.code,
+  })
 
   return invitation
 }
@@ -90,7 +96,11 @@ export const resendInvitation: MutationResolvers['resendInvitation'] = async ({
   const { redirectUrl } = input
   delete input.redirectUrl
 
-  await sendInvitation({ email: invitation.email, redirectUrl, code: invitation.code })
+  await sendInvitation({
+    email: invitation.email,
+    redirectUrl,
+    code: invitation.code,
+  })
 
   return invitation
 }
@@ -100,7 +110,7 @@ export const updateInvitation: MutationResolvers['updateInvitation'] = async ({
   input,
 }) => {
   const invitation = await db.invitation.findFirst({
-    where: { id }
+    where: { id },
   })
   requireAuth({ roles: 'ADMIN', familyId: invitation.familyId })
 
@@ -114,7 +124,7 @@ export const deleteInvitation: MutationResolvers['deleteInvitation'] = async ({
   id,
 }) => {
   const invitation = await db.invitation.findFirst({
-    where: { id }
+    where: { id },
   })
   requireAuth({ roles: 'ADMIN', familyId: invitation.familyId })
 
@@ -129,7 +139,11 @@ export const Invitation: InvitationRelationResolvers = {
   },
 }
 
-async function sendInvitation(invitation: { email: string, redirectUrl: string, code: string }) {
+async function sendInvitation(invitation: {
+  email: string
+  redirectUrl: string
+  code: string
+}) {
   const url = invitation.redirectUrl.replace(':code', invitation.code)
 
   await mailer.send(

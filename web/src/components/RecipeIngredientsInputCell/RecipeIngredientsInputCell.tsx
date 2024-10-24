@@ -1,4 +1,9 @@
-import type { FindIngredients, FindIngredientsVariables, FindTags, FindTagsVariables } from 'types/graphql'
+import { t } from 'i18next'
+import type {
+  FindIngredients,
+  FindIngredientsVariables,
+  FindTags,
+} from 'types/graphql'
 
 import type {
   CellSuccessProps,
@@ -7,9 +12,11 @@ import type {
 } from '@redwoodjs/web'
 
 import MultiSelectFormField from 'src/components/MultiSelect/MultiSelect'
-import { t } from 'i18next'
 
-export const QUERY: TypedDocumentNode<FindIngredients, FindIngredientsVariables> = gql`
+export const QUERY: TypedDocumentNode<
+  FindIngredients,
+  FindIngredientsVariables
+> = gql`
   query FindIngredients {
     ingredients {
       id
@@ -38,11 +45,16 @@ export const Success = ({
   ingredients,
   onChange,
   value,
-}: CellSuccessProps<FindIngredients, FindIngredientsVariables> & InputProps) => {
+}: CellSuccessProps<FindIngredients, FindIngredientsVariables> &
+  InputProps) => {
   return (
     <MultiSelectFormField
       name="ingredients"
-      options={ingredients.map((ingredient) => ({ value: ingredient.id, label: ingredient.name, color: ingredient.color }))}
+      options={ingredients.map((ingredient) => ({
+        value: ingredient.id,
+        label: ingredient.name,
+        color: ingredient.color,
+      }))}
       defaultValue={value}
       onValueChange={onChange}
       placeholder={t('common:select-placeholder')}

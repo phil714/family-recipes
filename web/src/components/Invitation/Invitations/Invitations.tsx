@@ -1,18 +1,35 @@
+import { useCallback, useMemo } from 'react'
+
+import {
+  useReactTable,
+  ColumnDef,
+  createColumnHelper,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+} from '@tanstack/react-table'
+import { t } from 'i18next'
+import { MoreHorizontal } from 'lucide-react'
+import type {
+  DeleteInvitationMutationVariables,
+  FindInvitations,
+} from 'types/graphql'
+
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useMemo } from 'react'
-import { useReactTable, ColumnDef, createColumnHelper, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
+
 import { Button } from 'src/components/Button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from 'src/components/DropdownMenu/DropdownMenu'
-import { MoreHorizontal } from 'lucide-react'
-
-import type { DeleteInvitationMutationVariables, FindInvitations } from 'types/graphql'
-
-import { QUERY } from 'src/components/Invitation/InvitationsCell'
-import { truncate } from 'src/lib/formatters'
 import DataTable from 'src/components/DataTable/DataTable'
-import { t } from 'i18next'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from 'src/components/DropdownMenu/DropdownMenu'
+import { QUERY } from 'src/components/Invitation/InvitationsCell'
 
 const DELETE_INVITATION_MUTATION = gql`
   mutation DeleteInvitationMutation($id: String!) {
@@ -34,11 +51,14 @@ const InvitationsList = ({ invitations }: FindInvitations) => {
     awaitRefetchQueries: true,
   })
 
-  const onDeleteClick = (id: DeleteInvitationMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete invitation ' + id + '?')) {
-      deleteInvitation({ variables: { id } })
-    }
-  }
+  const onDeleteClick = useCallback(
+    (id: DeleteInvitationMutationVariables['id']) => {
+      if (confirm('Are you sure you want to delete invitation ' + id + '?')) {
+        deleteInvitation({ variables: { id } })
+      }
+    },
+    [deleteInvitation]
+  )
 
   const columnHelper = createColumnHelper<FindInvitations['invitations'][0]>()
 
@@ -77,23 +97,30 @@ const InvitationsList = ({ invitations }: FindInvitations) => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">{t("common:open-menu")}</span>
+                  <span className="sr-only">{t('common:open-menu')}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                <DropdownMenuLabel>{t("common:actions")}</DropdownMenuLabel>
+              <DropdownMenuContent
+                align="end"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DropdownMenuLabel>{t('common:actions')}</DropdownMenuLabel>
                 <Link to={routes.editInvitation({ id: row.original.id })}>
-                  <DropdownMenuItem>{t("common:edit")}</DropdownMenuItem>
+                  <DropdownMenuItem>{t('common:edit')}</DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem onClick={() => onDeleteClick(row.original.id)}>{t("common:delete")}</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => onDeleteClick(row.original.id)}
+                >
+                  {t('common:delete')}
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </>
         ),
       }),
     ],
-    []
+    [columnHelper, onDeleteClick]
   )
 
   const table = useReactTable({
@@ -107,7 +134,10 @@ const InvitationsList = ({ invitations }: FindInvitations) => {
   })
 
   return (
-    <DataTable table={table} onRowClick={(id) => navigate(routes.editInvitation({ id }))} />
+    <DataTable
+      table={table}
+      onRowClick={(id) => navigate(routes.editInvitation({ id }))}
+    />
   )
 }
 

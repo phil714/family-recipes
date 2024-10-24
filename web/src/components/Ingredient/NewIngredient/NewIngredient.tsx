@@ -2,14 +2,14 @@ import type {
   CreateIngredientMutation,
   CreateIngredientInput,
   CreateIngredientMutationVariables,
-} from "types/graphql";
+} from 'types/graphql'
 
-import { navigate, routes } from "@redwoodjs/router";
-import { useMutation } from "@redwoodjs/web";
-import type { TypedDocumentNode } from "@redwoodjs/web";
-import { toast } from "@redwoodjs/web/toast";
+import { navigate, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import type { TypedDocumentNode } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
-import IngredientForm from "src/components/Ingredient/IngredientForm";
+import IngredientForm from 'src/components/Ingredient/IngredientForm'
 
 const CREATE_INGREDIENT_MUTATION: TypedDocumentNode<
   CreateIngredientMutation,
@@ -20,25 +20,25 @@ const CREATE_INGREDIENT_MUTATION: TypedDocumentNode<
       id
     }
   }
-`;
+`
 
 const NewIngredient = () => {
   const [createIngredient, { loading, error }] = useMutation(
     CREATE_INGREDIENT_MUTATION,
     {
       onCompleted: () => {
-        toast.success("Ingredient created");
-        navigate(routes.ingredients());
+        toast.success('Ingredient created')
+        navigate(routes.ingredients())
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message)
       },
-    },
-  );
+    }
+  )
 
   const onSave = (input: CreateIngredientInput) => {
-    createIngredient({ variables: { input } });
-  };
+    createIngredient({ variables: { input } })
+  }
 
   return (
     <div className="rw-segment">
@@ -49,7 +49,7 @@ const NewIngredient = () => {
         <IngredientForm onSave={onSave} loading={loading} error={error} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewIngredient;
+export default NewIngredient

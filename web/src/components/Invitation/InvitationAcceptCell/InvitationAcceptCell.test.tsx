@@ -1,4 +1,5 @@
 import { render } from '@redwoodjs/testing/web'
+
 import { Loading, Empty, Failure, Success } from './InvitationAcceptCell'
 import { standard } from './InvitationAcceptCell.mock'
 
@@ -35,7 +36,12 @@ describe('InvitationAcceptCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success invitationByCode={standard().invitationByCode} queryResult={standard().queryResult} />)
+      render(
+        <Success
+          invitationByCode={standard().invitationByCode}
+          queryResult={standard().queryResult}
+        />
+      )
     }).not.toThrow()
   })
 })

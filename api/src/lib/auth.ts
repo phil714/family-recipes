@@ -1,9 +1,9 @@
+import { AccessRole } from 'types/graphql'
+
 import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
-import { AccessRole } from 'types/graphql'
-import { logger } from './logger'
 
 const APP_ADMIN_EMAILS = process.env.APP_ADMIN_EMAILS.split(';')
 
@@ -33,9 +33,7 @@ export const cookieName = 'session_%port%'
  * fields to the `select` object below once you've decided they are safe to be
  * seen if someone were to open the Web Inspector in their browser.
  */
-export const getCurrentUser = async (
-  session: Decoded
-) => {
+export const getCurrentUser = async (session: Decoded) => {
   console.log('session', session)
   if (!session || typeof session.id !== 'string') {
     throw new Error('Invalid session')
@@ -51,13 +49,14 @@ export const getCurrentUser = async (
         select: {
           id: true,
           familyId: true,
-          accessRole: true
-        }
-      }
+          accessRole: true,
+        },
+      },
     },
   })
   const roles = user.familyMembers.map((fM) => fM.accessRole)
-  const isSuperAdmin: boolean | undefined = APP_ADMIN_EMAILS.includes(user.email) || undefined
+  const isSuperAdmin: boolean | undefined =
+    APP_ADMIN_EMAILS.includes(user.email) || undefined
 
   return { ...user, roles, isSuperAdmin: isSuperAdmin }
 }
@@ -92,10 +91,13 @@ export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
   }
 
   if (context.currentUser?.isSuperAdmin) {
-    return true;
+    return true
   }
 
-  const currentUserRoles = context.currentUser?.familyMembers.reduce((acc, curr) => acc.set(curr.familyId, curr.accessRole), new Map<string, AccessRole>())
+  const currentUserRoles = context.currentUser?.familyMembers.reduce(
+    (acc, curr) => acc.set(curr.familyId, curr.accessRole),
+    new Map<string, AccessRole>()
+  )
 
   if (typeof roles === 'string') {
     if (familyId) {
@@ -113,9 +115,7 @@ export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
       return roles.some((allowedRole) => allowedRole === familyRole)
     } else {
       const allRoles = [...currentUserRoles.values()]
-      return allRoles.some((allowedRole) =>
-        roles.includes(allowedRole)
-      )
+      return allRoles.some((allowedRole) => roles.includes(allowedRole))
     }
   }
 
@@ -137,7 +137,10 @@ export const hasRole = (roles: AllowedRoles, familyId?: string): boolean => {
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles, familyId }: { roles?: AllowedRoles, familyId?: string } = {}) => {
+export const requireAuth = ({
+  roles,
+  familyId,
+}: { roles?: AllowedRoles; familyId?: string } = {}) => {
   if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }

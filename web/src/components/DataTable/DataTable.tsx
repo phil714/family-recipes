@@ -1,6 +1,15 @@
 import { flexRender, type Table as ITable } from '@tanstack/react-table'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../Table';
-import { cn } from 'src/lib/utils';
+
+import { cn } from 'src/lib/utils'
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../Table'
 
 interface Props<T> {
   table: ITable<T>
@@ -8,7 +17,7 @@ interface Props<T> {
 }
 
 function DataTable<T>(props: Props<T>) {
-  const { table } = props;
+  const { table } = props
 
   const handleRowClick = (id: string) => {
     if (props.onRowClick) {
@@ -20,7 +29,7 @@ function DataTable<T>(props: Props<T>) {
   }
 
   return (
-    <Table className='border border-gray-200 rounded'>
+    <Table className="rounded border border-gray-200">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
@@ -30,9 +39,9 @@ function DataTable<T>(props: Props<T>) {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </TableHead>
               )
             })}
@@ -40,28 +49,26 @@ function DataTable<T>(props: Props<T>) {
         ))}
       </TableHeader>
       <TableBody>
-        {
-          table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && "selected"}
-              className={cn(props.onRowClick && 'hover:text-secondary-foreground cursor-pointer')}
-              onClick={handleRowClick(row.id)}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                  {flexRender(
-                    cell.column.columnDef.cell,
-                    cell.getContext()
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
+        {table.getRowModel().rows.map((row) => (
+          <TableRow
+            key={row.id}
+            data-state={row.getIsSelected() && 'selected'}
+            className={cn(
+              props.onRowClick &&
+                'cursor-pointer hover:text-secondary-foreground'
+            )}
+            onClick={handleRowClick(row.id)}
+          >
+            {row.getVisibleCells().map((cell) => (
+              <TableCell key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
-  );
-};
+  )
+}
 
-export default DataTable;
-
+export default DataTable

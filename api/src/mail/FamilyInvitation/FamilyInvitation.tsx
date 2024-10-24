@@ -13,13 +13,11 @@ import {
 } from '@react-email/components'
 
 interface FamilyInvitationProps {
-  name: string;
-  url: string;
+  name: string
+  url: string
 }
 
-export function FamilyInvitation(
-  props: FamilyInvitationProps
-) {
+export function FamilyInvitation(props: FamilyInvitationProps) {
   return (
     <Html lang="en">
       <Head />

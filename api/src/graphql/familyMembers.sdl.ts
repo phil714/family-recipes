@@ -31,4 +31,4 @@ export const schema = gql`
     ): FamilyMember! @requireAuth(roles: "ADMIN")
     deleteFamilyMember(id: String!): FamilyMember! @requireAuth(roles: "ADMIN")
   }
-`;
+`
