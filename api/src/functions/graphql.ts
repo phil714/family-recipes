@@ -13,6 +13,8 @@ const authDecoder = createAuthDecoder(cookieName)
 
 export const config = {
   runtime: 'nodejs20.x',
+  maxDuration: 30,
+  memory: 512,
 }
 
 export const handler = createGraphQLHandler({
