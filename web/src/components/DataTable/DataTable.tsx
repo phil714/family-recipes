@@ -66,6 +66,15 @@ function DataTable<T>(props: Props<T>) {
             ))}
           </TableRow>
         ))}
+        {table.getRowModel().rows.length === 0 && (
+          <tbody>
+            <TableRow>
+              <TableCell colSpan={table.getFlatHeaders().length}>
+                Empty
+              </TableCell>
+            </TableRow>
+          </tbody>
+        )}
       </TableBody>
     </Table>
   )

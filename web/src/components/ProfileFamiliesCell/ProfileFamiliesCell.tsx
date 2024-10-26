@@ -39,6 +39,7 @@ import {
 } from '../Card'
 import DataTable from '../DataTable/DataTable'
 import { DropdownMenuItem } from '../DropdownMenu/DropdownMenu'
+import { Skeleton } from '../Skeleton'
 import { UserGroup } from '../UserGroup/UserGroup'
 
 export const QUERY: TypedDocumentNode<
@@ -75,9 +76,11 @@ const LEAVE_FAMILY_MUTATION: TypedDocumentNode<
   }
 `
 
-export const Loading = () => <div>Loading...</div>
-
-export const Empty = () => <div>Empty</div>
+export const Loading = () => (
+  <Layout>
+    <Skeleton />
+  </Layout>
+)
 
 export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>

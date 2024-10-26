@@ -6,11 +6,7 @@ import { DbAuthHandler } from '@redwoodjs/auth-dbauth-api'
 import { cookieName } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
-export const config = {
-  runtime: 'nodejs20.x',
-  maxDuration: 30,
-  memory: 512,
-}
+export const config = {}
 
 export const handler = async (
   event: APIGatewayProxyEvent,
