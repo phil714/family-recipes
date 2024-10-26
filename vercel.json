@@ -1,8 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-
-  },
   "build": {
     "env": {
       "ENABLE_EXPERIMENTAL_COREPACK": "1"
