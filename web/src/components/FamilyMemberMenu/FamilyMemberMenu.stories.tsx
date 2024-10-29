@@ -12,7 +12,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FamilyMemberMenu from './FamilyMemberMenu'
+import { FamilyMemberMenu } from './FamilyMemberMenu'
 
 const meta: Meta<typeof FamilyMemberMenu> = {
   component: FamilyMemberMenu,
