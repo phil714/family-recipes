@@ -6737,6 +6737,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-email/render@npm:0.0.16":
+  version: 0.0.16
+  resolution: "@react-email/render@npm:0.0.16"
+  dependencies:
+    html-to-text: "npm:9.0.5"
+    js-beautify: "npm:^1.14.11"
+    react-promise-suspense: "npm:0.3.4"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/1cc3479f674f070f8564b8944dcb86081b7f52b67742d0c255d79b6cea989be0e2207d2adcd5a920ff4b41fbe360d655ac97a71f8ebd5e6d78441cafcfc668dc
+  languageName: node
+  linkType: hard
+
 "@react-email/render@npm:0.0.17":
   version: 0.0.17
   resolution: "@react-email/render@npm:0.0.17"
@@ -7297,6 +7311,16 @@ __metadata:
     "@redwoodjs/mailer-core": "npm:8.4.0"
     nodemailer: "npm:6.9.15"
   checksum: 10c0/ad719626f34df2301927a289ae62179c5a83ba659042ccff6c3470ab96376d14ea4f65c5e66f3293465211801a64626d3173fe716790526b695bd26d0b7ab52c
+  languageName: node
+  linkType: hard
+
+"@redwoodjs/mailer-handler-resend@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "@redwoodjs/mailer-handler-resend@npm:8.4.0"
+  dependencies:
+    "@redwoodjs/mailer-core": "npm:8.4.0"
+    resend: "npm:3.5.0"
+  checksum: 10c0/0aa1ce212cace991021fc3ad0e23f2f2ad701dcd40824687b44b94c09760b0b576ceb2f6af0b371e82aeecaaca2969bfa394b9694022caac5c603f0e13c36fe2
   languageName: node
   linkType: hard
 
@@ -10833,6 +10857,7 @@ __metadata:
     "@redwoodjs/mailer-core": "npm:8.4.0"
     "@redwoodjs/mailer-handler-in-memory": "npm:8.4.0"
     "@redwoodjs/mailer-handler-nodemailer": "npm:8.4.0"
+    "@redwoodjs/mailer-handler-resend": "npm:^8.4.0"
     "@redwoodjs/mailer-handler-studio": "npm:8.4.0"
     "@redwoodjs/mailer-renderer-react-email": "npm:8.4.0"
     "@sendgrid/mail": "npm:^8.1.4"
@@ -23308,6 +23333,15 @@ __metadata:
   version: 4.1.8
   resolution: "reselect@npm:4.1.8"
   checksum: 10c0/06a305a504affcbb67dd0561ddc8306b35796199c7e15b38934c80606938a021eadcf68cfd58e7bb5e17786601c37602a3362a4665c7bf0a96c1041ceee9d0b7
+  languageName: node
+  linkType: hard
+
+"resend@npm:3.5.0":
+  version: 3.5.0
+  resolution: "resend@npm:3.5.0"
+  dependencies:
+    "@react-email/render": "npm:0.0.16"
+  checksum: 10c0/9920a456b926ef7be165a550c1c02355a8390fb215f05778118e3758a636411d49e4fa1ce3c648f42499e5928e7e159e2ebcce89b991c5708ae8b3393a84c242
   languageName: node
   linkType: hard
 
