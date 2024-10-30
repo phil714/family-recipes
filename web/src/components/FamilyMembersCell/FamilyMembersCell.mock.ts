@@ -4,7 +4,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
     {
       __typename: 'FamilyMember' as const,
       id: '42',
-      accessRole: 'ADMIN',
+      accessRole: 'ADMIN' as const,
       familyId: '1',
       user: {
         email: 'test@test.com',
@@ -14,7 +14,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
     {
       __typename: 'FamilyMember' as const,
       id: '43',
-      accessRole: 'VIEWER',
+      accessRole: 'VIEWER' as const,
       familyId: '1',
       user: {
         email: 'test@test.com',
@@ -24,7 +24,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
     {
       __typename: 'FamilyMember' as const,
       id: '44',
-      accessRole: 'USER',
+      accessRole: 'USER' as const,
       familyId: '1',
       user: {
         email: 'test@test.com',

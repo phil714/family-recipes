@@ -21,10 +21,45 @@ jobs:
           node-version: 20.x
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --immutable
-      - name: Run linter
-        run: yarn rw lint
+      - run: yarn rw lint
 
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --immutable
+      - run: yarn rw build
+
+  build-storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --immutable
+      - run: yarn rw storybook --build
+
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --immutable
+      - run: yarn rw type-check
+
+  test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -47,9 +82,4 @@ jobs:
           node-version: 20.x
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --immutable
-      - name: Build Redwood app
-        run: yarn rw build
-      - name: Run API tests
-        run: yarn rw test api --no-watch
-      - name: Run Web tests
-        run: yarn rw test web --no-watch
+      - run: yarn rw test --no-watch

@@ -1,16 +1,5 @@
-// Pass props to your component by passing an `args` object to your story
-//
-// ```tsx
-// export const Primary: Story = {
-//  args: {
-//    propName: propValue
-//  }
-// }
-// ```
-//
-// See https://storybook.js.org/docs/react/writing-stories/args.
-
 import type { Meta, StoryObj } from '@storybook/react'
+import { noop } from '@tanstack/react-table'
 
 import AccessRoleSelect from './AccessRoleSelect'
 
@@ -23,4 +12,8 @@ export default meta
 
 type Story = StoryObj<typeof AccessRoleSelect>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  render: () => {
+    return <AccessRoleSelect value={'USER'} onChange={noop} />
+  },
+}

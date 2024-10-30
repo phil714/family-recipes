@@ -1,3 +1,5 @@
+import { noop } from '@tanstack/react-table'
+
 import { render } from '@redwoodjs/testing/web'
 
 import AllRecipesSearchBar from './AllRecipesSearchBar'
@@ -8,7 +10,7 @@ import AllRecipesSearchBar from './AllRecipesSearchBar'
 describe('AllRecipesSearchBar', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<AllRecipesSearchBar />)
+      render(<AllRecipesSearchBar onChange={noop} />)
     }).not.toThrow()
   })
 })
