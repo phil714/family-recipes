@@ -12,15 +12,40 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { InferredCurrentUser } from '../../../../.redwood/types/includes/all-currentUser'
+
 import { FamilyMemberMenu } from './FamilyMemberMenu'
+
+const userContext = {
+  id: '1',
+  name: 'Michel Tremblay',
+  email: 'micheltremblay@gmail.com',
+  isSuperAdmin: undefined,
+  roles: ['ADMIN'],
+  familyMembers: [
+    {
+      id: '1',
+      familyId: '1',
+      accessRole: 'ADMIN',
+    },
+  ],
+} satisfies InferredCurrentUser
 
 const meta: Meta<typeof FamilyMemberMenu> = {
   component: FamilyMemberMenu,
   tags: ['autodocs'],
+  args: {
+    familyMember: { familyId: '1', id: '1' },
+  },
 }
 
 export default meta
 
 type Story = StoryObj<typeof FamilyMemberMenu>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  render: (args) => {
+    mockCurrentUser(userContext)
+    return <FamilyMemberMenu {...args} />
+  },
+}

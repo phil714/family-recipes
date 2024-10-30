@@ -12,11 +12,14 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FamilyInvitationMenu from './FamilyInvitationMenu'
+import { FamilyInvitationMenu } from './FamilyInvitationMenu'
 
 const meta: Meta<typeof FamilyInvitationMenu> = {
   component: FamilyInvitationMenu,
   tags: ['autodocs'],
+  args: {
+    invitation: { familyId: '1', id: '1' },
+  },
 }
 
 export default meta
