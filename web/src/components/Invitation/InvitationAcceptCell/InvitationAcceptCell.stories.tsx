@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Loading, Empty, Failure, Success } from './InvitationAcceptCell'
+import { Empty, Failure, Loading, Success } from './InvitationAcceptCell'
 import { standard } from './InvitationAcceptCell.mock'
 
 const meta: Meta = {
@@ -30,6 +30,14 @@ export const failure: StoryObj<typeof Failure> = {
 
 export const success: StoryObj<typeof Success> = {
   render: (args) => {
-    return Success ? <Success {...standard()} {...args} /> : <></>
+    return Success ? (
+      <Success
+        {...standard()}
+        {...args}
+        queryResult={{ variables: { code: '1' } }}
+      />
+    ) : (
+      <></>
+    )
   },
 }

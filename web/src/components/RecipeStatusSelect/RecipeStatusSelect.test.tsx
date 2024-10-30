@@ -1,3 +1,5 @@
+import { noop } from '@tanstack/react-table'
+
 import { render } from '@redwoodjs/testing/web'
 
 import RecipeStatusSelect from './RecipeStatusSelect'
@@ -8,7 +10,7 @@ import RecipeStatusSelect from './RecipeStatusSelect'
 describe('RecipeStatusSelect', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<RecipeStatusSelect />)
+      render(<RecipeStatusSelect value={'PUBLIC'} onChange={noop} />)
     }).not.toThrow()
   })
 })

@@ -8,7 +8,7 @@ import RecipeStatusDisplay from './RecipeStatusDisplay'
 describe('RecipeStatusDisplay', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<RecipeStatusDisplay />)
+      render(<RecipeStatusDisplay status={'PUBLIC'} />)
     }).not.toThrow()
   })
 })
