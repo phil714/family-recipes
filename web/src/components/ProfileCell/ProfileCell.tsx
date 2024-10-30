@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next'
 import type { EditUserById, UpdateUserMutationVariables } from 'types/graphql'
 
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
-import { Metadata, useMutation } from '@redwoodjs/web'
+import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -123,12 +123,7 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
 
   return (
     <>
-      <Metadata
-        title={t('profile:title')}
-        description={t('profile:description')}
-      />
-
-      <Card className="w-[350px]">
+      <Card className="w-full sm:w-[350px]">
         <CardHeader>
           <CardTitle>{t('profile:title')}</CardTitle>
           <CardDescription>{t('profile:description')}</CardDescription>

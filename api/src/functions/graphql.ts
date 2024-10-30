@@ -11,9 +11,7 @@ import { logger } from 'src/lib/logger'
 
 const authDecoder = createAuthDecoder(cookieName)
 
-export const config = {
-  runtime: 'nodejs20.x',
-}
+export const config = {}
 
 export const handler = createGraphQLHandler({
   authDecoder,
