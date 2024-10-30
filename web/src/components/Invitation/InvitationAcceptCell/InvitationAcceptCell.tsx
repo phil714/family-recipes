@@ -40,10 +40,9 @@ export const Success = ({
 >) => {
   console.log('queryResult', queryResult)
   /* Redirect to Sign Up page if user does not exist, else add him to the family */
-  if (invitationByCode.userId) {
+  if (invitationByCode.userId || !('variables' in queryResult)) {
     // already added to family
     return <Redirect to={routes.home()} />
   }
-
   return <Redirect to={routes.signup({ code: queryResult.variables.code })} />
 }
