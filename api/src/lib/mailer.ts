@@ -8,7 +8,6 @@ import { logger } from 'src/lib/logger'
 export const mailer = new Mailer({
   handling: {
     handlers: {
-      // TODO: Update this handler config or switch it out for a different handler completely
       nodemailer: new NodemailerMailHandler({
         transport: {
           host: 'localhost',
@@ -17,12 +16,11 @@ export const mailer = new Mailer({
         },
       }),
       resend: new ResendMailHandler({
-        apiKey: process.env.RESEND_API_KEY,
+        apiToken: process.env.RESEND_API_KEY,
       }),
     },
     default: 'resend',
   },
-
   rendering: {
     renderers: {
       reactEmail: new ReactEmailRenderer(),
