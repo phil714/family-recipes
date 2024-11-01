@@ -1,14 +1,14 @@
 'use client'
 
 import {
+  AppleIcon,
   BookOpen,
   HomeIcon,
   ListIcon,
+  LogInIcon,
   LucideProps,
   SendIcon,
   UsersIcon,
-  AppleIcon,
-  LogInIcon,
 } from 'lucide-react'
 import { AccessRole } from 'types/graphql'
 
@@ -40,6 +40,8 @@ export const NavigationBar = () => {
   const isCollapsed = false //TODO: implement
 
   const { currentUser } = useAuth()
+
+  console.log('currentUser', currentUser)
 
   const unauthenticatedLinks: NavItem[] = [
     {
