@@ -1,4 +1,8 @@
-import { render } from '@redwoodjs/testing/web'
+import { I18nextProvider } from 'react-i18next'
+
+import { MockProviders, render } from '@redwoodjs/testing/web'
+
+import i18n from 'src/i18n'
 
 import { FamilyMemberMenu } from './FamilyMemberMenu'
 
@@ -8,7 +12,13 @@ import { FamilyMemberMenu } from './FamilyMemberMenu'
 describe('FamilyMemberMenu', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<FamilyMemberMenu familyMember={{ familyId: '1', id: '1' }} />)
+      render(<FamilyMemberMenu familyMember={{ familyId: '1', id: '1' }} />, {
+        wrapper: ({ children }) => (
+          <MockProviders>
+            <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+          </MockProviders>
+        ),
+      })
     }).not.toThrow()
   })
 })

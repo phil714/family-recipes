@@ -1,12 +1,11 @@
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import {
+  FieldError,
   Form,
   Label,
-  TextField,
   PasswordField,
-  FieldError,
+  TextField,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
@@ -34,6 +33,8 @@ const LoginPage = () => {
       username: data.email,
       password: data.password,
     })
+
+    console.log(response)
 
     if (response.message) {
       toast(response.message)

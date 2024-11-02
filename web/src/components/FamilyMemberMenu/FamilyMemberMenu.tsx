@@ -8,6 +8,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { hasRole, useAuth } from 'src/auth'
+import { Button } from 'src/components/Button/Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +17,6 @@ import {
   DropdownMenuTrigger,
 } from 'src/components/DropdownMenu/DropdownMenu'
 
-import { Button } from '../Button'
 import { QUERY } from '../FamilyMembersCell/FamilyMembersCell'
 
 const DELETE_FAMILY_MEMBER_MUTATION = gql`

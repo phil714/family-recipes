@@ -4,14 +4,44 @@ export const standard = (/* vars, { ctx, req } */) => ({
     {
       __typename: 'ProfileFamilies' as const,
       id: 42,
+      recipes: [
+        {
+          id: '1',
+        },
+      ],
+      familyMembers: [
+        {
+          id: '1',
+        },
+      ],
     },
     {
       __typename: 'ProfileFamilies' as const,
       id: 43,
+      recipes: [
+        {
+          id: '1',
+        },
+      ],
+      familyMembers: [
+        {
+          id: '1',
+        },
+      ],
     },
     {
       __typename: 'ProfileFamilies' as const,
       id: 44,
+      recipes: [
+        {
+          id: '1',
+        },
+      ],
+      familyMembers: [
+        {
+          id: '1',
+        },
+      ],
     },
   ],
 })

@@ -6,6 +6,7 @@ import { routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { Button } from 'src/components/Button/Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from 'src/components/DropdownMenu/DropdownMenu'
 
-import { Button } from '../Button'
 import { QUERY } from '../FamilyInvitationsCell/FamilyInvitationsCell'
 
 const DELETE_INVITATION_MUTATION = gql`

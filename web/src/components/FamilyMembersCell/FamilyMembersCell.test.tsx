@@ -1,6 +1,10 @@
-import { render } from '@redwoodjs/testing/web'
+import { I18nextProvider } from 'react-i18next'
 
-import { Loading, Empty, Failure, Success } from './FamilyMembersCell'
+import { MockProviders, render } from '@redwoodjs/testing/web'
+
+import i18n from 'src/i18n'
+
+import { Empty, Failure, Loading, Success } from './FamilyMembersCell'
 import { standard } from './FamilyMembersCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
@@ -36,7 +40,13 @@ describe('FamilyMembersCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success familyMembers={standard().familyMembers} />)
+      render(<Success familyMembers={standard().familyMembers} />, {
+        wrapper: ({ children }) => (
+          <MockProviders>
+            <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+          </MockProviders>
+        ),
+      })
     }).not.toThrow()
   })
 })

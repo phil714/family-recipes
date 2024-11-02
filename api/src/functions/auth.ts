@@ -60,15 +60,11 @@ export const handler = async (
 
     errors: {
       usernameOrPasswordMissing: 'Both username and password are required',
-      usernameNotFound: 'Username ${username} not found',
-      // For security reasons you may want to make this the same as the
-      // usernameNotFound error so that a malicious user can't use the error
-      // to narrow down if it's the username or password that's incorrect
+      usernameNotFound: 'Incorrect password for ${username}',
       incorrectPassword: 'Incorrect password for ${username}',
     },
-
     // How long a user will remain logged in, in seconds
-    expires: 60 * 60 * 24 * 365 * 10,
+    expires: 60 * 60 * 24 * 7,
   }
 
   const resetPasswordOptions: DbAuthHandlerOptions['resetPassword'] = {
@@ -224,7 +220,7 @@ export const handler = async (
 
     // See https://redwoodjs.com/docs/authentication/dbauth#webauthn for options
     webAuthn: {
-      enabled: true,
+      enabled: false,
       // How long to allow re-auth via WebAuthn in seconds (default is 10 years).
       // The `login.expires` time denotes how many seconds before a user will be
       // logged out, and this value is how long they'll be to continue to use a

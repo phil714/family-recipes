@@ -9,6 +9,7 @@
     "@redwoodjs/graphql-server": "8.4.0",
     "@redwoodjs/mailer-core": "8.4.0",
     "@redwoodjs/mailer-handler-nodemailer": "8.4.0",
+    "@redwoodjs/mailer-handler-resend": "^8.4.0",
     "@redwoodjs/mailer-renderer-react-email": "8.4.0",
     "@sendgrid/mail": "^8.1.4",
     "@simplewebauthn/server": "^11.0.0"

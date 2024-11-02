@@ -1,5 +1,6 @@
 import { Mailer } from '@redwoodjs/mailer-core'
 import { NodemailerMailHandler } from '@redwoodjs/mailer-handler-nodemailer'
+import { ResendMailHandler } from '@redwoodjs/mailer-handler-resend'
 import { ReactEmailRenderer } from '@redwoodjs/mailer-renderer-react-email'
 
 import { logger } from 'src/lib/logger'
@@ -7,7 +8,6 @@ import { logger } from 'src/lib/logger'
 export const mailer = new Mailer({
   handling: {
     handlers: {
-      // TODO: Update this handler config or switch it out for a different handler completely
       nodemailer: new NodemailerMailHandler({
         transport: {
           host: 'localhost',
@@ -15,10 +15,12 @@ export const mailer = new Mailer({
           secure: false,
         },
       }),
+      resend: new ResendMailHandler({
+        apiToken: process.env.RESEND_API_KEY,
+      }),
     },
-    default: 'nodemailer',
+    default: 'resend',
   },
-
   rendering: {
     renderers: {
       reactEmail: new ReactEmailRenderer(),
