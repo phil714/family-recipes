@@ -44,9 +44,11 @@ const withI18n = (StoryFn: StoryFn, context: StoryContext) => {
     i18n.changeLanguage(context.globals.locale)
   }, [context.globals.locale])
   return (
-    <I18nextProvider i18n={i18n}>
-      <StoryFn />
-    </I18nextProvider>
+    <React.Suspense fallback={<div>loading translations...</div>}>
+      <I18nextProvider i18n={i18n}>
+        <StoryFn />
+      </I18nextProvider>
+    </React.Suspense>
   )
 }
 

@@ -39,9 +39,9 @@ function DataTable<T>(props: Props<T>) {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                 </TableHead>
               )
             })}
@@ -55,7 +55,7 @@ function DataTable<T>(props: Props<T>) {
             data-state={row.getIsSelected() && 'selected'}
             className={cn(
               props.onRowClick &&
-                'cursor-pointer hover:text-secondary-foreground'
+              'cursor-pointer hover:text-secondary-foreground'
             )}
             onClick={handleRowClick(row.id)}
           >
@@ -67,13 +67,9 @@ function DataTable<T>(props: Props<T>) {
           </TableRow>
         ))}
         {table.getRowModel().rows.length === 0 && (
-          <tbody>
-            <TableRow>
-              <TableCell colSpan={table.getFlatHeaders().length}>
-                Empty
-              </TableCell>
-            </TableRow>
-          </tbody>
+          <TableRow>
+            <TableCell colSpan={table.getFlatHeaders().length}>Empty</TableCell>
+          </TableRow>
         )}
       </TableBody>
     </Table>
