@@ -1,4 +1,6 @@
-import { Analytics } from '@vercel/analytics/react'
+import { inject } from '@vercel/analytics'
+
+inject()
 
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
@@ -12,7 +14,6 @@ import './scaffold.css'
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
-    <Analytics />
     <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
       <AuthProvider>
         <RedwoodApolloProvider useAuth={useAuth}>
