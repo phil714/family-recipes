@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@envelop/sentry": "5",
     "@react-email/components": "^0.0.25",
     "@redwoodjs/api": "8.4.0",
     "@redwoodjs/auth-dbauth-api": "8.4.0",
@@ -12,6 +13,7 @@
     "@redwoodjs/mailer-handler-resend": "^8.4.0",
     "@redwoodjs/mailer-renderer-react-email": "8.4.0",
     "@sendgrid/mail": "^8.1.4",
+    "@sentry/node": "7",
     "@simplewebauthn/server": "^11.0.0"
   },
   "devDependencies": {
