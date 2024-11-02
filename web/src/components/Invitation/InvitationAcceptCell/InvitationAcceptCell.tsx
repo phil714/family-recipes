@@ -38,7 +38,6 @@ export const Success = ({
   FindInvitationByCodeQuery,
   FindInvitationByCodeQueryVariables
 >) => {
-  console.log('queryResult', queryResult)
   /* Redirect to Sign Up page if user does not exist, else add him to the family */
   if (invitationByCode.userId || !('variables' in queryResult)) {
     // already added to family

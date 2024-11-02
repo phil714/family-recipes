@@ -5,11 +5,11 @@ import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 import { mailer } from 'src/lib/mailer'
 
 import {
-  invitations,
-  invitation,
   createInvitation,
-  updateInvitation,
   deleteInvitation,
+  invitation,
+  invitations,
+  updateInvitation,
 } from './invitations'
 import { userContext, type StandardScenario } from './invitations.scenarios'
 
@@ -66,7 +66,7 @@ describe('invitations', () => {
             "bcc": [],
             "cc": [],
             "from": "${mailer.defaults.from}",
-            "handler": "nodemailer",
+            "handler": "resend",
             "handlerOptions": undefined,
             "headers": {},
             "htmlContent": undefined,
