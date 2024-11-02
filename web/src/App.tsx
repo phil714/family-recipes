@@ -1,7 +1,3 @@
-import { inject } from '@vercel/analytics'
-
-inject()
-
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 

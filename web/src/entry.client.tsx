@@ -1,6 +1,8 @@
-import { hydrateRoot, createRoot } from 'react-dom/client'
-
+import { inject } from '@vercel/analytics'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './i18n'
+
+inject()
 
 import App from './App'
 /**
