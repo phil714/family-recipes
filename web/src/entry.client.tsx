@@ -1,7 +1,9 @@
 import { inject } from '@vercel/analytics'
+import { injectSpeedInsights } from '@vercel/speed-insights'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import './i18n'
 
+injectSpeedInsights()
 inject()
 
 import App from './App'
