@@ -5,7 +5,6 @@ import type { StoryContext, StoryFn } from '@storybook/react'
 import { I18nextProvider } from 'react-i18next'
 import i18n from 'web/src/i18n'
 
-
 /** @type { import("@storybook/csf").GlobalTypes } */
 /** @type { import("@storybook/csf").GlobalTypes } */
 export const globalTypes: GlobalTypes = {
