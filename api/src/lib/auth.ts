@@ -4,6 +4,7 @@ import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
+import Sentry from './sentry'
 
 const APP_ADMIN_EMAILS = process.env.APP_ADMIN_EMAILS.split(';')
 
@@ -34,7 +35,6 @@ export const cookieName = 'session_%port%'
  * seen if someone were to open the Web Inspector in their browser.
  */
 export const getCurrentUser = async (session: Decoded) => {
-  console.log('session', session)
   if (!session || typeof session.id !== 'string') {
     throw new Error('Invalid session')
   }
@@ -54,6 +54,8 @@ export const getCurrentUser = async (session: Decoded) => {
       },
     },
   })
+  Sentry.setUser(user)
+
   const roles = user.familyMembers.map((fM) => fM.accessRole)
   const isSuperAdmin: boolean | undefined =
     APP_ADMIN_EMAILS.includes(user.email) || undefined

@@ -1,3 +1,5 @@
+import { useSentry } from '@envelop/sentry'
+
 import { createAuthDecoder } from '@redwoodjs/auth-dbauth-api'
 import { createGraphQLHandler } from '@redwoodjs/graphql-server'
 
@@ -8,12 +10,20 @@ import services from 'src/services/**/*.{js,ts}'
 import { cookieName, getCurrentUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
+import 'src/lib/sentry'
 
 const authDecoder = createAuthDecoder(cookieName)
 
 export const config = {}
 
 export const handler = createGraphQLHandler({
+  extraPlugins: [
+    useSentry({
+      includeRawResult: true,
+      includeResolverArgs: true,
+      includeExecuteVariables: true,
+    }),
+  ],
   authDecoder,
   getCurrentUser,
   loggerConfig: { logger, options: {} },
