@@ -1,15 +1,16 @@
+import { PickerInline } from 'filestack-react'
 import type { EditRecipeById, UpdateRecipeInput } from 'types/graphql'
 
 import type { RWGqlError } from '@redwoodjs/forms'
 import {
+  Controller,
+  FieldError,
   Form,
   FormError,
-  FieldError,
   Label,
-  TextField,
   NumberField,
   Submit,
-  Controller,
+  TextField,
 } from '@redwoodjs/forms'
 
 import FamilyInputCell from 'src/components/FamilyInputCell'
@@ -63,6 +64,23 @@ const RecipeForm = (props: RecipeFormProps) => {
         />
 
         <FieldError name="name" className="rw-field-error" />
+
+        <Label
+          name="mainImageUrl"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Main Image
+        </Label>
+        <Controller
+          name="mainImageUrl"
+          defaultValue={''}
+          // rules={validation}
+          render={({ field: { onChange, value } }) => (
+            <PickerInline apikey={process.env.REDWOOD_ENV_FILESTACK_API_KEY} />
+          )}
+        />
+        <FieldError name="mainImageUrl" className="rw-field-error" />
 
         <Label
           name="description"

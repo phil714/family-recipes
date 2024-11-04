@@ -40,6 +40,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "filestack-react": "^5.0.0",
     "humanize-string": "3.0.0",
     "i18n": "^0.15.1",
     "i18next": "^23.16.2",
@@ -55,6 +56,7 @@
   },
   "devDependencies": {
     "@redwoodjs/vite": "8.4.0",
+    "@types/filestack-react": "^4.0.4",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",

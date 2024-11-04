@@ -22,6 +22,7 @@ model User {
   id                  String           @id @default(nanoid())
   email               String           @unique
   name                String
+  avatarUrl           String?
   language            String?
   hashedPassword      String
   salt                String
@@ -62,11 +63,11 @@ model FamilyMember {
   familyId   String
   accessRole AccessRole @default(USER)
 
-  @@unique([userId, familyId])
+  family  Family   @relation(fields: [familyId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
+  recipes Recipe[]
 
-  family     Family     @relation(fields: [familyId], references: [id])
-  user       User       @relation(fields: [userId], references: [id])
-  recipes    Recipe[]
+  @@unique([userId, familyId])
 }
 
 model Invitation {
@@ -86,19 +87,29 @@ enum RecipeStatus {
 }
 
 model Recipe {
-  id                     String       @id @default(nanoid())
+  id                     String        @id @default(nanoid())
   name                   String
+  mainImageUrl           String
   description            String
   instructions           String
   preparationTimeMinutes Int
   cookingTimeMinutes     Int
-  status                 RecipeStatus @default(DRAFT)
+  status                 RecipeStatus  @default(DRAFT)
   familyId               String
   familyMemberId         String
-  family                 Family       @relation(fields: [familyId], references: [id])
+  family                 Family        @relation(fields: [familyId], references: [id])
   tags                   Tag[]
-  familyMember           FamilyMember @relation(fields: [familyMemberId], references: [id])
+  familyMember           FamilyMember  @relation(fields: [familyMemberId], references: [id])
   ingredients            Ingredient[]
+  images            RecipeImage[]
+}
+
+model RecipeImage {
+  id       String @id @default(nanoid())
+  name     String
+  url      String
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
 }
 
 model Ingredient {

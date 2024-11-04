@@ -20,6 +20,7 @@ export const QUERY: TypedDocumentNode<EditRecipeById> = gql`
     recipe: recipe(id: $id) {
       id
       name
+      mainImageUrl
       description
       instructions
       preparationTimeMinutes
