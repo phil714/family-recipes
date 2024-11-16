@@ -41,8 +41,6 @@ export const NavigationBar = () => {
 
   const { currentUser } = useAuth()
 
-  console.log('currentUser', currentUser)
-
   const unauthenticatedLinks: NavItem[] = [
     {
       title: 'Home',
