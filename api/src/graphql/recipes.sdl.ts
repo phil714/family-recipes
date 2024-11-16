@@ -2,6 +2,7 @@ export const schema = gql`
   type Recipe {
     id: String!
     name: String!
+    mainImageUrl: String!
     description: String!
     instructions: String!
     preparationTimeMinutes: Int!
