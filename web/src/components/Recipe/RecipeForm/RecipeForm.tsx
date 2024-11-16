@@ -76,8 +76,11 @@ const RecipeForm = (props: RecipeFormProps) => {
           name="mainImageUrl"
           defaultValue={''}
           // rules={validation}
-          render={({ field: { onChange, value } }) => (
-            <PickerInline apikey={process.env.REDWOOD_ENV_FILESTACK_API_KEY} />
+          render={({ field: { onChange } }) => (
+            <PickerInline
+              apikey={process.env.REDWOOD_ENV_FILESTACK_API_KEY}
+              onUploadDone={(result) => onChange(result.source)}
+            />
           )}
         />
         <FieldError name="mainImageUrl" className="rw-field-error" />
