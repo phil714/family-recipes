@@ -32,6 +32,7 @@ export const schema = gql`
 
   input CreateRecipeInput {
     name: String!
+    mainImageUrl: String!
     description: String!
     ingredientIds: [String!]!
     instructions: String!
@@ -44,6 +45,7 @@ export const schema = gql`
 
   input UpdateRecipeInput {
     name: String
+    mainImageUrl: String
     description: String
     ingredientIds: [String!]!
     instructions: String
