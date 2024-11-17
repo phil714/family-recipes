@@ -18,7 +18,7 @@ const RecipeStatusDisplay = ({ status }: Props) => {
   return (
     <div
       className={cn(
-        'rounded-md bg-slate-200 p-1',
+        'rounded-md bg-slate-200 p-2 leading-none',
         status === 'DRAFT' && 'bg-yellow-100',
         status === 'PUBLIC' && 'bg-green-200'
       )}

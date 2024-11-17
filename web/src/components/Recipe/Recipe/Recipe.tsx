@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from 'src/components/Card'
+import MainRecipeImage from 'src/components/MainRecipeImage/MainRecipeImage'
 import TagDisplay from 'src/components/TagDisplay/TagDisplay'
 import TextEditor from 'src/components/TextEditor/TextEditor'
 
@@ -17,13 +18,9 @@ interface Props {
 
 const Recipe = ({ recipe }: Props) => {
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <img
-          src={recipe.mainImageUrl}
-          alt={recipe.name}
-          className="h-80 w-full rounded-lg object-cover shadow-md"
-        />
+        <MainRecipeImage recipe={recipe} />
       </div>
       <Card className="mb-6 h-fit shadow-lg">
         <CardHeader>

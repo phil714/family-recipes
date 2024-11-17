@@ -14,6 +14,7 @@ import {
 
 import FamilyInputCell from 'src/components/FamilyInputCell'
 import { FileInput } from 'src/components/FileInput/FileInput'
+import MainRecipeImage from 'src/components/MainRecipeImage/MainRecipeImage'
 import RecipeIngredientsInputCell from 'src/components/RecipeIngredientsInputCell'
 import RecipeStatusSelect from 'src/components/RecipeStatusSelect/RecipeStatusSelect'
 import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
@@ -74,19 +75,17 @@ const RecipeForm = (props: RecipeFormProps) => {
         </Label>
         <Controller
           name="mainImageUrl"
-          defaultValue={''}
+          defaultValue={props.recipe?.mainImageUrl}
           // rules={validation}
           render={({ field: { onChange, value } }) => (
-            <>
+            <div className="flex flex-col gap-2 pt-2">
               {value && (
-                <img
-                  src={value}
-                  style={{ width: 200, height: 200 }}
-                  alt="To upload"
+                <MainRecipeImage
+                  recipe={{ mainImageUrl: value, name: 'To upload' }}
                 />
               )}
-              <FileInput onChange={onChange} />
-            </>
+              <FileInput onChange={onChange} tag="mainImageUrl" />
+            </div>
           )}
         />
         <FieldError name="mainImageUrl" className="rw-field-error" />

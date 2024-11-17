@@ -12,11 +12,6 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from 'src/components/Avatar/Avatar'
 import { Button } from 'src/components/Button/Button'
 import {
   Card,
@@ -34,10 +29,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'src/components/Select/Select'
-import { transform } from 'src/lib/file-upload'
+import { remove } from 'src/lib/file-upload'
 
 import { FileInput } from '../FileInput/FileInput'
 import { Label } from '../Label/Label'
+import UserAvatar from '../UserAvatar/UserAvatar'
 
 export const QUERY: TypedDocumentNode<EditUserById> = gql`
   query EditUserById($id: String!) {
@@ -79,6 +75,7 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
   const { i18n } = useTranslation()
   const [name, setName] = useState(user.name)
   const [avatarUrl, setAvatarUrl] = useState<string>(user.avatarUrl ?? null)
+  const oldAvatar = user.avatarUrl ?? null
   const [language, setLanguage] = useState(user.language ?? i18n.language)
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
@@ -86,6 +83,13 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
       toast.success('Profile updated')
       i18n.changeLanguage(language)
       reauthenticate()
+
+      console.log('user.avatarUrl', user.avatarUrl)
+      console.log('avatarUrl', avatarUrl)
+
+      if (oldAvatar && oldAvatar !== avatarUrl) {
+        remove(user.avatarUrl)
+      }
     },
     onError: (error) => {
       toast.error(error.message)
@@ -101,8 +105,7 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
   }
 
   const handleAvatarChange = (value: string) => {
-    const transformedImage = transform(value, { circle: true })
-    setAvatarUrl(transformedImage)
+    setAvatarUrl(value)
   }
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -133,18 +136,8 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="avatar">{t('user:avatar')}</Label>
                 <div className="flex items-center space-x-4">
-                  <Avatar className="h-20 w-20">
-                    <AvatarImage alt={name} src={avatarUrl} />
-                    <AvatarFallback>
-                      {name
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')
-                        .toUpperCase()
-                        .substring(0, 2)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <FileInput onChange={handleAvatarChange} />
+                  <UserAvatar user={{ name, avatarUrl }} size="lg" />
+                  <FileInput onChange={handleAvatarChange} tag="avatar" />
                 </div>
               </div>
               <div className="flex flex-col space-y-1.5">
