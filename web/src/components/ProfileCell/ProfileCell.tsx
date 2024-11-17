@@ -34,7 +34,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'src/components/Select/Select'
+import { transform } from 'src/lib/file-upload'
 
+import { FileInput } from '../FileInput/FileInput'
 import { Label } from '../Label/Label'
 
 export const QUERY: TypedDocumentNode<EditUserById> = gql`
@@ -43,6 +45,7 @@ export const QUERY: TypedDocumentNode<EditUserById> = gql`
       id
       name
       language
+      avatarUrl
     }
   }
 `
@@ -57,6 +60,7 @@ const UPDATE_USER_MUTATION: TypedDocumentNode<
       name
       email
       language
+      avatarUrl
     }
   }
 `
@@ -74,7 +78,7 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const [name, setName] = useState(user.name)
-  // const [avatarSrc, setAvatarSrc] = useState("/placeholder.svg?height=100&width=100")
+  const [avatarUrl, setAvatarUrl] = useState<string>(user.avatarUrl ?? null)
   const [language, setLanguage] = useState(user.language ?? i18n.language)
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
@@ -92,19 +96,13 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
     setName(event.target.value)
   }
 
-  // const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0]
-  //   if (file) {
-  //     const reader = new FileReader()
-  //     reader.onload = (e) => {
-  //       setAvatarSrc(e.target?.result as string)
-  //     }
-  //     reader.readAsDataURL(file)
-  //   }
-  // }
-
   const handleLanguageChange = (value: string) => {
     setLanguage(value)
+  }
+
+  const handleAvatarChange = (value: string) => {
+    const transformedImage = transform(value, { circle: true })
+    setAvatarUrl(transformedImage)
   }
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -116,6 +114,7 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
         input: {
           name,
           language,
+          avatarUrl,
         },
       },
     })
@@ -135,17 +134,17 @@ export const Success = ({ user }: CellSuccessProps<EditUserById>) => {
                 <Label htmlFor="avatar">{t('user:avatar')}</Label>
                 <div className="flex items-center space-x-4">
                   <Avatar className="h-20 w-20">
-                    <AvatarImage alt={name} />
+                    <AvatarImage alt={name} src={avatarUrl} />
                     <AvatarFallback>
                       {name
                         .split(' ')
                         .map((n) => n[0])
                         .join('')
-                        .toUpperCase()}
-                    </AvatarFallback>{' '}
-                    {/* TODO: make a chinese version of this */}
+                        .toUpperCase()
+                        .substring(0, 2)}
+                    </AvatarFallback>
                   </Avatar>
-                  {/* <Input id="avatar" type="file" accept="image/*" onChange={handleAvatarChange} className="w-full" /> */}
+                  <FileInput onChange={handleAvatarChange} />
                 </div>
               </div>
               <div className="flex flex-col space-y-1.5">

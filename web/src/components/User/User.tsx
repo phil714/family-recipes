@@ -7,7 +7,7 @@ import {
 export interface IUser {
   name: string
   email: string
-  avatarSrc?: string
+  avatarUrl?: string | null
 }
 
 export interface Props {
@@ -30,7 +30,7 @@ export const User: React.FC<Props> = (props) => {
     <div className="flex items-center gap-4">
       {options.avatar && (
         <Avatar className="hidden h-9 w-9 sm:flex">
-          <AvatarImage src={user.avatarSrc} alt="Avatar" />
+          <AvatarImage src={user.avatarUrl} alt="Avatar" />
           <AvatarFallback>{fallback}</AvatarFallback>
         </Avatar>
       )}

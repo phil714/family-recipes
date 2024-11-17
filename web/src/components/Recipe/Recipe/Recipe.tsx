@@ -3,15 +3,13 @@ import type { FindRecipeById } from 'types/graphql'
 
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
   CardDescription,
+  CardHeader,
+  CardTitle,
 } from 'src/components/Card'
 import TagDisplay from 'src/components/TagDisplay/TagDisplay'
 import TextEditor from 'src/components/TextEditor/TextEditor'
-
-import tomato from './tomato.jpeg'
 
 interface Props {
   recipe: NonNullable<FindRecipeById['recipe']>
@@ -22,7 +20,7 @@ const Recipe = ({ recipe }: Props) => {
     <div className="container mx-auto max-w-4xl px-4 py-8">
       <div className="mb-6">
         <img
-          src={tomato} // TODO: replace with recipe image
+          src={recipe.mainImageUrl}
           alt={recipe.name}
           className="h-80 w-full rounded-lg object-cover shadow-md"
         />

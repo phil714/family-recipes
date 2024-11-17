@@ -3,8 +3,8 @@ import { useDeferredValue } from 'react'
 import type { AllRecipesQuery, AllRecipesQueryVariables } from 'types/graphql'
 
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
@@ -19,6 +19,7 @@ export const QUERY: TypedDocumentNode<
     allRecipes(searchParams: $searchParams) {
       id
       name
+      mainImageUrl
       description
       family {
         id

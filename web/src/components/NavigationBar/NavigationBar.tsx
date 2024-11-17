@@ -102,7 +102,10 @@ export const NavigationBar = () => {
         {currentUser?.id ? (
           <UserMenu />
         ) : (
-          <User user={{ name: '', email: '' }} options={{ email: false }} />
+          <User
+            user={{ name: '', email: '', avatarUrl: null }}
+            options={{ email: false }}
+          />
         )}
         {links
           .filter((link) =>
