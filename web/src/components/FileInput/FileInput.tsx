@@ -12,7 +12,7 @@ interface Props {
     }
     maximumImageSize?: number
   }
-  tag: 'avatar' | 'mainImageUrl'
+  tag?: 'avatar' | 'mainImageUrl'
 }
 
 const DEFAULT_FILE_SIZE_LIMIT = 1024 * 1024 * 5 // 5 MB

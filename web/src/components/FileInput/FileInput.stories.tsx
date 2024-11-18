@@ -12,7 +12,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FileInput from './FileInput'
+import { FileInput } from './FileInput'
 
 const meta: Meta<typeof FileInput> = {
   component: FileInput,

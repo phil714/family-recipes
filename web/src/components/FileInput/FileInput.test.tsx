@@ -1,6 +1,8 @@
+import { noop } from '@tanstack/react-table'
+
 import { render } from '@redwoodjs/testing/web'
 
-import FileInput from './FileInput'
+import { FileInput } from './FileInput'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +10,7 @@ import FileInput from './FileInput'
 describe('FileInput', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<FileInput />)
+      render(<FileInput onChange={noop} />)
     }).not.toThrow()
   })
 })
