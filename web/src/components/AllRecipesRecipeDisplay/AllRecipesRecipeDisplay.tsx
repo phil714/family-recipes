@@ -1,5 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 
+import { transform } from 'src/lib/file-upload'
+
 import {
   Card,
   CardContent,
@@ -7,13 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from '../Card'
-import tomato from '../Recipe/Recipe/tomato.jpeg'
 import TagDisplay from '../TagDisplay/TagDisplay'
 
 interface Recipe {
   id: string
   name: string
   description: string
+  mainImageUrl: string
   family: {
     id: string
     name: string
@@ -46,7 +48,10 @@ const AllRecipesRecipeDisplay = ({ recipe }: Props) => {
       <Card className="h-fit shadow-md hover:bg-slate-100">
         <CardHeader className="p-4 pb-0">
           <img
-            src={tomato} // TODO: replace with recipe image
+            src={transform(recipe.mainImageUrl, {
+              resize: { width: 160, height: 160 },
+            })}
+            // src={recipe.mainImageUrl}
             alt={recipe.name}
             className="h-40 w-full rounded-lg object-cover pb-2"
           />

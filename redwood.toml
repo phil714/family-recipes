@@ -13,7 +13,7 @@
   includeEnvironmentVariables = [
     # Add any ENV vars that should be available to the web side to this array
     # See https://redwoodjs.com/docs/environment-variables#web
-    'SENTRY_DSN'
+    'SENTRY_ENABLED', 'SENTRY_DSN', 'NODE_ENV'
   ]
 [api]
   host = "0.0.0.0"

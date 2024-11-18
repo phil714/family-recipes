@@ -2,17 +2,19 @@ import type { EditRecipeById, UpdateRecipeInput } from 'types/graphql'
 
 import type { RWGqlError } from '@redwoodjs/forms'
 import {
+  Controller,
+  FieldError,
   Form,
   FormError,
-  FieldError,
   Label,
-  TextField,
   NumberField,
   Submit,
-  Controller,
+  TextField,
 } from '@redwoodjs/forms'
 
 import FamilyInputCell from 'src/components/FamilyInputCell'
+import { FileInput } from 'src/components/FileInput/FileInput'
+import MainRecipeImage from 'src/components/MainRecipeImage/MainRecipeImage'
 import RecipeIngredientsInputCell from 'src/components/RecipeIngredientsInputCell'
 import RecipeStatusSelect from 'src/components/RecipeStatusSelect/RecipeStatusSelect'
 import RecipeTagsInputCell from 'src/components/RecipeTagsInputCell'
@@ -63,6 +65,30 @@ const RecipeForm = (props: RecipeFormProps) => {
         />
 
         <FieldError name="name" className="rw-field-error" />
+
+        <Label
+          name="mainImageUrl"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Main Image
+        </Label>
+        <Controller
+          name="mainImageUrl"
+          defaultValue={props.recipe?.mainImageUrl}
+          // rules={validation}
+          render={({ field: { onChange, value } }) => (
+            <div className="flex flex-col gap-2 pt-2">
+              {value && (
+                <MainRecipeImage
+                  recipe={{ mainImageUrl: value, name: 'To upload' }}
+                />
+              )}
+              <FileInput onChange={onChange} tag="mainImageUrl" />
+            </div>
+          )}
+        />
+        <FieldError name="mainImageUrl" className="rw-field-error" />
 
         <Label
           name="description"

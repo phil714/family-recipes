@@ -278,6 +278,8 @@ export default async () => {
       data: {
         id: '1',
         name: 'Tomato and Egg Stir-Fry',
+        mainImageUrl:
+          'https://christieathome.com/blog/chinese-tomato-egg-stir-fry/',
         description:
           "A quick and simple stir-fry combining fresh tomatoes and scrambled eggs. This classic dish is packed with flavor and comes together in just a few minutes. It's perfect for a light meal or as a side to rice.",
         cookingTimeMinutes: 5,
@@ -324,6 +326,8 @@ export default async () => {
       data: {
         id: '2',
         name: 'Simple Roast Chicken',
+        mainImageUrl:
+          'https://christieathome.com/blog/chinese-tomato-egg-stir-fry/',
         description:
           'A classic and easy roast chicken recipe that delivers tender, juicy meat with crispy skin. This no-fuss dish uses simple seasonings and can be customized with your favorite herbs. Perfect for a comforting dinner or meal prep for the week.',
         cookingTimeMinutes: 60,

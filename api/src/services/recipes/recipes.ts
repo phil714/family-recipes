@@ -1,7 +1,7 @@
 import { RecipeStatus } from '@prisma/client'
 import type {
-  QueryResolvers,
   MutationResolvers,
+  QueryResolvers,
   RecipeRelationResolvers,
 } from 'types/graphql'
 
@@ -128,6 +128,7 @@ export const createRecipe: MutationResolvers['createRecipe'] = async ({
   return db.recipe.create({
     data: {
       name: input.name,
+      mainImageUrl: input.mainImageUrl,
       description: input.description,
       instructions: input.instructions,
       cookingTimeMinutes: input.cookingTimeMinutes,

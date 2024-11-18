@@ -1,13 +1,9 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from 'src/components/Avatar/Avatar'
+import UserAvatar from 'src/components/UserAvatar/UserAvatar'
 
 export interface IUser {
   name: string
   email: string
-  avatarSrc?: string
+  avatarUrl?: string | null
 }
 
 export interface Props {
@@ -24,16 +20,10 @@ export const defaultOptions = { name: true, email: true, avatar: true }
 export const User: React.FC<Props> = (props) => {
   const { user } = props
   const options = { ...defaultOptions, ...props.options }
-  const fallback = user.name.split(' ').map((str) => str[0]?.toUpperCase())
 
   return (
     <div className="flex items-center gap-4">
-      {options.avatar && (
-        <Avatar className="hidden h-9 w-9 sm:flex">
-          <AvatarImage src={user.avatarSrc} alt="Avatar" />
-          <AvatarFallback>{fallback}</AvatarFallback>
-        </Avatar>
-      )}
+      {options.avatar && <UserAvatar user={user} />}
       <div className="grid gap-1">
         {options.name && (
           <p className="text-sm font-medium leading-none">{user.name}</p>

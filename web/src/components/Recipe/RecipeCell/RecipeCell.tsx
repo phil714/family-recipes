@@ -1,8 +1,8 @@
 import type { FindRecipeById, FindRecipeByIdVariables } from 'types/graphql'
 
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
@@ -14,6 +14,7 @@ export const QUERY: TypedDocumentNode<FindRecipeById, FindRecipeByIdVariables> =
       recipe: recipe(id: $id) {
         id
         name
+        mainImageUrl
         description
         instructions
         preparationTimeMinutes

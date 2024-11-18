@@ -20,7 +20,6 @@ export const handler = createGraphQLHandler({
   extraPlugins: [
     useSentry({
       includeRawResult: true,
-      includeResolverArgs: true,
       includeExecuteVariables: true,
     }),
   ],

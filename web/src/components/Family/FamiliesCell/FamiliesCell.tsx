@@ -2,8 +2,8 @@ import type { FindFamilies, FindFamiliesVariables } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
@@ -24,6 +24,7 @@ export const QUERY: TypedDocumentNode<FindFamilies, FindFamiliesVariables> =
             id
             name
             email
+            avatarUrl
           }
         }
       }

@@ -1,12 +1,12 @@
-import { type Recipe, RecipeStatus } from '@prisma/client'
+import { RecipeStatus, type Recipe } from '@prisma/client'
 
 import {
-  recipes,
-  recipe,
-  createRecipe,
-  updateRecipe,
-  deleteRecipe,
   allRecipes,
+  createRecipe,
+  deleteRecipe,
+  recipe,
+  recipes,
+  updateRecipe,
 } from './recipes'
 import { userContext, type StandardScenario } from './recipes.scenarios'
 
@@ -50,6 +50,7 @@ describe('recipes', () => {
     const result = await createRecipe({
       input: {
         name: 'String',
+        mainImageUrl: 'String',
         description: 'String',
         instructions: 'String',
         preparationTimeMinutes: 2652393,
@@ -76,6 +77,7 @@ describe('recipes', () => {
       id: original.id,
       input: {
         name: 'String2',
+        mainImageUrl: 'String',
         description: 'String',
         instructions: 'String',
         preparationTimeMinutes: 2652393,
