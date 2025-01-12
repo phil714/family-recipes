@@ -13,6 +13,7 @@ export const user = {
   isSuperAdmin: undefined,
   hashedPassword,
   salt,
+  avatarUrl: 'https://picsum.photos/id/237/50',
 }
 
 export const userContext = {

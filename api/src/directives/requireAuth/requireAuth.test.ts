@@ -14,6 +14,7 @@ export const user = {
   hashedPassword,
   salt,
   roles: [AccessRole.ADMIN],
+  avatarUrl: 'https://picsum.photos/id/237/50',
   familyMembers: [
     {
       id: '1',
