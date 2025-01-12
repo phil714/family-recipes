@@ -1,6 +1,8 @@
 import { render } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './InvitationAcceptCell'
+jest.mock('src/lib/file-upload')
+
+import { Empty, Failure, Loading, Success } from './InvitationAcceptCell'
 import { standard } from './InvitationAcceptCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances

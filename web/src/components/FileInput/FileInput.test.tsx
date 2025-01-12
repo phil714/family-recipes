@@ -1,3 +1,5 @@
+jest.mock('src/lib/file-upload')
+
 import { noop } from '@tanstack/react-table'
 
 import { render } from '@redwoodjs/testing/web'

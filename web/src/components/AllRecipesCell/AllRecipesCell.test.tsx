@@ -1,3 +1,5 @@
+jest.mock('src/lib/file-upload')
+
 import { TooltipProvider } from '@radix-ui/react-tooltip'
 
 import { render } from '@redwoodjs/testing/web'
