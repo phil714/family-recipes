@@ -1,9 +1,5 @@
 import type { Invitation } from '@prisma/client'
 
-import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
-
-import { mailer } from 'src/lib/mailer'
-
 import {
   createInvitation,
   deleteInvitation,
