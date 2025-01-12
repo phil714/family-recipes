@@ -24,7 +24,7 @@ const TagDisplay = (props: Props) => {
           key={props.tag.id}
           style={{ backgroundColor: props.tag.color }}
           className={twMerge(
-            'flex w-min flex-none whitespace-nowrap rounded-full p-1 text-sm',
+            'flex w-min flex-none whitespace-nowrap rounded-full p-2 text-sm leading-none',
             isDarkBackground(props.tag.color) && 'text-white'
           )}
         >

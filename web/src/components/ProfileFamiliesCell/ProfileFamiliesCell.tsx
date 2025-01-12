@@ -59,6 +59,7 @@ export const QUERY: TypedDocumentNode<
           id
           name
           email
+          avatarUrl
         }
       }
     }

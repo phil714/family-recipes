@@ -1,4 +1,4 @@
-import { type Prisma, type FamilyMember, AccessRole } from '@prisma/client'
+import { type FamilyMember, type Prisma, AccessRole } from '@prisma/client'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 import type { ScenarioData } from '@redwoodjs/testing/api'
@@ -12,6 +12,7 @@ export const user = {
   isSuperAdmin: undefined,
   hashedPassword,
   salt,
+  avatarUrl: 'https://picsum.photos/id/237/50',
 }
 
 export const userContext = {
@@ -43,6 +44,7 @@ const user2 = {
   isSuperAdmin: undefined,
   hashedPassword,
   salt,
+  avatarUrl: 'https://picsum.photos/id/237/50',
 }
 
 export const standard = defineScenario<Prisma.FamilyMemberCreateArgs>({

@@ -1,4 +1,5 @@
 import { Mailer } from '@redwoodjs/mailer-core'
+import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 import { NodemailerMailHandler } from '@redwoodjs/mailer-handler-nodemailer'
 import { ResendMailHandler } from '@redwoodjs/mailer-handler-resend'
 import { ReactEmailRenderer } from '@redwoodjs/mailer-renderer-react-email'
@@ -18,6 +19,7 @@ export const mailer = new Mailer({
       resend: new ResendMailHandler({
         apiToken: process.env.RESEND_API_KEY,
       }),
+      inMemory: new InMemoryMailHandler(),
     },
     default: 'resend',
   },
@@ -30,6 +32,9 @@ export const mailer = new Mailer({
   defaults: {
     replyTo: 'no-reply@example.com',
     from: 'Philippe Deschesnes <philippe.deschesnes@hotmail.com>',
+  },
+  test: {
+    handler: 'inMemory',
   },
   logger,
 })

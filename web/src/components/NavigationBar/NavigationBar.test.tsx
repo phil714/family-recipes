@@ -1,3 +1,5 @@
+jest.mock('src/lib/file-upload')
+
 import { render } from '@redwoodjs/testing/web'
 
 import { InferredCurrentUser } from '../../../../.redwood/types/includes/all-currentUser'
@@ -16,6 +18,7 @@ export const userContext = {
   email: 'micheltremblay@gmail.com',
   isSuperAdmin: undefined,
   roles: ['ADMIN'],
+  avatarUrl: 'https://picsum.photos/id/237/50',
   familyMembers: [
     {
       id: '1',

@@ -16,6 +16,7 @@ const meta: Meta<typeof AllRecipesRecipeDisplay> = {
         id: '1',
         name: 'Deschesnes',
       },
+      mainImageUrl: 'https://picsum.photos/200',
       ingredients: [],
       tags: [],
     },
