@@ -1,6 +1,6 @@
 import { client as fsClient } from 'filestack-react'
 
-const client = fsClient.init(process.env.REDWOOD_ENV_FILESTACK_API_KEY)
+const client = fsClient.init(process.env.REDWOOD_ENV_FILESTACK_API_KEY ?? '')
 
 export type TransformOptions = fsClient.TransformOptions
 export type UploadOptions = fsClient.UploadOptions
