@@ -16,6 +16,7 @@ export const userContext = {
   email: 'micheltremblay@gmail.com',
   isSuperAdmin: undefined,
   roles: ['ADMIN'],
+  avatarUrl: 'https://picsum.photos/id/237/50',
   familyMembers: [
     {
       id: '1',

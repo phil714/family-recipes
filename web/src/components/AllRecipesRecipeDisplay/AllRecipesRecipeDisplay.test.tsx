@@ -18,6 +18,7 @@ describe('AllRecipesRecipeDisplay', () => {
               id: '1',
               name: 'Test',
             },
+            mainImageUrl: 'https://picsum.photos/200',
             tags: [],
             ingredients: [],
           }}

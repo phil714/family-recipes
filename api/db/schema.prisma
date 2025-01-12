@@ -77,7 +77,7 @@ model Invitation {
   family     Family     @relation(fields: [familyId], references: [id])
   accessRole AccessRole
   code       String     @default(nanoid())
-  expiresAt  DateTime   @default(dbgenerated("NOW() + interval '7 day'"))
+  expiresAt  DateTime   @default(dbgenerated("(NOW() + '7 days'::interval)"))
 }
 
 enum RecipeStatus {

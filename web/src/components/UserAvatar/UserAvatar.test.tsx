@@ -8,7 +8,14 @@ import UserAvatar from './UserAvatar'
 describe('UserAvatar', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<UserAvatar />)
+      render(
+        <UserAvatar
+          user={{
+            name: 'Michel Tremblay',
+            avatarUrl: 'https://picsum.photos/id/237/50',
+          }}
+        />
+      )
     }).not.toThrow()
   })
 })

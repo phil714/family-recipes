@@ -8,7 +8,14 @@ import MainRecipeImage from './MainRecipeImage'
 describe('MainRecipeImage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<MainRecipeImage />)
+      render(
+        <MainRecipeImage
+          recipe={{
+            name: 'Tomate and Eggs',
+            mainImageUrl: 'https://picsum.photos/200',
+          }}
+        />
+      )
     }).not.toThrow()
   })
 })
