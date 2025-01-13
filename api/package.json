@@ -14,7 +14,7 @@
     "@redwoodjs/mailer-renderer-react-email": "8.4.1",
     "@sendgrid/mail": "^8.1.4",
     "@sentry/node": "8.38.0",
-    "@simplewebauthn/server": "^11.0.0"
+    "@simplewebauthn/server": "^13.1.0"
   },
   "devDependencies": {
     "@redwoodjs/mailer-handler-in-memory": "8.4.1",
