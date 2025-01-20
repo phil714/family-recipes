@@ -42,6 +42,7 @@
       "jest",
       "jest-dom"
     ],
+    "lib": ["dom", "ES2022"],
     "jsx": "preserve"
   },
   "include": [
