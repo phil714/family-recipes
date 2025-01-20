@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { render, renderHook } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './RecipeTagsInputCell'
+import { Empty, Failure, Loading, Success } from './RecipeTagsInputCell'
 import { standard } from './RecipeTagsInputCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
@@ -26,7 +26,7 @@ describe('RecipeTagsInputCell', () => {
 
   it('renders Failure successfully', async () => {
     expect(() => {
-      render(<Failure error={new Error('Oh no')} />)
+      render(<Failure error={new Error('Oh no')} tags={[]} />)
     }).not.toThrow()
   })
 

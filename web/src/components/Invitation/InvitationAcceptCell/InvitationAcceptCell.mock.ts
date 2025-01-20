@@ -6,4 +6,5 @@ export const standard = (/* vars, { ctx, req } */) => ({
   queryResult: {
     variables: { code: '1' },
   },
+  code: '1',
 })

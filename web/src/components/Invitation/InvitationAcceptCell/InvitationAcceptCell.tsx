@@ -34,6 +34,7 @@ export const Failure = ({
 export const Success = ({
   invitationByCode,
   queryResult,
+  code,
 }: CellSuccessProps<
   FindInvitationByCodeQuery,
   FindInvitationByCodeQueryVariables
@@ -43,5 +44,5 @@ export const Success = ({
     // already added to family
     return <Redirect to={routes.home()} />
   }
-  return <Redirect to={routes.signup({ code: queryResult.variables.code })} />
+  return <Redirect to={routes.signup({ code: code })} />
 }
