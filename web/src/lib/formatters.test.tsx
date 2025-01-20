@@ -4,7 +4,6 @@ import {
   jsonTruncate,
   truncate,
   timeTag,
-  jsonDisplay,
   checkboxInputTag,
 } from './formatters'
 
