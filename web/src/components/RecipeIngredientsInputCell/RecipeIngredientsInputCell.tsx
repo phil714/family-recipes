@@ -1,13 +1,9 @@
 import { t } from 'i18next'
-import type {
-  FindIngredients,
-  FindIngredientsVariables,
-  FindTags,
-} from 'types/graphql'
+import type { FindIngredients, FindIngredientsVariables } from 'types/graphql'
 
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
@@ -32,7 +28,7 @@ export const Empty = () => {
   return <div className="rw-text-center">Empty</div>
 }
 
-export const Failure = ({ error }: CellFailureProps<FindTags>) => (
+export const Failure = ({ error }: CellFailureProps<FindIngredients>) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 

@@ -22,3 +22,7 @@
   open = true
 [notifications]
   versionUpdates = ["latest"]
+
+[experimental.reactCompiler]
+  enabled = false
+  lintOnly = false

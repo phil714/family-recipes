@@ -26,7 +26,7 @@ describe('InvitationAcceptCell', () => {
 
   it('renders Failure successfully', async () => {
     expect(() => {
-      render(<Failure error={new Error('Oh no')} />)
+      render(<Failure error={new Error('Oh no')} code={''} />)
     }).not.toThrow()
   })
 
@@ -42,6 +42,7 @@ describe('InvitationAcceptCell', () => {
         <Success
           invitationByCode={standard().invitationByCode}
           queryResult={standard().queryResult}
+          code={standard().code}
         />
       )
     }).not.toThrow()
