@@ -24,5 +24,5 @@
   versionUpdates = ["latest"]
 
 [experimental.reactCompiler]
-  enabled = true
+  enabled = false
   lintOnly = false
