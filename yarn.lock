@@ -2186,16 +2186,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@envelop/sentry@npm:5.1.1":
-  version: 5.1.1
-  resolution: "@envelop/sentry@npm:5.1.1"
+"@envelop/sentry@npm:12.0.0":
+  version: 12.0.0
+  resolution: "@envelop/sentry@npm:12.0.0"
   dependencies:
     tslib: "npm:^2.5.0"
   peerDependencies:
-    "@envelop/core": ^3.0.6
-    "@sentry/node": ^6 || ^7
+    "@envelop/core": ^5.0.2
+    "@sentry/node": ^8.0.0
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 10c0/316056d1c57fb9273bbc05d3579cac6933a835344aed1fb3901969f09c17b6491ff68ee9b904e608552d2d5fa1f6cc8098d2917c820962a932e0194159ba4d87
+  checksum: 10c0/8aedb65831e22e8766f5071224f737f02250ea5452a3c5876962c4248cdcd70c727fd2347eed373cd1557beb4fe66df6386ecf1003e3f407817add704705067e
   languageName: node
   linkType: hard
 
@@ -11940,7 +11940,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "api@workspace:api"
   dependencies:
-    "@envelop/sentry": "npm:5.1.1"
+    "@envelop/sentry": "npm:12.0.0"
     "@react-email/components": "npm:^0.0.32"
     "@redwoodjs/api": "npm:8.4.4"
     "@redwoodjs/auth-dbauth-api": "npm:8.4.4"
