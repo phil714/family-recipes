@@ -2,14 +2,6 @@ import React from 'react'
 
 const MAX_STRING_LENGTH = 150
 
-export const jsonDisplay = (obj: unknown) => {
-  return (
-    <pre>
-      <code>{JSON.stringify(obj, null, 2)}</code>
-    </pre>
-  )
-}
-
 export const truncate = (value: string | number) => {
   let output = value?.toString() ?? ''
 

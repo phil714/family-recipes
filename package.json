@@ -21,6 +21,7 @@
     "@redwoodjs/project-config": "8.4.4",
     "@redwoodjs/realtime": "8.4.4",
     "@redwoodjs/studio": "13.0.1",
+    "eslint-plugin-react-compiler": "^19.0.0-beta-e552027-20250112",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.1",
     "prettier-plugin-tailwindcss": "0.6.10",
