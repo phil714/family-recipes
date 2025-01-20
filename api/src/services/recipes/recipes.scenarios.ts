@@ -13,6 +13,7 @@ export const user = {
   isSuperAdmin: undefined,
   hashedPassword,
   salt,
+  avatarUrl: 'https://picsum.photos/id/237/50',
 }
 
 export const userContext = {
@@ -39,6 +40,7 @@ export const standard = defineScenario<
     one: {
       data: {
         name: 'String',
+        mainImageUrl: 'String',
         description: 'String',
         instructions: 'String',
         preparationTimeMinutes: 6569867,
@@ -72,6 +74,7 @@ export const standard = defineScenario<
     two: {
       data: {
         name: 'String',
+        mainImageUrl: 'String',
         description: 'String',
         instructions: 'String',
         preparationTimeMinutes: 53524,

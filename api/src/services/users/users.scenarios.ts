@@ -11,6 +11,7 @@ export const user = {
   email: 'micheltremblay@gmail.com',
   hashedPassword,
   salt,
+  avatarUrl: 'https://picsum.photos/id/237/50',
 }
 
 export const userContext = {

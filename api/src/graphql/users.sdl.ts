@@ -4,6 +4,7 @@ export const schema = gql`
     email: String!
     name: String!
     language: String
+    avatarUrl: String
     # familyMembers: [FamilyMember]!
   }
 
@@ -11,6 +12,7 @@ export const schema = gql`
     email: String
     name: String
     language: String
+    avatarUrl: String
   }
 
   type Query {

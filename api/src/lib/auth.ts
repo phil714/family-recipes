@@ -45,6 +45,7 @@ export const getCurrentUser = async (session: Decoded) => {
       id: true,
       email: true,
       name: true,
+      avatarUrl: true,
       familyMembers: {
         select: {
           id: true,

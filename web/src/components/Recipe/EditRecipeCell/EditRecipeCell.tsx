@@ -6,8 +6,8 @@ import type {
 
 import { navigate, routes } from '@redwoodjs/router'
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
@@ -20,6 +20,7 @@ export const QUERY: TypedDocumentNode<EditRecipeById> = gql`
     recipe: recipe(id: $id) {
       id
       name
+      mainImageUrl
       description
       instructions
       preparationTimeMinutes

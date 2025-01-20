@@ -1,3 +1,5 @@
+jest.mock('src/lib/file-upload')
+
 import { I18nextProvider } from 'react-i18next'
 
 import { MockProviders, render } from '@redwoodjs/testing/web'
@@ -16,6 +18,7 @@ export const user = {
   name: 'Michel Tremblay',
   email: 'micheltremblay@gmail.com',
   isSuperAdmin: undefined,
+  avatarUrl: 'https://picsum.photos/id/237/50',
 }
 
 export const userContext = {

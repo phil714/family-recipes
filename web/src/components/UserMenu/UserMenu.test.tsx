@@ -1,3 +1,5 @@
+jest.mock('src/lib/file-upload')
+
 import { render } from '@redwoodjs/testing/web'
 
 import { UserMenu } from './UserMenu'
