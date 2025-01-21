@@ -5,6 +5,8 @@ import type {
   RecipeRelationResolvers,
 } from 'types/graphql'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
@@ -146,6 +148,22 @@ export const updateRecipe: MutationResolvers['updateRecipe'] = async ({
   id,
   input,
 }) => {
+  const recipe = await db.recipe.findUnique({
+    where: { id },
+  })
+  requireAuth({ roles: ['ADMIN', 'USER'], familyId: recipe?.familyId })
+  const familyMember = context.currentUser?.familyMembers.find(
+    (fM) => fM.familyId === recipe?.familyId
+  )
+
+  // if you are a USER but now creator of the recipe
+  if (
+    familyMember.accessRole === 'USER' &&
+    familyMember.id !== recipe?.familyMemberId
+  ) {
+    throw new ForbiddenError("You don't have access to do that.")
+  }
+
   const ingredients =
     (await db.recipe.findUnique({ where: { id } }).ingredients()) ?? []
   const ingredientsToConnect = input.ingredientIds.map((id) => ({ id }))
@@ -183,6 +201,19 @@ export const deleteRecipe: MutationResolvers['deleteRecipe'] = async ({
     where: { id },
   })
   requireAuth({ roles: ['ADMIN', 'USER'], familyId: recipe?.familyId })
+  const familyMember = context.currentUser?.familyMembers.find(
+    (fM) => fM.familyId === recipe?.familyId
+  )
+
+  console.log('recipe', recipe)
+  console.log('familyMember', familyMember)
+  // if you are a USER but now creator of the recipe
+  if (
+    familyMember.accessRole === 'USER' &&
+    familyMember.id !== recipe?.familyMemberId
+  ) {
+    throw new ForbiddenError("You don't have access to do that.")
+  }
 
   return db.recipe.delete({
     where: { id },

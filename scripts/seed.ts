@@ -37,7 +37,13 @@ export default async () => {
       {
         id: '5',
         name: 'Laurence Amyotte',
-        email: 'philippe.deschesnes+1@hotmail.com',
+        email: 'philippe.deschesnes+laurence@hotmail.com',
+        password: 'AAAaaa111',
+      },
+      {
+        id: '6',
+        name: 'Philippe Deschesnes User',
+        email: 'philippe.deschesnes+user2@hotmail.com',
         password: 'AAAaaa111',
       },
     ]
@@ -110,12 +116,17 @@ export default async () => {
         familyId: '2',
         accessRole: 'ADMIN',
       },
-
       {
         id: '7',
         userId: '1',
         familyId: '3',
         accessRole: 'ADMIN',
+      },
+      {
+        id: '8',
+        userId: '6',
+        familyId: '1',
+        accessRole: 'USER',
       },
     ]
 

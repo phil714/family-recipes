@@ -1,19 +1,19 @@
 import { useCallback, useMemo } from 'react'
 
 import {
-  useReactTable,
   ColumnDef,
   createColumnHelper,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
+  useReactTable,
 } from '@tanstack/react-table'
 import { t } from 'i18next'
 import { MoreHorizontal } from 'lucide-react'
 import type { DeleteRecipeMutationVariables, FindRecipes } from 'types/graphql'
 
-import { Link, routes, navigate } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -66,8 +66,18 @@ const RecipesList = ({ recipes }: FindRecipes) => {
 
   const data = useMemo(() => recipes, [recipes])
 
-  const columns: ColumnDef<FindRecipes['recipes'][0]>[] = useMemo(
-    () => [
+  const columns: ColumnDef<FindRecipes['recipes'][0]>[] = useMemo(() => {
+    const IsRecipeCreator = (recipe: FindRecipes['recipes'][0]) => {
+      const familyMember = currentUser.familyMembers.find(
+        (fm) => fm.familyId === recipe.family.id
+      )
+      return (
+        familyMember.accessRole === 'USER' &&
+        recipe.familyMemberId === familyMember.id
+      )
+    }
+
+    return [
       columnHelper.accessor((recipe) => recipe.status, {
         id: 'status',
         enableColumnFilter: false,
@@ -126,11 +136,8 @@ const RecipesList = ({ recipes }: FindRecipes) => {
         size: 220,
         cell: ({ row }) => (
           <>
-            {hasRole(
-              ['ADMIN', 'USER'],
-              currentUser,
-              row.original.family.id
-            ) && (
+            {(hasRole(['ADMIN'], currentUser, row.original.family.id) ||
+              IsRecipeCreator(row.original)) && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="h-8 w-8 p-0">
@@ -157,9 +164,8 @@ const RecipesList = ({ recipes }: FindRecipes) => {
           </>
         ),
       }),
-    ],
-    [columnHelper, onDeleteClick, currentUser]
-  )
+    ]
+  }, [columnHelper, onDeleteClick, currentUser])
 
   const table = useReactTable({
     data,

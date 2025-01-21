@@ -33,6 +33,33 @@ export const userContext = {
   ],
 }
 
+export const user2 = {
+  id: '2',
+  name: 'Jean-Paul Tremblay',
+  email: 'jeanpaultremblay@gmail.com',
+  isSuperAdmin: undefined,
+  hashedPassword,
+  salt,
+  avatarUrl: 'https://picsum.photos/id/237/50',
+}
+
+export const userContext2 = {
+  ...user,
+  roles: [AccessRole.USER, AccessRole.USER],
+  familyMembers: [
+    {
+      id: '1',
+      familyId: '1',
+      accessRole: AccessRole.USER,
+    },
+    {
+      id: '2',
+      familyId: '2',
+      accessRole: AccessRole.USER,
+    },
+  ],
+}
+
 export const standard = defineScenario<
   Prisma.RecipeCreateArgs | Prisma.TagCreateArgs | Prisma.IngredientCreateArgs
 >({

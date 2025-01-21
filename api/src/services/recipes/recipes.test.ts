@@ -8,7 +8,11 @@ import {
   recipes,
   updateRecipe,
 } from './recipes'
-import { userContext, type StandardScenario } from './recipes.scenarios'
+import {
+  userContext,
+  userContext2,
+  type StandardScenario,
+} from './recipes.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -94,6 +98,15 @@ describe('recipes', () => {
 
   scenario('deletes a recipe', async (scenario: StandardScenario) => {
     mockCurrentUser(userContext)
+    const original = (await deleteRecipe({
+      id: scenario.recipe.one.id,
+    })) as Recipe
+    const result = await recipe({ id: original.id })
+
+    expect(result).toEqual(null)
+  })
+  scenario('fails to delete a recipe', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext2)
     const original = (await deleteRecipe({
       id: scenario.recipe.one.id,
     })) as Recipe
