@@ -1,5 +1,7 @@
 import { RecipeStatus, type Recipe } from '@prisma/client'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import {
   allRecipes,
   createRecipe,
@@ -107,11 +109,10 @@ describe('recipes', () => {
   })
   scenario('fails to delete a recipe', async (scenario: StandardScenario) => {
     mockCurrentUser(userContext2)
-    const original = (await deleteRecipe({
-      id: scenario.recipe.one.id,
-    })) as Recipe
-    const result = await recipe({ id: original.id })
-
-    expect(result).toEqual(null)
+    await expect(
+      deleteRecipe({
+        id: scenario.recipe.one.id,
+      })
+    ).rejects.toThrow(ForbiddenError)
   })
 })
