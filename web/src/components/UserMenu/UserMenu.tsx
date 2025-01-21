@@ -18,6 +18,8 @@ export const UserMenu = () => {
   const { t, i18n } = useTranslation('user-menu')
 
   console.log('i18n.language', i18n.language)
+  console.log('i18n.language', i18n.languages)
+  console.log('i18n', i18n)
 
   return (
     <DropdownMenu>

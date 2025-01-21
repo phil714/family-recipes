@@ -1,12 +1,11 @@
 import enCommon from '../src/locales/en/common.json'
-import enGlossary from '../src/locales/en/glossary.json'
-import enUserMenu from '../src/locales/en/user-menu.json'
-import enProfile from '../src/locales/en/profile.json'
-import enUser from '../src/locales/en/user.json'
-import enRecipe from '../src/locales/en/recipe.json'
 import enFamily from '../src/locales/en/family.json'
-
+import enGlossary from '../src/locales/en/glossary.json'
 import enInvitation from '../src/locales/en/invitation.json'
+import enProfile from '../src/locales/en/profile.json'
+import enRecipe from '../src/locales/en/recipe.json'
+import enUserMenu from '../src/locales/en/user-menu.json'
+import enUser from '../src/locales/en/user.json'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
