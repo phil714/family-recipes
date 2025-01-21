@@ -15,7 +15,11 @@ import { User } from 'src/components/User/User'
 
 export const UserMenu = () => {
   const { currentUser, logOut } = useAuth()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation('user-menu')
+
+  console.log('i18n.language', i18n.language)
+  console.log('i18n.language', i18n.languages)
+  console.log('i18n', i18n)
 
   return (
     <DropdownMenu>

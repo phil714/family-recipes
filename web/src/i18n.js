@@ -24,7 +24,10 @@ i18n
     defaultNS: 'common',
     backend: {
       // Path to your translation files
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      // loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: () => {
+        return '/locales/{{lng}}/{{ns}}.json'
+      },
     },
   })
 export default i18n
