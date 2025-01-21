@@ -2,8 +2,8 @@ import type { FindRecipes, FindRecipesVariables } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
 import type {
-  CellSuccessProps,
   CellFailureProps,
+  CellSuccessProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
@@ -23,6 +23,7 @@ export const QUERY: TypedDocumentNode<FindRecipes, FindRecipesVariables> = gql`
         id
         name
       }
+      familyMemberId
     }
   }
 `

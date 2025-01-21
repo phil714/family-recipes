@@ -1,5 +1,7 @@
 import { RecipeStatus, type Recipe } from '@prisma/client'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import {
   allRecipes,
   createRecipe,
@@ -8,7 +10,11 @@ import {
   recipes,
   updateRecipe,
 } from './recipes'
-import { userContext, type StandardScenario } from './recipes.scenarios'
+import {
+  userContext,
+  userContext2,
+  type StandardScenario,
+} from './recipes.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -100,5 +106,13 @@ describe('recipes', () => {
     const result = await recipe({ id: original.id })
 
     expect(result).toEqual(null)
+  })
+  scenario('fails to delete a recipe', async (scenario: StandardScenario) => {
+    mockCurrentUser(userContext2)
+    await expect(
+      deleteRecipe({
+        id: scenario.recipe.one.id,
+      })
+    ).rejects.toThrow(ForbiddenError)
   })
 })

@@ -9,6 +9,8 @@ export const schema = gql`
     cookingTimeMinutes: Int!
     familyId: String!
     family: Family!
+    familyMemberId: String!
+    familyMember: FamilyMember!
     status: RecipeStatus!
     tags: [Tag]!
     ingredients: [Ingredient]!
