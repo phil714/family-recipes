@@ -4,20 +4,20 @@
   "private": true,
   "dependencies": {
     "@envelop/sentry": "12.0.0",
-    "@react-email/components": "^0.0.32",
-    "@redwoodjs/api": "8.4.4",
-    "@redwoodjs/auth-dbauth-api": "8.4.4",
-    "@redwoodjs/graphql-server": "8.4.4",
-    "@redwoodjs/mailer-core": "8.4.4",
-    "@redwoodjs/mailer-handler-nodemailer": "8.4.4",
-    "@redwoodjs/mailer-handler-resend": "8.4.4",
-    "@redwoodjs/mailer-renderer-react-email": "8.4.4",
+    "@react-email/components": "^0.0.33",
+    "@redwoodjs/api": "8.5.0",
+    "@redwoodjs/auth-dbauth-api": "8.5.0",
+    "@redwoodjs/graphql-server": "8.5.0",
+    "@redwoodjs/mailer-core": "8.5.0",
+    "@redwoodjs/mailer-handler-nodemailer": "8.5.0",
+    "@redwoodjs/mailer-handler-resend": "8.5.0",
+    "@redwoodjs/mailer-renderer-react-email": "8.5.0",
     "@sendgrid/mail": "^8.1.4",
     "@sentry/node": "8.50.0",
     "@simplewebauthn/server": "^13.1.0"
   },
   "devDependencies": {
-    "@redwoodjs/mailer-handler-in-memory": "8.4.4",
-    "@redwoodjs/mailer-handler-studio": "8.4.4"
+    "@redwoodjs/mailer-handler-in-memory": "8.5.0",
+    "@redwoodjs/mailer-handler-studio": "8.5.0"
   }
 }
